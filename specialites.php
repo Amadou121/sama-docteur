@@ -114,8 +114,45 @@ $medecins = $stmtMedecins->fetchAll();
                     <?php foreach($medecins as $index => $medecin): ?>
                     <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="<?php echo $index * 50; ?>">
                         <div class="card-medecin card h-100">
+                            <?php
+                                // Liste d'avatars par défaut présents dans assets/images
+                                $defaults = [
+                                    'assets/images/doc11.jpg',
+                                    'assets/images/doc4.jpg',
+                                    'assets/images/docs.jpg',
+                                    'assets/images/doc6.jpg',
+                                    'assets/images/doc3.jpg',
+                                    'assets/images/doc10.jpg',
+                                    'assets/images/doc5.jpg',
+                                    'assets/images/med.jpg'
+                                ];
+
+                                // Déterminer la source de l'image du médecin
+                                $photo = '';
+                                if (!empty($medecin['photo'])) {
+                                    $photo = $medecin['photo'];
+                                    // Si c'est un chemin relatif stocké sans dossier, chercher dans assets/images
+                                    if (!preg_match('#^https?://#', $photo) && !file_exists(BASE_PATH . $photo)) {
+                                        if (file_exists(BASE_PATH . 'assets/images/' . $photo)) {
+                                            $photo = 'assets/images/' . $photo;
+                                        }
+                                    }
+                                    // Si le fichier n'existe toujours pas, utiliser un fallback
+                                    if (!preg_match('#^https?://#', $photo) && !file_exists(BASE_PATH . $photo)) {
+                                        $photo = $defaults[$index % count($defaults)];
+                                    }
+                                } else {
+                                    $photo = $defaults[$index % count($defaults)];
+                                }
+
+                                // Construire l'URL publique
+                                $imgSrc = preg_match('#^https?://#', $photo) ? $photo : SITE_URL . ltrim($photo, '/');
+                            ?>
                             <div class="card-img-top text-center pt-4">
-                                <i class="fas fa-user-md fa-5x text-primary"></i>
+                                  <img src="<?php echo htmlspecialchars($imgSrc); ?>"
+                                      alt="Photo de <?php echo htmlspecialchars($medecin['nom_complet']); ?>"
+                                      class="photo-profil"
+                                      style="width:120px;height:120px;border-radius:50%;object-fit:cover;border:4px solid #ffffff;box-shadow:0 4px 12px rgba(0,0,0,0.2);transition:transform 0.3s ease;" />
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo htmlspecialchars($medecin['nom_complet']); ?></h5>
