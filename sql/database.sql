@@ -401,6 +401,20 @@ WHERE r.date_rendez_vous > NOW()
 AND r.statut NOT IN ('annule', 'termine')
 ORDER BY r.date_rendez_vous ASC;
 
+
+-- Ajouter une table pour les logs si ce n'est pas déjà fait
+CREATE TABLE IF NOT EXISTS logs_systeme (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    utilisateur_id INT NULL,
+    action VARCHAR(100),
+    details TEXT,
+    ip_address VARCHAR(45),
+    user_agent TEXT,
+    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_utilisateur (utilisateur_id),
+    INDEX idx_action (action),
+    INDEX idx_date (date_creation)
+);
 -- ============================================
 -- FIN DU SCRIPT
 -- ============================================

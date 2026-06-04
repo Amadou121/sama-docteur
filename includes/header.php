@@ -50,19 +50,23 @@ if (!isset($noHeader)) {
                             <i class="fas fa-envelope"></i> Contact
                         </a>
                     </li>
+                    
                     <?php if (estConnecte()): ?>
+                        <!-- Menu pour les médecins -->
                         <?php if ($_SESSION['user_role'] == 'medecin'): ?>
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo SITE_URL; ?>dashboard-medecin.php">
                                 <i class="fas fa-chart-line"></i> Dashboard Médecin
                             </a>
                         </li>
+                        <!-- Menu pour les admins -->
                         <?php elseif ($_SESSION['user_role'] == 'admin'): ?>
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo SITE_URL; ?>admin/">
                                 <i class="fas fa-crown"></i> Administration
                             </a>
                         </li>
+                        <!-- Menu pour les patients -->
                         <?php else: ?>
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo SITE_URL; ?>dashboard.php">
@@ -70,12 +74,15 @@ if (!isset($noHeader)) {
                             </a>
                         </li>
                         <?php endif; ?>
+                        
+                        <!-- Lien de déconnexion (à la racine) -->
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo SITE_URL; ?>includes/deconnexion.php">
+                            <a class="nav-link" href="<?php echo SITE_URL; ?>deconnexion.php">
                                 <i class="fas fa-sign-out-alt"></i> Déconnexion
                             </a>
                         </li>
                     <?php else: ?>
+                        <!-- Menu pour les utilisateurs non connectés -->
                         <li class="nav-item">
                             <a class="nav-link btn btn-outline-primary ms-lg-2" href="<?php echo SITE_URL; ?>connexion.php">
                                 <i class="fas fa-sign-in-alt"></i> Connexion
@@ -92,12 +99,25 @@ if (!isset($noHeader)) {
         </div>
     </nav>
 
+    <!-- Affichage des messages flash -->
     <?php if (isset($_SESSION['flash_message'])): ?>
     <div class="alert alert-<?php echo $_SESSION['flash_type']; ?> alert-dismissible fade show m-3" role="alert">
         <?php 
         echo $_SESSION['flash_message'];
         unset($_SESSION['flash_message']);
         unset($_SESSION['flash_type']);
+        ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <?php endif; ?>
+    
+    <!-- Affichage des messages flash (nouveau système) -->
+    <?php if (isset($_SESSION['flash'])): ?>
+    <div class="alert alert-<?php echo $_SESSION['flash']['type']; ?> alert-dismissible fade show m-3" role="alert">
+        <i class="fas <?php echo $_SESSION['flash']['type'] == 'success' ? 'fa-check-circle' : 'fa-info-circle'; ?> me-2"></i>
+        <?php 
+        echo $_SESSION['flash']['message'];
+        unset($_SESSION['flash']);
         ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
