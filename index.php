@@ -48,7 +48,7 @@ $medecins = $stmtMedecins->fetchAll();
             </div>
 
             <div class="col-lg-6 text-center">
-                <img src="assets/images/docff.png"
+                <img src="assets/images/doccrm.png"
                      class="img-fluid hero-image"
                      alt="Docteur"
                      style="max-width: 60%; height: auto;">
