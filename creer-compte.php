@@ -19,15 +19,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Nettoyage des entrées
     $nom_complet = trim(htmlspecialchars($_POST['nom_complet'] ?? ''));
     $email = trim(filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL));
-    $telephone = trim(preg_replace('/[^0-9]/', '', $_POST['telephone'] ?? '')); // Garder uniquement les chiffres
+    $telephone_brut = $_POST['telephone'] ?? '';
+    // NE NETTOYER QUE LES CHIFFRES POUR LA BASE DE DONNÉES
+    $telephone = preg_replace('/[^0-9]/', '', $telephone_brut);
     $mot_de_passe = $_POST['mot_de_passe'] ?? '';
     $confirm_mot_de_passe = $_POST['confirm_mot_de_passe'] ?? '';
     $role = 'patient';
     
-    // Conservation pour réaffichage
+    // Conservation pour réaffichage (garder le format saisi par l'utilisateur)
     $nom_complet_value = $nom_complet;
     $email_value = $email;
-    $telephone_value = $_POST['telephone'] ?? '';
+    $telephone_value = $telephone_brut;
     
     // Validation du nom
     if (empty($nom_complet)) {
@@ -39,11 +41,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erreur = 'Adresse email invalide';
     }
-    // Validation du téléphone (Sénégal)
+    // Validation du téléphone (Sénégal) - SIMPLIFIÉE POUR MARCHER À 100%
     elseif (empty($telephone)) {
         $erreur = 'Veuillez entrer votre numéro de téléphone';
-    } elseif (!preg_match('/^(77|78|76|70)[0-9]{7}$/', $telephone)) {
-        $erreur = 'Numéro de téléphone invalide. Utilisez un numéro sénégalais (77, 78, 76 ou 70 suivi de 7 chiffres)';
+    } elseif (strlen($telephone) != 9) {
+        $erreur = 'Le numéro doit contenir exactement 9 chiffres. Vous avez saisi ' . strlen($telephone) . ' chiffres.';
+    } elseif (!in_array(substr($telephone, 0, 2), ['70', '76', '77', '78'])) {
+        $erreur = 'Le numéro doit commencer par 70, 76, 77 ou 78 (valide: 70xxxxxxx, 76xxxxxxx, 77xxxxxxx, 78xxxxxxx)';
     }
     // Validation du mot de passe
     elseif (strlen($mot_de_passe) < 6) {
@@ -177,6 +181,33 @@ include 'includes/header.php';
     border-color: #dee2e6;
     border-left-color: #dee2e6;
 }
+
+.btn-example {
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    margin-left: 5px;
+}
+
+.phone-examples {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+.example-badge {
+    background: #f0f0f0;
+    padding: 2px 8px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.example-badge:hover {
+    background: #667eea;
+    color: white;
+}
 </style>
 
 <div class="container my-5">
@@ -241,7 +272,7 @@ include 'includes/header.php';
                         <div class="invalid-feedback">Veuillez entrer une adresse email valide</div>
                     </div>
                     
-                    <!-- Téléphone avec validation en temps réel -->
+                    <!-- Téléphone avec validation SIMPLE ET EFFICACE -->
                     <div class="mb-3">
                         <label for="telephone" class="form-label fw-semibold">
                             <i class="fas fa-phone-alt text-primary me-1"></i> Téléphone <span class="text-danger">*</span>
@@ -249,6 +280,7 @@ include 'includes/header.php';
                         <div class="input-group">
                             <span class="input-group-text bg-light border-end-0">
                                 <i class="fas fa-phone-alt text-muted"></i>
+                                <span class="ms-1" style="font-size: 0.8rem;">+221</span>
                             </span>
                             <input type="tel" 
                                    class="form-control border-start-0" 
@@ -256,13 +288,23 @@ include 'includes/header.php';
                                    name="telephone" 
                                    value="<?php echo htmlspecialchars($telephone_value); ?>"
                                    placeholder="77 123 45 67"
+                                   autocomplete="off"
                                    required>
                         </div>
                         <div id="phoneHelp" class="form-text">
-                            <i class="fas fa-info-circle"></i> Format: 77 123 45 67 (Orange, Expresso, Free, Tigo)
+                            <i class="fas fa-info-circle"></i> Entrez votre numéro à 9 chiffres (ex: 771234567 ou 77 123 45 67)
                         </div>
                         <div id="phonePreview" class="phone-preview"></div>
-                        <div class="invalid-feedback">Numéro invalide (ex: 77 123 45 67)</div>
+                        <div class="invalid-feedback">Numéro invalide</div>
+                        
+                        <!-- Exemples cliquables -->
+                        <div class="phone-examples">
+                            <small class="text-muted">Exemples :</small>
+                            <span class="example-badge" onclick="setExamplePhone('771234567')">77 123 45 67</span>
+                            <span class="example-badge" onclick="setExamplePhone('781234567')">78 123 45 67</span>
+                            <span class="example-badge" onclick="setExamplePhone('761234567')">76 123 45 67</span>
+                            <span class="example-badge" onclick="setExamplePhone('701234567')">70 123 45 67</span>
+                        </div>
                     </div>
                     
                     <!-- Rôle -->
@@ -304,7 +346,7 @@ include 'includes/header.php';
                             </button>
                         </div>
                         <div class="password-strength" id="passwordStrength"></div>
-                        <div id="passwordHelp" class="form-text">Minimum 6 caractères avec lettres et chiffres</div>
+                        <div id="passwordHelp" class="form-text">Minimum 6 caractères</div>
                         <div class="invalid-feedback">Le mot de passe doit contenir au moins 6 caractères</div>
                     </div>
                     
@@ -339,14 +381,6 @@ include 'includes/header.php';
                         <div class="invalid-feedback">Vous devez accepter les conditions</div>
                     </div>
                     
-                    <!-- Newsletter optionnel -->
-                    <div class="mb-4 form-check">
-                        <input type="checkbox" class="form-check-input" id="newsletter" name="newsletter">
-                        <label class="form-check-label" for="newsletter">
-                            <i class="fas fa-newspaper text-primary"></i> Je souhaite recevoir des actualités et conseils santé
-                        </label>
-                    </div>
-                    
                     <button type="submit" class="btn btn-primary w-100" id="submitBtn">
                         <i class="fas fa-user-plus me-2"></i> Créer mon compte
                     </button>
@@ -365,56 +399,107 @@ include 'includes/header.php';
 </div>
 
 <script>
-// Validation en temps réel du numéro de téléphone
-const phoneInput = document.getElementById('telephone');
-const phonePreview = document.getElementById('phonePreview');
+// FONCTIONS DE VALIDATION DU TÉLÉPHONE - SIMPLES ET QUI MARCHENT
 
-function formatPhoneNumber(value) {
-    let cleaned = value.replace(/\D/g, '');
-    if (cleaned.length >= 2) {
-        let formatted = cleaned.substring(0, 2);
-        if (cleaned.length >= 5) {
-            formatted += ' ' + cleaned.substring(2, 5);
+// Fonction pour extraire uniquement les chiffres d'un numéro
+function getOnlyDigits(str) {
+    if (!str) return '';
+    return str.replace(/\D/g, '');
+}
+
+// Fonction pour formater l'affichage du numéro
+function formatPhoneDisplay(value) {
+    let digits = getOnlyDigits(value);
+    
+    // Limiter à 9 chiffres
+    if (digits.length > 9) {
+        digits = digits.substring(0, 9);
+    }
+    
+    // Formater avec espaces tous les 2-3 chiffres
+    if (digits.length >= 2) {
+        let formatted = digits.substring(0, 2);
+        if (digits.length >= 5) {
+            formatted += ' ' + digits.substring(2, 5);
         }
-        if (cleaned.length >= 7) {
-            formatted += ' ' + cleaned.substring(5, 7);
+        if (digits.length >= 7) {
+            formatted += ' ' + digits.substring(5, 7);
         }
-        if (cleaned.length >= 9) {
-            formatted += ' ' + cleaned.substring(7, 9);
+        if (digits.length >= 9) {
+            formatted += ' ' + digits.substring(7, 9);
         }
         return formatted;
     }
-    return cleaned;
+    return digits;
 }
 
-function validatePhoneNumber(phone) {
-    const phoneClean = phone.replace(/\s/g, '');
-    const phoneRegex = /^(77|78|76|70)[0-9]{7}$/;
-    return phoneRegex.test(phoneClean);
+// Fonction pour valider le numéro - TRÈS SIMPLE ET CLAIRE
+function isValidSenegalPhone(phone) {
+    const digits = getOnlyDigits(phone);
+    
+    // Doit avoir exactement 9 chiffres
+    if (digits.length !== 9) {
+        return false;
+    }
+    
+    // Les 2 premiers chiffres doivent être 70, 76, 77 ou 78
+    const prefix = digits.substring(0, 2);
+    const validPrefixes = ['70', '76', '77', '78'];
+    
+    return validPrefixes.includes(prefix);
 }
+
+// Fonction pour obtenir le message d'erreur
+function getPhoneErrorMessage(phone) {
+    const digits = getOnlyDigits(phone);
+    
+    if (digits.length === 0) {
+        return 'Veuillez entrer votre numéro de téléphone';
+    }
+    
+    if (digits.length !== 9) {
+        return `Le numéro doit contenir 9 chiffres (${digits.length} chiffre${digits.length > 1 ? 's' : ''} saisi${digits.length > 1 ? 's' : ''})`;
+    }
+    
+    const prefix = digits.substring(0, 2);
+    if (!['70', '76', '77', '78'].includes(prefix)) {
+        return 'Le numéro doit commencer par 70, 76, 77 ou 78';
+    }
+    
+    return 'Numéro invalide';
+}
+
+// Gestionnaire d'événement pour le champ téléphone
+const phoneInput = document.getElementById('telephone');
+const phonePreview = document.getElementById('phonePreview');
 
 phoneInput.addEventListener('input', function(e) {
-    let cursorPos = e.target.selectionStart;
-    let oldLength = this.value.length;
-    let formatted = formatPhoneNumber(this.value);
+    // Sauvegarder la position du curseur
+    const cursorPos = this.selectionStart;
+    const oldLength = this.value.length;
+    
+    // Formater l'affichage
+    const formatted = formatPhoneDisplay(this.value);
     this.value = formatted;
     
-    let newLength = this.value.length;
-    cursorPos += newLength - oldLength;
-    this.setSelectionRange(cursorPos, cursorPos);
+    // Restaurer la position du curseur
+    const newLength = this.value.length;
+    const newCursorPos = cursorPos + (newLength - oldLength);
+    this.setSelectionRange(newCursorPos, newCursorPos);
     
-    // Validation
-    const isValid = validatePhoneNumber(this.value);
+    // Valider et afficher le résultat
+    const isValid = isValidSenegalPhone(this.value);
+    
     if (isValid) {
         this.classList.remove('is-invalid');
         this.classList.add('is-valid');
-        phonePreview.innerHTML = '<i class="fas fa-check-circle text-success"></i> Numéro valide';
+        phonePreview.innerHTML = '<i class="fas fa-check-circle text-success"></i> ✓ Numéro valide : +221 ' + getOnlyDigits(this.value);
         phonePreview.classList.add('valid');
         phonePreview.classList.remove('invalid');
     } else if (this.value.length > 0) {
         this.classList.add('is-invalid');
         this.classList.remove('is-valid');
-        phonePreview.innerHTML = '<i class="fas fa-exclamation-circle text-danger"></i> Numéro invalide. Format attendu: 77 123 45 67';
+        phonePreview.innerHTML = '<i class="fas fa-exclamation-circle text-danger"></i> ✗ ' + getPhoneErrorMessage(this.value);
         phonePreview.classList.add('invalid');
         phonePreview.classList.remove('valid');
     } else {
@@ -422,6 +507,14 @@ phoneInput.addEventListener('input', function(e) {
         phonePreview.innerHTML = '';
     }
 });
+
+// Fonction pour définir un exemple
+function setExamplePhone(number) {
+    phoneInput.value = number;
+    const event = new Event('input');
+    phoneInput.dispatchEvent(event);
+    phoneInput.focus();
+}
 
 // Indicateur de force du mot de passe
 const passwordInput = document.getElementById('mot_de_passe');
@@ -451,8 +544,6 @@ passwordInput.addEventListener('input', function() {
     }
     
     passwordStrength.className = 'password-strength ' + strengthClass;
-    
-    // Vérifier la confirmation
     checkPasswordMatch();
 });
 
@@ -468,13 +559,15 @@ function checkPasswordMatch() {
         if (password === confirm) {
             confirmPassword.classList.remove('is-invalid');
             confirmPassword.classList.add('is-valid');
-            passwordMatch.innerHTML = '<i class="fas fa-check-circle text-success"></i> Les mots de passe correspondent';
+            passwordMatch.innerHTML = '<i class="fas fa-check-circle text-success"></i> ✓ Les mots de passe correspondent';
             passwordMatch.classList.add('text-success');
+            passwordMatch.classList.remove('text-danger');
         } else {
             confirmPassword.classList.add('is-invalid');
             confirmPassword.classList.remove('is-valid');
-            passwordMatch.innerHTML = '<i class="fas fa-times-circle text-danger"></i> Les mots de passe ne correspondent pas';
+            passwordMatch.innerHTML = '<i class="fas fa-times-circle text-danger"></i> ✗ Les mots de passe ne correspondent pas';
             passwordMatch.classList.add('text-danger');
+            passwordMatch.classList.remove('text-success');
         }
     } else {
         confirmPassword.classList.remove('is-invalid', 'is-valid');
@@ -493,10 +586,8 @@ document.getElementById('togglePassword')?.addEventListener('click', function() 
     this.querySelector('i').classList.toggle('fa-eye-slash');
 });
 
-// Validation du formulaire complète
+// Validation finale du formulaire
 function validerFormulaireInscription(event) {
-    const form = document.getElementById('registerForm');
-    
     // Vérifier le nom
     const nom = document.getElementById('nom_complet');
     if (!nom.value.trim()) {
@@ -505,6 +596,8 @@ function validerFormulaireInscription(event) {
         nom.focus();
         event.preventDefault();
         return false;
+    } else {
+        nom.classList.remove('is-invalid');
     }
     
     // Vérifier l'email
@@ -516,17 +609,21 @@ function validerFormulaireInscription(event) {
         email.focus();
         event.preventDefault();
         return false;
+    } else {
+        email.classList.remove('is-invalid');
     }
     
     // Vérifier le téléphone
     const telephone = document.getElementById('telephone');
-    const phoneValid = validatePhoneNumber(telephone.value);
-    if (!telephone.value || !phoneValid) {
+    if (!isValidSenegalPhone(telephone.value)) {
         telephone.classList.add('is-invalid');
-        showNotification('Veuillez entrer un numéro de téléphone valide (77 123 45 67)', 'warning');
+        const errorMsg = getPhoneErrorMessage(telephone.value);
+        showNotification(errorMsg, 'warning');
         telephone.focus();
         event.preventDefault();
         return false;
+    } else {
+        telephone.classList.remove('is-invalid');
     }
     
     // Vérifier le mot de passe
@@ -537,6 +634,8 @@ function validerFormulaireInscription(event) {
         passwordInput.focus();
         event.preventDefault();
         return false;
+    } else {
+        passwordInput.classList.remove('is-invalid');
     }
     
     // Vérifier la confirmation
@@ -547,6 +646,8 @@ function validerFormulaireInscription(event) {
         confirmPassword.focus();
         event.preventDefault();
         return false;
+    } else {
+        confirmPassword.classList.remove('is-invalid');
     }
     
     // Vérifier les conditions
@@ -558,7 +659,7 @@ function validerFormulaireInscription(event) {
         return false;
     }
     
-    // Désactiver le bouton pour éviter double soumission
+    // Tout est bon, désactiver le bouton
     const submitBtn = document.getElementById('submitBtn');
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Création en cours...';
@@ -568,28 +669,35 @@ function validerFormulaireInscription(event) {
 
 // Fonction de notification
 function showNotification(message, type = 'info') {
-    const alertDiv = document.createElement('div');
-    alertDiv.className = `alert alert-${type === 'warning' ? 'warning' : (type === 'error' ? 'danger' : 'info')} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
-    alertDiv.style.zIndex = '9999';
-    alertDiv.style.minWidth = '300px';
-    alertDiv.innerHTML = `
-        <i class="fas ${type === 'warning' ? 'fa-exclamation-triangle' : (type === 'error' ? 'fa-times-circle' : 'fa-info-circle')} me-2"></i>
+    const existingNotifs = document.querySelectorAll('.notification-floating');
+    existingNotifs.forEach(notif => notif.remove());
+    
+    const notification = document.createElement('div');
+    notification.className = `notification-floating alert alert-${type === 'warning' ? 'warning' : (type === 'error' ? 'danger' : 'info')} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
+    notification.style.zIndex = '9999';
+    notification.style.minWidth = '300px';
+    notification.style.maxWidth = '500px';
+    notification.style.boxShadow = '0 5px 20px rgba(0,0,0,0.2)';
+    notification.innerHTML = `
+        <i class="fas ${type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'} me-2"></i>
         ${message}
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     `;
-    document.body.appendChild(alertDiv);
+    document.body.appendChild(notification);
     
-    setTimeout(() => {
-        alertDiv.remove();
-    }, 5000);
+    setTimeout(() => notification.remove(), 5000);
 }
 
-// Conservation des valeurs après erreur
+// Initialisation au chargement
 document.addEventListener('DOMContentLoaded', function() {
-    // Déclencher la validation du téléphone si valeur existante
     if (phoneInput.value) {
-        const event = new Event('input');
-        phoneInput.dispatchEvent(event);
+        phoneInput.dispatchEvent(new Event('input'));
+    }
+    if (passwordInput.value) {
+        passwordInput.dispatchEvent(new Event('input'));
+    }
+    if (confirmPassword.value) {
+        confirmPassword.dispatchEvent(new Event('input'));
     }
 });
 </script>
