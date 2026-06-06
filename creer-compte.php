@@ -41,68 +41,125 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erreur = 'Adresse email invalide';
     }
-    // Validation du téléphone (Sénégal) - SIMPLIFIÉE POUR MARCHER À 100%
+    // Validation améliorée du téléphone Sénégal
     elseif (empty($telephone)) {
         $erreur = 'Veuillez entrer votre numéro de téléphone';
-    } elseif (strlen($telephone) != 9) {
-        $erreur = 'Le numéro doit contenir exactement 9 chiffres. Vous avez saisi ' . strlen($telephone) . ' chiffres.';
-    } elseif (!in_array(substr($telephone, 0, 2), ['70', '76', '77', '78'])) {
-        $erreur = 'Le numéro doit commencer par 70, 76, 77 ou 78 (valide: 70xxxxxxx, 76xxxxxxx, 77xxxxxxx, 78xxxxxxx)';
-    }
-    // Validation du mot de passe
-    elseif (strlen($mot_de_passe) < 6) {
-        $erreur = 'Le mot de passe doit contenir au moins 6 caractères';
-    } elseif ($mot_de_passe !== $confirm_mot_de_passe) {
-        $erreur = 'Les mots de passe ne correspondent pas';
     } else {
-        // Vérifier si l'email existe déjà
-        $stmt = $pdo->prepare("SELECT id FROM utilisateurs WHERE email = ?");
-        $stmt->execute([$email]);
-        if ($stmt->fetch()) {
-            $erreur = 'Cet email est déjà utilisé. <a href="connexion.php" class="alert-link">Connectez-vous</a> ou <a href="mot-passe-oublie.php" class="alert-link">réinitialisez votre mot de passe</a>.';
+        // Validation complète du numéro Sénégal
+        $validation_phone = validerTelephoneSenegal($telephone);
+        if (!$validation_phone['valide']) {
+            $erreur = $validation_phone['message'];
         } else {
-            // Vérifier si le téléphone existe déjà
-            $stmt = $pdo->prepare("SELECT id FROM utilisateurs WHERE telephone = ?");
-            $stmt->execute([$telephone]);
+            // Vérifier si l'email existe déjà
+            $stmt = $pdo->prepare("SELECT id FROM utilisateurs WHERE email = ?");
+            $stmt->execute([$email]);
             if ($stmt->fetch()) {
-                $erreur = 'Ce numéro de téléphone est déjà utilisé.';
+                $erreur = 'Cet email est déjà utilisé. <a href="connexion.php" class="alert-link">Connectez-vous</a> ou <a href="mot-passe-oublie.php" class="alert-link">réinitialisez votre mot de passe</a>.';
             } else {
-                // Créer le compte
-                $hash = password_hash($mot_de_passe, PASSWORD_DEFAULT);
-                
-                try {
-                    $stmt = $pdo->prepare("
-                        INSERT INTO utilisateurs (nom_complet, email, telephone, mot_de_passe, role, date_inscription, est_actif) 
-                        VALUES (?, ?, ?, ?, ?, NOW(), 1)
-                    ");
-                    
-                    if ($stmt->execute([$nom_complet, $email, $telephone, $hash, $role])) {
-                        $user_id = $pdo->lastInsertId();
-                        
-                        // Créer une notification de bienvenue
-                        $stmt = $pdo->prepare("
-                            INSERT INTO notifications (utilisateur_id, titre, message, type, date_creation) 
-                            VALUES (?, 'Bienvenue sur Sama Docteur', 'Votre compte a été créé avec succès. Connectez-vous pour prendre rendez-vous avec nos médecins.', 'info', NOW())
-                        ");
-                        $stmt->execute([$user_id]);
-                        
-                        $_SESSION['flash'] = [
-                            'type' => 'success',
-                            'message' => 'Compte créé avec succès ! Vous pouvez maintenant vous connecter.'
-                        ];
-                        
-                        header('Location: connexion.php');
-                        exit();
+                // Vérifier si le téléphone existe déjà
+                $stmt = $pdo->prepare("SELECT id FROM utilisateurs WHERE telephone = ?");
+                $stmt->execute([$telephone]);
+                if ($stmt->fetch()) {
+                    $erreur = 'Ce numéro de téléphone est déjà utilisé.';
+                } else {
+                    // Validation du mot de passe
+                    if (strlen($mot_de_passe) < 6) {
+                        $erreur = 'Le mot de passe doit contenir au moins 6 caractères';
+                    } elseif ($mot_de_passe !== $confirm_mot_de_passe) {
+                        $erreur = 'Les mots de passe ne correspondent pas';
                     } else {
-                        $erreur = 'Une erreur est survenue lors de la création du compte. Veuillez réessayer.';
+                        // Créer le compte
+                        $hash = password_hash($mot_de_passe, PASSWORD_DEFAULT);
+                        
+                        try {
+                            $stmt = $pdo->prepare("
+                                INSERT INTO utilisateurs (nom_complet, email, telephone, mot_de_passe, role, date_inscription, est_actif) 
+                                VALUES (?, ?, ?, ?, ?, NOW(), 1)
+                            ");
+                            
+                            if ($stmt->execute([$nom_complet, $email, $telephone, $hash, $role])) {
+                                $user_id = $pdo->lastInsertId();
+                                
+                                // Créer une notification de bienvenue
+                                $stmt = $pdo->prepare("
+                                    INSERT INTO notifications (utilisateur_id, titre, message, type, date_creation) 
+                                    VALUES (?, 'Bienvenue sur Sama Docteur', 'Votre compte a été créé avec succès. Connectez-vous pour prendre rendez-vous avec nos médecins.', 'info', NOW())
+                                ");
+                                $stmt->execute([$user_id]);
+                                
+                                $_SESSION['flash'] = [
+                                    'type' => 'success',
+                                    'message' => 'Compte créé avec succès ! Vous pouvez maintenant vous connecter.'
+                                ];
+                                
+                                header('Location: connexion.php');
+                                exit();
+                            } else {
+                                $erreur = 'Une erreur est survenue lors de la création du compte. Veuillez réessayer.';
+                            }
+                        } catch (PDOException $e) {
+                            error_log("Erreur création compte: " . $e->getMessage());
+                            $erreur = 'Une erreur technique est survenue. Veuillez réessayer plus tard.';
+                        }
                     }
-                } catch (PDOException $e) {
-                    error_log("Erreur création compte: " . $e->getMessage());
-                    $erreur = 'Une erreur technique est survenue. Veuillez réessayer plus tard.';
                 }
             }
         }
     }
+}
+
+// Fonction améliorée de validation du téléphone Sénégal
+function validerTelephoneSenegal($telephone) {
+    // Nettoyer le numéro (garde uniquement les chiffres)
+    $chiffres = preg_replace('/[^0-9]/', '', $telephone);
+    
+    // Vérifier la longueur
+    $longueur = strlen($chiffres);
+    
+    // Cas particuliers avec indicatif +221
+    if ($longueur == 12 && substr($chiffres, 0, 3) == '221') {
+        $chiffres = substr($chiffres, 3);
+        $longueur = 9;
+    }
+    
+    // Vérifier si on a exactement 9 chiffres
+    if ($longueur != 9) {
+        if ($longueur == 0) {
+            return ['valide' => false, 'message' => 'Veuillez entrer votre numéro de téléphone'];
+        } else {
+            return ['valide' => false, 'message' => "Le numéro doit contenir 9 chiffres (vous avez saisi $longueur chiffre" . ($longueur > 1 ? 's' : '') . ")"];
+        }
+    }
+    
+    // Vérifier le préfixe (2 premiers chiffres)
+    $prefixe = substr($chiffres, 0, 2);
+    $prefixes_valides = ['70', '76', '77', '78'];
+    
+    if (!in_array($prefixe, $prefixes_valides)) {
+        return ['valide' => false, 'message' => 'Le numéro doit commencer par 70, 76, 77 ou 78 (valide: 70xxxxxxx, 76xxxxxxx, 77xxxxxxx, 78xxxxxxx)'];
+    }
+    
+    // Vérifier que ce ne sont pas tous des zéros
+    if ($chiffres == '000000000') {
+        return ['valide' => false, 'message' => 'Numéro de téléphone invalide'];
+    }
+    
+    return ['valide' => true, 'message' => 'Numéro valide', 'clean' => $chiffres];
+}
+
+// Fonction pour formater l'affichage du numéro
+function formaterTelephone($telephone) {
+    $chiffres = preg_replace('/[^0-9]/', '', $telephone);
+    
+    if (strlen($chiffres) == 12 && substr($chiffres, 0, 3) == '221') {
+        $chiffres = substr($chiffres, 3);
+    }
+    
+    if (strlen($chiffres) == 9) {
+        return substr($chiffres, 0, 2) . ' ' . substr($chiffres, 2, 3) . ' ' . substr($chiffres, 5, 2) . ' ' . substr($chiffres, 7, 2);
+    }
+    
+    return $telephone;
 }
 
 include 'includes/header.php';
@@ -157,15 +214,20 @@ include 'includes/header.php';
 
 .phone-preview {
     font-size: 0.85rem;
-    margin-top: 5px;
+    margin-top: 8px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: all 0.3s;
 }
 
 .phone-preview.valid {
     color: #28a745;
+    background: rgba(40,167,69,0.1);
 }
 
 .phone-preview.invalid {
     color: #dc3545;
+    background: rgba(220,53,69,0.1);
 }
 
 .input-group-text {
@@ -180,6 +242,7 @@ include 'includes/header.php';
 .input-group .form-control:focus {
     border-color: #dee2e6;
     border-left-color: #dee2e6;
+    box-shadow: none;
 }
 
 .btn-example {
@@ -192,21 +255,47 @@ include 'includes/header.php';
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    margin-top: 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 .example-badge {
     background: #f0f0f0;
-    padding: 2px 8px;
-    border-radius: 15px;
+    padding: 4px 10px;
+    border-radius: 20px;
     font-size: 0.75rem;
     cursor: pointer;
     transition: all 0.2s;
+    font-family: monospace;
 }
 
 .example-badge:hover {
     background: #667eea;
     color: white;
+    transform: scale(1.05);
+}
+
+/* Animation de chargement */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.fa-spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Style pour les champs valides/invalides */
+.form-control.is-valid:focus,
+.was-validated .form-control:valid:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40,167,69,0.25);
+}
+
+.form-control.is-invalid:focus,
+.was-validated .form-control:invalid:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220,53,69,0.25);
 }
 </style>
 
@@ -230,7 +319,7 @@ include 'includes/header.php';
                     </div>
                 <?php endif; ?>
                 
-                <form method="POST" action="" onsubmit="return validerFormulaireInscription(event)" id="registerForm" novalidate>
+                <form method="POST" action="" id="registerForm" novalidate>
                     <!-- Nom complet -->
                     <div class="mb-3">
                         <label for="nom_complet" class="form-label fw-semibold">
@@ -272,7 +361,7 @@ include 'includes/header.php';
                         <div class="invalid-feedback">Veuillez entrer une adresse email valide</div>
                     </div>
                     
-                    <!-- Téléphone avec validation SIMPLE ET EFFICACE -->
+                    <!-- Téléphone avec validation améliorée -->
                     <div class="mb-3">
                         <label for="telephone" class="form-label fw-semibold">
                             <i class="fas fa-phone-alt text-primary me-1"></i> Téléphone <span class="text-danger">*</span>
@@ -292,18 +381,19 @@ include 'includes/header.php';
                                    required>
                         </div>
                         <div id="phoneHelp" class="form-text">
-                            <i class="fas fa-info-circle"></i> Entrez votre numéro à 9 chiffres (ex: 771234567 ou 77 123 45 67)
+                            <i class="fas fa-info-circle"></i> Entrez votre numéro à 9 chiffres (ex: 771234567, 77 123 45 67, ou +221771234567)
                         </div>
                         <div id="phonePreview" class="phone-preview"></div>
-                        <div class="invalid-feedback">Numéro invalide</div>
+                        <div class="invalid-feedback" id="phoneError">Numéro invalide</div>
                         
                         <!-- Exemples cliquables -->
                         <div class="phone-examples">
-                            <small class="text-muted">Exemples :</small>
+                            <small class="text-muted me-2">Exemples :</small>
                             <span class="example-badge" onclick="setExamplePhone('771234567')">77 123 45 67</span>
                             <span class="example-badge" onclick="setExamplePhone('781234567')">78 123 45 67</span>
                             <span class="example-badge" onclick="setExamplePhone('761234567')">76 123 45 67</span>
                             <span class="example-badge" onclick="setExamplePhone('701234567')">70 123 45 67</span>
+                            <span class="example-badge" onclick="setExamplePhone('+221771234567')">+221 77 123 45 67</span>
                         </div>
                     </div>
                     
@@ -399,151 +489,178 @@ include 'includes/header.php';
 </div>
 
 <script>
-// FONCTIONS DE VALIDATION DU TÉLÉPHONE - SIMPLES ET QUI MARCHENT
-
-// Fonction pour extraire uniquement les chiffres d'un numéro
+// Fonctions améliorées de validation du téléphone
 function getOnlyDigits(str) {
     if (!str) return '';
     return str.replace(/\D/g, '');
 }
 
-// Fonction pour formater l'affichage du numéro
-function formatPhoneDisplay(value) {
-    let digits = getOnlyDigits(value);
-    
-    // Limiter à 9 chiffres
-    if (digits.length > 9) {
-        digits = digits.substring(0, 9);
-    }
-    
-    // Formater avec espaces tous les 2-3 chiffres
-    if (digits.length >= 2) {
-        let formatted = digits.substring(0, 2);
-        if (digits.length >= 5) {
-            formatted += ' ' + digits.substring(2, 5);
-        }
-        if (digits.length >= 7) {
-            formatted += ' ' + digits.substring(5, 7);
-        }
-        if (digits.length >= 9) {
-            formatted += ' ' + digits.substring(7, 9);
-        }
-        return formatted;
-    }
-    return digits;
-}
-
-// Fonction pour valider le numéro - TRÈS SIMPLE ET CLAIRE
 function isValidSenegalPhone(phone) {
-    const digits = getOnlyDigits(phone);
+    let digits = getOnlyDigits(phone);
     
-    // Doit avoir exactement 9 chiffres
-    if (digits.length !== 9) {
-        return false;
+    // Gérer le cas avec l'indicatif +221
+    if (digits.length === 12 && digits.substring(0, 3) === '221') {
+        digits = digits.substring(3);
     }
     
-    // Les 2 premiers chiffres doivent être 70, 76, 77 ou 78
+    // Vérifier la longueur
+    if (digits.length !== 9) return false;
+    
+    // Vérifier le préfixe
     const prefix = digits.substring(0, 2);
     const validPrefixes = ['70', '76', '77', '78'];
+    
+    // Vérifier que ce ne sont pas tous des zéros
+    if (digits === '000000000') return false;
     
     return validPrefixes.includes(prefix);
 }
 
-// Fonction pour obtenir le message d'erreur
+function formatPhoneNumber(phone) {
+    let digits = getOnlyDigits(phone);
+    
+    // Gérer l'indicatif
+    let hasInternational = false;
+    if (digits.length === 12 && digits.substring(0, 3) === '221') {
+        digits = digits.substring(3);
+        hasInternational = true;
+    }
+    
+    if (digits.length === 9) {
+        let formatted = digits.substring(0, 2) + ' ' + 
+                       digits.substring(2, 5) + ' ' + 
+                       digits.substring(5, 7) + ' ' + 
+                       digits.substring(7, 9);
+        
+        if (hasInternational) {
+            formatted = '+221 ' + formatted;
+        }
+        
+        return formatted;
+    }
+    
+    return phone;
+}
+
 function getPhoneErrorMessage(phone) {
-    const digits = getOnlyDigits(phone);
+    let digits = getOnlyDigits(phone);
     
     if (digits.length === 0) {
         return 'Veuillez entrer votre numéro de téléphone';
     }
     
+    // Gérer l'indicatif
+    if (digits.length === 12 && digits.substring(0, 3) === '221') {
+        digits = digits.substring(3);
+    }
+    
     if (digits.length !== 9) {
+        if (digits.length === 12 && digits.substring(0, 3) !== '221') {
+            return 'Format invalide. Utilisez 9 chiffres ou +221 suivi de 9 chiffres';
+        }
         return `Le numéro doit contenir 9 chiffres (${digits.length} chiffre${digits.length > 1 ? 's' : ''} saisi${digits.length > 1 ? 's' : ''})`;
     }
     
     const prefix = digits.substring(0, 2);
     if (!['70', '76', '77', '78'].includes(prefix)) {
-        return 'Le numéro doit commencer par 70, 76, 77 ou 78';
+        return 'Le numéro doit commencer par 70, 76, 77 ou 78 (Orange, Expresso, Free ou Promobile)';
+    }
+    
+    if (digits === '000000000') {
+        return 'Numéro de téléphone invalide';
     }
     
     return 'Numéro invalide';
 }
 
-// Gestionnaire d'événement pour le champ téléphone
+// Gestionnaire d'événement pour le téléphone
 const phoneInput = document.getElementById('telephone');
 const phonePreview = document.getElementById('phonePreview');
+const phoneError = document.getElementById('phoneError');
 
 phoneInput.addEventListener('input', function(e) {
     // Sauvegarder la position du curseur
     const cursorPos = this.selectionStart;
-    const oldLength = this.value.length;
+    const oldValue = this.value;
     
     // Formater l'affichage
-    const formatted = formatPhoneDisplay(this.value);
+    const formatted = formatPhoneNumber(this.value);
     this.value = formatted;
     
     // Restaurer la position du curseur
-    const newLength = this.value.length;
-    const newCursorPos = cursorPos + (newLength - oldLength);
-    this.setSelectionRange(newCursorPos, newCursorPos);
+    if (oldValue.length !== formatted.length) {
+        const diff = formatted.length - oldValue.length;
+        const newPos = cursorPos + diff;
+        if (newPos >= 0 && newPos <= formatted.length) {
+            this.setSelectionRange(newPos, newPos);
+        }
+    }
     
-    // Valider et afficher le résultat
+    // Valider
     const isValid = isValidSenegalPhone(this.value);
     
     if (isValid) {
         this.classList.remove('is-invalid');
         this.classList.add('is-valid');
-        phonePreview.innerHTML = '<i class="fas fa-check-circle text-success"></i> ✓ Numéro valide : +221 ' + getOnlyDigits(this.value);
-        phonePreview.classList.add('valid');
-        phonePreview.classList.remove('invalid');
+        const cleanNumber = getOnlyDigits(this.value);
+        const displayNumber = cleanNumber.length === 12 ? cleanNumber.substring(3) : cleanNumber;
+        phonePreview.innerHTML = '<i class="fas fa-check-circle"></i> ✓ Numéro valide : +221 ' + displayNumber;
+        phonePreview.className = 'phone-preview valid';
+        phoneError.style.display = 'none';
     } else if (this.value.length > 0) {
         this.classList.add('is-invalid');
         this.classList.remove('is-valid');
-        phonePreview.innerHTML = '<i class="fas fa-exclamation-circle text-danger"></i> ✗ ' + getPhoneErrorMessage(this.value);
-        phonePreview.classList.add('invalid');
-        phonePreview.classList.remove('valid');
+        phonePreview.innerHTML = '<i class="fas fa-exclamation-circle"></i> ✗ ' + getPhoneErrorMessage(this.value);
+        phonePreview.className = 'phone-preview invalid';
+        phoneError.style.display = 'block';
+        phoneError.textContent = getPhoneErrorMessage(this.value);
     } else {
         this.classList.remove('is-invalid', 'is-valid');
         phonePreview.innerHTML = '';
+        phonePreview.className = 'phone-preview';
+        phoneError.style.display = 'none';
     }
 });
 
 // Fonction pour définir un exemple
 function setExamplePhone(number) {
     phoneInput.value = number;
-    const event = new Event('input');
-    phoneInput.dispatchEvent(event);
     phoneInput.focus();
+    // Déclencher l'événement input
+    const event = new Event('input', { bubbles: true });
+    phoneInput.dispatchEvent(event);
 }
 
 // Indicateur de force du mot de passe
 const passwordInput = document.getElementById('mot_de_passe');
 const passwordStrength = document.getElementById('passwordStrength');
+const passwordHelp = document.getElementById('passwordHelp');
 
 passwordInput.addEventListener('input', function() {
     const password = this.value;
     let strength = 0;
     let strengthClass = '';
+    let message = '';
     
     if (password.length >= 6) strength++;
-    if (password.length >= 8) strength++;
-    if (password.match(/[a-z]/)) strength++;
-    if (password.match(/[A-Z]/)) strength++;
+    if (password.length >= 10) strength++;
+    if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
     if (password.match(/[0-9]/)) strength++;
     if (password.match(/[^a-zA-Z0-9]/)) strength++;
     
     if (strength <= 2) {
         strengthClass = 'password-strength-weak';
-        document.getElementById('passwordHelp').innerHTML = '<span class="text-danger"><i class="fas fa-exclamation-circle"></i> Mot de passe faible</span>';
+        message = '<span class="text-danger"><i class="fas fa-exclamation-circle"></i> Mot de passe faible</span>';
     } else if (strength <= 4) {
         strengthClass = 'password-strength-medium';
-        document.getElementById('passwordHelp').innerHTML = '<span class="text-warning"><i class="fas fa-chart-line"></i> Mot de passe moyen</span>';
+        message = '<span class="text-warning"><i class="fas fa-chart-line"></i> Mot de passe moyen</span>';
     } else {
         strengthClass = 'password-strength-strong';
-        document.getElementById('passwordHelp').innerHTML = '<span class="text-success"><i class="fas fa-check-circle"></i> Mot de passe fort</span>';
+        message = '<span class="text-success"><i class="fas fa-check-circle"></i> Mot de passe fort</span>';
     }
     
     passwordStrength.className = 'password-strength ' + strengthClass;
+    passwordHelp.innerHTML = message + ' <small>(minimum 6 caractères)</small>';
     checkPasswordMatch();
 });
 
@@ -560,14 +677,12 @@ function checkPasswordMatch() {
             confirmPassword.classList.remove('is-invalid');
             confirmPassword.classList.add('is-valid');
             passwordMatch.innerHTML = '<i class="fas fa-check-circle text-success"></i> ✓ Les mots de passe correspondent';
-            passwordMatch.classList.add('text-success');
-            passwordMatch.classList.remove('text-danger');
+            passwordMatch.className = 'form-text text-success';
         } else {
             confirmPassword.classList.add('is-invalid');
             confirmPassword.classList.remove('is-valid');
             passwordMatch.innerHTML = '<i class="fas fa-times-circle text-danger"></i> ✗ Les mots de passe ne correspondent pas';
-            passwordMatch.classList.add('text-danger');
-            passwordMatch.classList.remove('text-success');
+            passwordMatch.className = 'form-text text-danger';
         }
     } else {
         confirmPassword.classList.remove('is-invalid', 'is-valid');
@@ -586,88 +701,91 @@ document.getElementById('togglePassword')?.addEventListener('click', function() 
     this.querySelector('i').classList.toggle('fa-eye-slash');
 });
 
-// Validation finale du formulaire
-function validerFormulaireInscription(event) {
-    // Vérifier le nom
+// Validation complète du formulaire
+document.getElementById('registerForm').addEventListener('submit', function(event) {
+    let isValid = true;
+    let firstInvalid = null;
+    
+    // Valider le nom
     const nom = document.getElementById('nom_complet');
     if (!nom.value.trim()) {
         nom.classList.add('is-invalid');
+        if (!firstInvalid) firstInvalid = nom;
+        isValid = false;
         showNotification('Veuillez entrer votre nom complet', 'warning');
-        nom.focus();
-        event.preventDefault();
-        return false;
     } else {
         nom.classList.remove('is-invalid');
     }
     
-    // Vérifier l'email
+    // Valider l'email
     const email = document.getElementById('email');
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.value || !emailRegex.test(email.value)) {
         email.classList.add('is-invalid');
+        if (!firstInvalid) firstInvalid = email;
+        isValid = false;
         showNotification('Veuillez entrer une adresse email valide', 'warning');
-        email.focus();
-        event.preventDefault();
-        return false;
     } else {
         email.classList.remove('is-invalid');
     }
     
-    // Vérifier le téléphone
+    // Valider le téléphone
     const telephone = document.getElementById('telephone');
     if (!isValidSenegalPhone(telephone.value)) {
         telephone.classList.add('is-invalid');
-        const errorMsg = getPhoneErrorMessage(telephone.value);
-        showNotification(errorMsg, 'warning');
-        telephone.focus();
-        event.preventDefault();
-        return false;
+        if (!firstInvalid) firstInvalid = telephone;
+        isValid = false;
+        showNotification(getPhoneErrorMessage(telephone.value), 'warning');
     } else {
         telephone.classList.remove('is-invalid');
     }
     
-    // Vérifier le mot de passe
+    // Valider le mot de passe
     const password = passwordInput.value;
     if (!password || password.length < 6) {
         passwordInput.classList.add('is-invalid');
+        if (!firstInvalid) firstInvalid = passwordInput;
+        isValid = false;
         showNotification('Le mot de passe doit contenir au moins 6 caractères', 'warning');
-        passwordInput.focus();
-        event.preventDefault();
-        return false;
     } else {
         passwordInput.classList.remove('is-invalid');
     }
     
-    // Vérifier la confirmation
+    // Valider la confirmation
     const confirm = confirmPassword.value;
     if (password !== confirm) {
         confirmPassword.classList.add('is-invalid');
+        if (!firstInvalid) firstInvalid = confirmPassword;
+        isValid = false;
         showNotification('Les mots de passe ne correspondent pas', 'warning');
-        confirmPassword.focus();
-        event.preventDefault();
-        return false;
-    } else {
+    } else if (confirm.length > 0) {
         confirmPassword.classList.remove('is-invalid');
     }
     
-    // Vérifier les conditions
+    // Valider les conditions
     const terms = document.getElementById('terms');
     if (!terms.checked) {
+        if (!firstInvalid) firstInvalid = terms;
+        isValid = false;
         showNotification('Veuillez accepter les conditions d\'utilisation', 'warning');
-        terms.focus();
+    }
+    
+    if (!isValid && firstInvalid) {
         event.preventDefault();
+        firstInvalid.focus();
         return false;
     }
     
-    // Tout est bon, désactiver le bouton
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Création en cours...';
+    if (isValid) {
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Création en cours...';
+    }
     
-    return true;
-}
+    return isValid;
+});
 
-// Fonction de notification
+// Fonction de notification améliorée
 function showNotification(message, type = 'info') {
     const existingNotifs = document.querySelectorAll('.notification-floating');
     existingNotifs.forEach(notif => notif.remove());
@@ -678,6 +796,7 @@ function showNotification(message, type = 'info') {
     notification.style.minWidth = '300px';
     notification.style.maxWidth = '500px';
     notification.style.boxShadow = '0 5px 20px rgba(0,0,0,0.2)';
+    notification.style.animation = 'slideDown 0.3s ease-out';
     notification.innerHTML = `
         <i class="fas ${type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'} me-2"></i>
         ${message}
@@ -685,10 +804,30 @@ function showNotification(message, type = 'info') {
     `;
     document.body.appendChild(notification);
     
-    setTimeout(() => notification.remove(), 5000);
+    setTimeout(() => {
+        if (notification && notification.remove) {
+            notification.remove();
+        }
+    }, 5000);
 }
 
-// Initialisation au chargement
+// Ajouter l'animation CSS
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -20px);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Initialisation
 document.addEventListener('DOMContentLoaded', function() {
     if (phoneInput.value) {
         phoneInput.dispatchEvent(new Event('input'));
