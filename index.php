@@ -169,7 +169,7 @@ $medecins = $stmtMedecins->fetchAll();
 
                 <div class="doctor-card">
 
-                    <img src="assets/images/doctor-placeholder.jpg"
+                    <img src="assets/images/doc2.jpg"
                          alt="Doctor"
                          style="width: 110px; height: 110px; object-fit: cover; margin-bottom: 15px; border-radius: 50%;">
 
