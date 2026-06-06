@@ -5,19 +5,41 @@ include 'includes/header.php';
 
 $message_envoye = false;
 $erreur = '';
+$nom = $email = $sujet = $message = ''; // Pour réafficher les valeurs en cas d'erreur
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nom = htmlspecialchars($_POST['nom']);
-    $email = htmlspecialchars($_POST['email']);
-    $sujet = htmlspecialchars($_POST['sujet']);
-    $message = htmlspecialchars($_POST['message']);
+    // Nettoyage et sécurisation des entrées
+    $nom = trim(htmlspecialchars($_POST['nom'] ?? ''));
+    $email = trim(htmlspecialchars($_POST['email'] ?? ''));
+    $sujet = trim(htmlspecialchars($_POST['sujet'] ?? ''));
+    $message = trim(htmlspecialchars($_POST['message'] ?? ''));
     
-    if(empty($nom) || empty($email) || empty($sujet) || empty($message)) {
+    if (empty($nom) || empty($email) || empty($sujet) || empty($message)) {
         $erreur = 'Veuillez remplir tous les champs';
-    } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erreur = 'Email invalide';
+    } elseif (strlen($message) < 10) {
+        $erreur = 'Le message doit contenir au moins 10 caractères';
     } else {
+        // Ici vous pouvez ajouter l'envoi réel du message (mail, base de données, etc.)
+        // Exemple simple d'envoi d'email (à configurer avec votre serveur)
+        /*
+        $to = "contact@samadocteur.sn";
+        $headers = "From: " . $email . "\r\n";
+        $headers .= "Reply-To: " . $email . "\r\n";
+        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        $corps = "Nom: $nom\nEmail: $email\nSujet: $sujet\n\nMessage:\n$message";
+        if (mail($to, $sujet, $corps, $headers)) {
+            $message_envoye = true;
+            $nom = $email = $sujet = $message = ''; // Réinitialiser le formulaire
+        } else {
+            $erreur = "Une erreur technique est survenue. Veuillez réessayer plus tard.";
+        }
+        */
+        
+        // Pour la démo, on simule l'envoi réussi
         $message_envoye = true;
+        $nom = $email = $sujet = $message = ''; // Réinitialiser après succès
     }
 }
 ?>
@@ -65,36 +87,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="form-container">
                 <h3 class="mb-4">Envoyez-nous un message</h3>
                 
-                <?php if($message_envoye): ?>
-                    <div class="alert alert-success">
+                <?php if ($message_envoye): ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <i class="fas fa-check-circle"></i> Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
                     </div>
                 <?php endif; ?>
                 
-                <?php if($erreur): ?>
-                    <div class="alert alert-danger">
-                        <i class="fas fa-exclamation-triangle"></i> <?php echo $erreur; ?>
+                <?php if ($erreur): ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i> <?php echo htmlspecialchars($erreur); ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
                     </div>
                 <?php endif; ?>
                 
-                <form method="POST" action="" onsubmit="return validerFormulaire('contactForm')" id="contactForm">
+                <form method="POST" action="" id="contactForm" novalidate>
                     <div class="mb-3">
-                        <label for="nom" class="form-label">Nom complet *</label>
-                        <input type="text" class="form-control" id="nom" name="nom" required>
+                        <label for="nom" class="form-label">Nom complet <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="nom" name="nom" value="<?php echo htmlspecialchars($nom); ?>" required>
+                        <div class="invalid-feedback">Veuillez entrer votre nom complet.</div>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email *</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
+                        <div class="invalid-feedback">Veuillez entrer une adresse email valide.</div>
                     </div>
                     <div class="mb-3">
-                        <label for="sujet" class="form-label">Sujet *</label>
-                        <input type="text" class="form-control" id="sujet" name="sujet" required>
+                        <label for="sujet" class="form-label">Sujet <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="sujet" name="sujet" value="<?php echo htmlspecialchars($sujet); ?>" required>
+                        <div class="invalid-feedback">Veuillez indiquer le sujet de votre message.</div>
                     </div>
                     <div class="mb-3">
-                        <label for="message" class="form-label">Message *</label>
-                        <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                        <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="message" name="message" rows="5" required minlength="10"><?php echo htmlspecialchars($message); ?></textarea>
+                        <div class="invalid-feedback">Le message doit contenir au moins 10 caractères.</div>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">
+                    <button type="submit" class="btn btn-primary w-100" id="submitBtn">
                         <i class="fas fa-paper-plane"></i> Envoyer le message
                     </button>
                 </form>
@@ -111,10 +139,84 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 height="400" 
                 style="border:0; border-radius: 12px;" 
                 allowfullscreen="" 
-                loading="lazy">
+                loading="lazy"
+                title="Carte Google Maps de Dakar">
             </iframe>
         </div>
     </div>
 </div>
+
+<script>
+(function() {
+    // Validation améliorée avec JavaScript
+    const form = document.getElementById('contactForm');
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            let isValid = true;
+            const nom = document.getElementById('nom');
+            const email = document.getElementById('email');
+            const sujet = document.getElementById('sujet');
+            const message = document.getElementById('message');
+            
+            // Réinitialiser les styles d'erreur
+            [nom, email, sujet, message].forEach(field => {
+                field.classList.remove('is-invalid');
+            });
+            
+            // Validation Nom
+            if (!nom.value.trim()) {
+                nom.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            // Validation Email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.value.trim() || !emailRegex.test(email.value)) {
+                email.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            // Validation Sujet
+            if (!sujet.value.trim()) {
+                sujet.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            // Validation Message (min 10 caractères)
+            if (!message.value.trim() || message.value.trim().length < 10) {
+                message.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                event.preventDefault();
+                // Scroll vers le premier champ en erreur
+                const firstInvalid = form.querySelector('.is-invalid');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalid.focus();
+                }
+            } else {
+                // Optionnel : Désactiver le bouton pour éviter double soumission
+                const submitBtn = document.getElementById('submitBtn');
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+                }
+            }
+        });
+        
+        // Supprimer le style d'erreur lors de la saisie
+        ['nom', 'email', 'sujet', 'message'].forEach(id => {
+            const field = document.getElementById(id);
+            if (field) {
+                field.addEventListener('input', function() {
+                    this.classList.remove('is-invalid');
+                });
+            }
+        });
+    }
+})();
+</script>
 
 <?php include 'includes/footer.php'; ?>
