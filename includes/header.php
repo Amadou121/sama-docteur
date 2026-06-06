@@ -19,6 +19,11 @@ if (!isset($noHeader)) {
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>assets/css/style.css">
 </head>
 <body>
+    <!-- AOS Animation JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <a class="navbar-brand" href="<?php echo SITE_URL; ?>">
