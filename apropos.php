@@ -81,7 +81,7 @@ include 'includes/header.php';
                         <i class="fas fa-quote-left fa-2x opacity-50 mb-3"></i>
                         <p class="fs-4 fst-italic">"Grâce à Sama Docteur, j'ai trouvé un spécialiste en moins de 24h alors que j'attendais depuis 3 mois."</p>
                         <div class="d-flex align-items-center justify-content-center gap-2 mt-3">
-                            <img src="assets/img/avatar-female.jpg" alt="Patient" class="rounded-circle" width="40" height="40" onerror="this.src='https://via.placeholder.com/40'">
+                            <img src="assets/images/docs.jpg" alt="Patient" class="rounded-circle" width="40" height="40" onerror="this.src='assets/images/doc3.jpg'">
                             <div>
                                 <div class="fw-bold">Fatou Diop</div>
                                 <small>Patiente à Dakar</small>

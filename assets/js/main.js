@@ -307,7 +307,6 @@ window.annulerRendezVous = annulerRendezVous;
 window.voirDetails = voirDetails;
 window.demarrerConsultation = demarrerConsultation;
 window.voirPatient = voirPatient;
-window.validerFormulaire = validerFormulaire;
 window.initDashboardNavigation = initDashboardNavigation;
 
 // Fonction globale showNotification
