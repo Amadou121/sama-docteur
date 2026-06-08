@@ -125,7 +125,8 @@ $medecins = $stmtMedecins->fetchAll();
                                     'Dr Adja Diop' => 'assets/images/Dr Adja Diop.jpg',
                                     'Dr Oumar Fall' => 'assets/images/Dr Oumar Fall.jpg',
                                     'Dr Aïssatou Ba' => 'assets/images/Dr Aïssatou Ba.jpg',
-                                    'Dr Cheikh Diagne' => 'assets/images/Dr Cheikh Diagne.jpg'
+                                    'Dr Cheikh Diagne' => 'assets/images/Dr Cheikh Diagne.jpg',
+                                    'Dr Mame Diarra Fall' => 'assets/images/Dr Mame Diarra Fall.jpg'
                                 ];
 
                                 // Images par défaut par spécialité
@@ -140,7 +141,7 @@ $medecins = $stmtMedecins->fetchAll();
                                     'ORL' => 'assets/images/docc.jpg',
                                     'Généraliste' => 'assets/images/docff.png',
                                     'Orthopédie' => 'assets/images/doccrm.png',
-                                    'Neurologie' => 'assets/images/docfee.webp',
+                                    'Neurologie' => 'assets/images/Dr Mame Diarra Fall.jpg',
                                     'Psychiatrie' => 'assets/images/docter.jpg'
                                 ];
 
