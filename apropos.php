@@ -89,7 +89,7 @@ include 'includes/header.php';
                         </div>
                     </div>
                 </div>
-                <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary opacity-10 rounded-4" style="transform: translate(15px, 15px); z-index: 0;"></div>
+                <img src="assets/images/hero2.jpg" alt="Sama Docteur" class="position-absolute top-0 start-0 w-100 h-100 rounded-4" style="transform: translate(15px, 15px); z-index: 0; object-fit: contain; object-position: center; background-color: #fff;" onerror="this.src='assets/images/doc4.jpg'" />
             </div>
         </div>
     </div>
