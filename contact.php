@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <style>
 .contact-page {
-    background: linear-gradient(135deg, #f5f7fa 0%, #e8edf5 100%);
+    background: linear-gradient(135deg, #f5f7fa 0%, #eef2ff 100%);
     min-height: 100vh;
 }
 
@@ -40,14 +40,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, #1a5f7a 0%, #0d4a63 100%);
+    background: linear-gradient(135deg, #2563EB 0%, #1e40af 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .contact-header p {
-    color: #4a627a;
+    color: #4b5563;
     font-size: 1.1rem;
     font-weight: 400;
 }
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 .contact-form-wrapper {
     background: white;
     border-radius: 24px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 5px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 20px 40px rgba(37,99,235,0.08), 0 5px 15px rgba(37,99,235,0.05);
     padding: 2rem;
     max-width: 600px;
     margin: 0 auto;
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #1a5f7a, #2c9cb0, #1a5f7a);
+    background: linear-gradient(90deg, #2563EB, #60a5fa, #2563EB);
 }
 
 .form-control-custom {
@@ -83,19 +83,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 .form-control-custom:focus {
-    border-color: #2c9cb0;
-    box-shadow: 0 0 0 4px rgba(44,156,176,0.1);
+    border-color: #2563EB;
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.1);
     outline: none;
     background-color: white;
 }
 
 .form-control-custom:hover:not(:focus) {
-    border-color: #b9d8e0;
+    border-color: #93c5fd;
     background-color: #ffffff;
 }
 
 label {
-    color: #1a5f7a;
+    color: #2563EB;
     font-weight: 600;
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
@@ -103,7 +103,7 @@ label {
 }
 
 .btn-submit {
-    background: linear-gradient(135deg, #1a5f7a 0%, #0d4a63 100%);
+    background: linear-gradient(135deg, #2563EB 0%, #1e40af 100%);
     color: white;
     border: none;
     border-radius: 16px;
@@ -134,9 +134,9 @@ label {
 }
 
 .btn-submit:hover {
-    background: linear-gradient(135deg, #0d4a63 0%, #1a5f7a 100%);
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(26,95,122,0.25);
+    box-shadow: 0 8px 25px rgba(37,99,235,0.3);
 }
 
 .btn-submit:active {
@@ -150,22 +150,22 @@ label {
 }
 
 .alert-success {
-    background-color: #d4edda;
-    color: #155724;
-    border-left: 4px solid #28a745;
+    background-color: #d1fae5;
+    color: #065f46;
+    border-left: 4px solid #10b981;
 }
 
 .alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
-    border-left: 4px solid #dc3545;
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-left: 4px solid #ef4444;
 }
 
 .map-container {
     position: relative;
     border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    box-shadow: 0 20px 40px rgba(37,99,235,0.1);
 }
 
 .map-container::after {
@@ -175,7 +175,7 @@ label {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #1a5f7a, #2c9cb0, #1a5f7a);
+    background: linear-gradient(90deg, #2563EB, #60a5fa, #2563EB);
 }
 
 @media (max-width: 768px) {
@@ -226,6 +226,19 @@ label {
     opacity: 0.03;
     pointer-events: none;
     transform: rotate(-15deg);
+}
+
+/* Style pour le champ invalide */
+.was-validated .form-control-custom:invalid,
+.form-control-custom.is-invalid {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+}
+
+.invalid-feedback {
+    color: #ef4444;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
 }
 </style>
 
