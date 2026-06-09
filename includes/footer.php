@@ -41,7 +41,7 @@
                     <ul class="footer-links">
                         <li><i class="fas fa-phone-alt"></i> +221 77 000 00 00</li>
                         <li><i class="fas fa-envelope"></i> contact@samadocteur.sn</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Saint-Louis, Sénégal</li>
                     </ul>
                 </div>
             </div>
