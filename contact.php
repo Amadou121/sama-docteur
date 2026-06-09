@@ -5,184 +5,330 @@ include 'includes/header.php';
 
 $message_envoye = false;
 $erreur = '';
-$nom = $email = $sujet = $message = ''; // Pour réafficher les valeurs en cas d'erreur
+$nom = $email = $message = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Nettoyage et sécurisation des entrées
     $nom = trim(htmlspecialchars($_POST['nom'] ?? ''));
     $email = trim(htmlspecialchars($_POST['email'] ?? ''));
-    $sujet = trim(htmlspecialchars($_POST['sujet'] ?? ''));
     $message = trim(htmlspecialchars($_POST['message'] ?? ''));
     
-    if (empty($nom) || empty($email) || empty($sujet) || empty($message)) {
+    if (empty($nom) || empty($email) || empty($message)) {
         $erreur = 'Veuillez remplir tous les champs';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erreur = 'Email invalide';
     } elseif (strlen($message) < 10) {
         $erreur = 'Le message doit contenir au moins 10 caractères';
     } else {
-        // Ici vous pouvez ajouter l'envoi réel du message (mail, base de données, etc.)
-        // Exemple simple d'envoi d'email (à configurer avec votre serveur)
-        /*
-        $to = "contact@samadocteur.sn";
-        $headers = "From: " . $email . "\r\n";
-        $headers .= "Reply-To: " . $email . "\r\n";
-        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-        $corps = "Nom: $nom\nEmail: $email\nSujet: $sujet\n\nMessage:\n$message";
-        if (mail($to, $sujet, $corps, $headers)) {
-            $message_envoye = true;
-            $nom = $email = $sujet = $message = ''; // Réinitialiser le formulaire
-        } else {
-            $erreur = "Une erreur technique est survenue. Veuillez réessayer plus tard.";
-        }
-        */
-        
-        // Pour la démo, on simule l'envoi réussi
         $message_envoye = true;
-        $nom = $email = $sujet = $message = ''; // Réinitialiser après succès
+        $nom = $email = $message = '';
     }
 }
 ?>
 
-<div class="container my-5">
-    <div class="row">
-        <div class="col-lg-6 mb-4" data-aos="fade-right">
-            <h1 class="display-5 mb-4">Contactez-nous</h1>
-            <p class="lead">Nous sommes à votre écoute pour toute question ou suggestion.</p>
-            <p>Notre équipe se tient à votre disposition pour vous assister dans l'utilisation de notre plateforme.</p>
-            
-            <div class="contact-info mt-5">
-                <div class="info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <h6>Notre adresse</h6>
-                        <p>Immeuble Sama Tower, 5ème étage<br>Saint-Louis, Sénégal</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-phone-alt"></i>
-                    <div>
-                        <h6>Téléphone</h6>
-                        <p>+221 77 000 00 00<br>+221 78 000 00 00</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-envelope"></i>
-                    <div>
-                        <h6>Email</h6>
-                        <p>contact@samadocteur.sn<br>support@samadocteur.sn</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-clock"></i>
-                    <div>
-                        <h6>Horaires d'ouverture</h6>
-                        <p>Lundi - Vendredi: 8h00 - 18h00<br>Samedi: 9h00 - 13h00</p>
-                    </div>
+<style>
+.contact-page {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8edf5 100%);
+    min-height: 100vh;
+}
+
+.contact-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.contact-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #1a5f7a 0%, #0d4a63 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.contact-header p {
+    color: #4a627a;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.contact-form-wrapper {
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 5px 15px rgba(0,0,0,0.05);
+    padding: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-form-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #1a5f7a, #2c9cb0, #1a5f7a);
+}
+
+.form-control-custom {
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 12px 18px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    background-color: #fafbff;
+}
+
+.form-control-custom:focus {
+    border-color: #2c9cb0;
+    box-shadow: 0 0 0 4px rgba(44,156,176,0.1);
+    outline: none;
+    background-color: white;
+}
+
+.form-control-custom:hover:not(:focus) {
+    border-color: #b9d8e0;
+    background-color: #ffffff;
+}
+
+label {
+    color: #1a5f7a;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, #1a5f7a 0%, #0d4a63 100%);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 14px;
+    font-weight: 600;
+    font-size: 1rem;
+    width: 100%;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-submit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-submit:hover::before {
+    left: 100%;
+}
+
+.btn-submit:hover {
+    background: linear-gradient(135deg, #0d4a63 0%, #1a5f7a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(26,95,122,0.25);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+.alert {
+    border-radius: 16px;
+    border: none;
+    padding: 1rem;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.map-container {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.map-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #1a5f7a, #2c9cb0, #1a5f7a);
+}
+
+@media (max-width: 768px) {
+    .contact-header h1 {
+        font-size: 2rem;
+    }
+    
+    .contact-form-wrapper {
+        padding: 1.5rem;
+        margin: 0 1rem;
+    }
+    
+    .btn-submit {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Animation d'apparition des champs */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.contact-form-wrapper .mb-4 {
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
+}
+
+.contact-form-wrapper .mb-4:nth-child(1) { animation-delay: 0.1s; }
+.contact-form-wrapper .mb-4:nth-child(2) { animation-delay: 0.2s; }
+.contact-form-wrapper .mb-4:nth-child(3) { animation-delay: 0.3s; }
+.contact-form-wrapper button { animation-delay: 0.4s; }
+
+/* Icônes décoratives */
+.contact-form-wrapper::after {
+    content: '⚕️';
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 60px;
+    opacity: 0.03;
+    pointer-events: none;
+    transform: rotate(-15deg);
+}
+</style>
+
+<div class="contact-page">
+    <div class="container py-5">
+        <!-- En-tête -->
+        <div class="contact-header" data-aos="fade-up">
+            <h1>Contactez-nous</h1>
+            <p>Une question ? Un besoin médical ? Notre équipe vous répond sous 24h</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-6" data-aos="fade-up">
+                <div class="contact-form-wrapper">
+                    <?php if ($message_envoye): ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i> Votre message a été envoyé avec succès. Notre équipe médicale vous répondra dans les plus brefs délais.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <?php if ($erreur): ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i> <?php echo htmlspecialchars($erreur); ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <form method="POST" action="" id="contactForm" novalidate>
+                        <div class="mb-4">
+                            <label for="email" class="form-label">
+                                <i class="fas fa-envelope me-2"></i> Adresse Email
+                            </label>
+                            <input type="email" class="form-control form-control-custom" id="email" name="email" placeholder="exemple@email.com" value="<?php echo htmlspecialchars($email); ?>" required>
+                            <div class="invalid-feedback">Veuillez entrer une adresse email valide.</div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="nom" class="form-label">
+                                <i class="fas fa-user me-2"></i> Nom complet
+                            </label>
+                            <input type="text" class="form-control form-control-custom" id="nom" name="nom" placeholder="Docteur ou Patient" value="<?php echo htmlspecialchars($nom); ?>" required>
+                            <div class="invalid-feedback">Veuillez entrer votre nom.</div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="message" class="form-label">
+                                <i class="fas fa-comment-medical me-2"></i> Votre message
+                            </label>
+                            <textarea class="form-control form-control-custom" id="message" name="message" rows="5" placeholder="Décrivez votre demande médicale..." required minlength="10"><?php echo htmlspecialchars($message); ?></textarea>
+                            <div class="invalid-feedback">Le message doit contenir au moins 10 caractères.</div>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <i class="fas fa-paper-plane me-2"></i> ENVOYER MA DEMANDE
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
         
-        <div class="col-lg-6" data-aos="fade-left">
-            <div class="form-container">
-                <h3 class="mb-4">Envoyez-nous un message</h3>
-                
-                <?php if ($message_envoye): ?>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="fas fa-check-circle"></i> Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
-                    </div>
-                <?php endif; ?>
-                
-                <?php if ($erreur): ?>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="fas fa-exclamation-triangle"></i> <?php echo htmlspecialchars($erreur); ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
-                    </div>
-                <?php endif; ?>
-                
-                <form method="POST" action="" id="contactForm" novalidate>
-                    <div class="mb-3">
-                        <label for="nom" class="form-label">Nom complet <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="nom" name="nom" value="<?php echo htmlspecialchars($nom); ?>" required>
-                        <div class="invalid-feedback">Veuillez entrer votre nom complet.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
-                        <div class="invalid-feedback">Veuillez entrer une adresse email valide.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="sujet" class="form-label">Sujet <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="sujet" name="sujet" value="<?php echo htmlspecialchars($sujet); ?>" required>
-                        <div class="invalid-feedback">Veuillez indiquer le sujet de votre message.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="message" name="message" rows="5" required minlength="10"><?php echo htmlspecialchars($message); ?></textarea>
-                        <div class="invalid-feedback">Le message doit contenir au moins 10 caractères.</div>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100" id="submitBtn">
-                        <i class="fas fa-paper-plane"></i> Envoyer le message
-                    </button>
-                </form>
+        <!-- Google Maps -->
+        <div class="mt-5" data-aos="fade-up">
+            <div class="map-container" style="max-width: 800px; margin: 0 auto;">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61429.47673229938!2d-16.518694990382948!3d16.01769551241829!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec256c9b9dfa4b3%3A0xead10ba233d5e2f!2sSaint-Louis%2C%20S%C3%A9n%C3%A9gal!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr" 
+                    width="100%" 
+                    height="350" 
+                    style="border:0; border-radius: 20px;" 
+                    allowfullscreen="" 
+                    loading="lazy"
+                    title="Carte Google Maps de Saint-Louis du Sénégal">
+                </iframe>
             </div>
-        </div>
-    </div>
-    
-    <!-- Google Maps - Saint-Louis du Sénégal -->
-    <div class="mt-5" data-aos="fade-up">
-        <div class="map-container">
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61429.47673229938!2d-16.518694990382948!3d16.01769551241829!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec256c9b9dfa4b3%3A0xead10ba233d5e2f!2sSaint-Louis%2C%20S%C3%A9n%C3%A9gal!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr" 
-                width="100%" 
-                height="400" 
-                style="border:0; border-radius: 12px;" 
-                allowfullscreen="" 
-                loading="lazy"
-                title="Carte Google Maps de Saint-Louis du Sénégal">
-            </iframe>
         </div>
     </div>
 </div>
 
 <script>
 (function() {
-    // Validation améliorée avec JavaScript
     const form = document.getElementById('contactForm');
     if (form) {
         form.addEventListener('submit', function(event) {
             let isValid = true;
             const nom = document.getElementById('nom');
             const email = document.getElementById('email');
-            const sujet = document.getElementById('sujet');
             const message = document.getElementById('message');
             
-            // Réinitialiser les styles d'erreur
-            [nom, email, sujet, message].forEach(field => {
+            [nom, email, message].forEach(field => {
                 field.classList.remove('is-invalid');
             });
             
-            // Validation Nom
             if (!nom.value.trim()) {
                 nom.classList.add('is-invalid');
                 isValid = false;
             }
             
-            // Validation Email
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!email.value.trim() || !emailRegex.test(email.value)) {
                 email.classList.add('is-invalid');
                 isValid = false;
             }
             
-            // Validation Sujet
-            if (!sujet.value.trim()) {
-                sujet.classList.add('is-invalid');
-                isValid = false;
-            }
-            
-            // Validation Message (min 10 caractères)
             if (!message.value.trim() || message.value.trim().length < 10) {
                 message.classList.add('is-invalid');
                 isValid = false;
@@ -190,24 +336,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             if (!isValid) {
                 event.preventDefault();
-                // Scroll vers le premier champ en erreur
                 const firstInvalid = form.querySelector('.is-invalid');
                 if (firstInvalid) {
                     firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     firstInvalid.focus();
                 }
             } else {
-                // Optionnel : Désactiver le bouton pour éviter double soumission
                 const submitBtn = document.getElementById('submitBtn');
                 if (submitBtn) {
                     submitBtn.disabled = true;
-                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> ENVOI EN COURS...';
                 }
             }
         });
         
-        // Supprimer le style d'erreur lors de la saisie
-        ['nom', 'email', 'sujet', 'message'].forEach(id => {
+        ['nom', 'email', 'message'].forEach(id => {
             const field = document.getElementById(id);
             if (field) {
                 field.addEventListener('input', function() {
