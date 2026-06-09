@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <i class="fas fa-map-marker-alt"></i>
                     <div>
                         <h6>Notre adresse</h6>
-                        <p>Immeuble Sama Tower, 5ème étage<br>Dakar, Sénégal</p>
+                        <p>Immeuble Sama Tower, 5ème étage<br>Saint-Louis, Sénégal</p>
                     </div>
                 </div>
                 <div class="info-item">
@@ -130,17 +130,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
     
-    <!-- Google Maps -->
+    <!-- Google Maps - Saint-Louis du Sénégal -->
     <div class="mt-5" data-aos="fade-up">
         <div class="map-container">
             <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d123530.61284222815!2d-17.50075575!3d14.69370495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec1749a1efdabdf%3A0x93d787a19a49e1d!2sDakar%2C%20S%C3%A9n%C3%A9gal!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61429.47673229938!2d-16.518694990382948!3d16.01769551241829!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec256c9b9dfa4b3%3A0xead10ba233d5e2f!2sSaint-Louis%2C%20S%C3%A9n%C3%A9gal!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr" 
                 width="100%" 
                 height="400" 
                 style="border:0; border-radius: 12px;" 
                 allowfullscreen="" 
                 loading="lazy"
-                title="Carte Google Maps de Dakar">
+                title="Carte Google Maps de Saint-Louis du Sénégal">
             </iframe>
         </div>
     </div>
