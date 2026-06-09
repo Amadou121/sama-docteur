@@ -24,13 +24,13 @@ if (!isset($noHeader)) {
     <script>
         AOS.init();
     </script>
-    <nav class="navbar navbar-expand-lg sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
         <div class="container">
             <a class="navbar-brand" href="<?php echo SITE_URL; ?>">
                 <img src="<?php echo SITE_URL; ?>assets/images/logo2.png" alt="" class="navbar-logo-img">
                 <span>Sama Docteur</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
