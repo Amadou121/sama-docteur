@@ -81,7 +81,7 @@ include 'includes/header.php';
                         <i class="fas fa-quote-left fa-2x opacity-50 mb-3"></i>
                         <p class="fs-4 fst-italic">"Grâce à Sama Docteur, j'ai trouvé un spécialiste en moins de 24h alors que j'attendais depuis 3 mois."</p>
                         <div class="d-flex align-items-center justify-content-center gap-2 mt-3">
-                            <img src="assets/img/avatar-female.jpg" alt="Patient" class="rounded-circle" width="40" height="40" onerror="this.src='https://via.placeholder.com/40'">
+                            <img src="assets/images/docs.jpg" alt="Patient" class="rounded-circle" width="40" height="40" onerror="this.src='assets/images/doc3.jpg'">
                             <div>
                                 <div class="fw-bold">Fatou Diop</div>
                                 <small>Patiente à Dakar</small>
@@ -89,7 +89,7 @@ include 'includes/header.php';
                         </div>
                     </div>
                 </div>
-                <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary opacity-10 rounded-4" style="transform: translate(15px, 15px); z-index: 0;"></div>
+                <img src="assets/images/hero2.jpg" alt="Sama Docteur" class="position-absolute top-0 start-0 w-100 h-100 rounded-4" style="transform: translate(15px, 15px); z-index: 0; object-fit: contain; object-position: center; background-color: #fff;" onerror="this.src='assets/images/doc4.jpg'" />
             </div>
         </div>
     </div>

@@ -115,9 +115,38 @@ $medecins = $stmtMedecins->fetchAll();
                     <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="<?php echo $index * 50; ?>">
                         <div class="card-medecin card h-100">
                             <?php
-                                // Liste d'avatars par défaut présents dans assets/images
-                                $defaults = [
-                                    'assets/images/doc11.jpg',
+                                // Photos de médecins par nom
+                                $doctorPhotos = [
+                                    'Dr Martin Dupuis' => 'assets/images/Dr Martin Dupuis.jpg',
+                                    'Dr Sophie Diallo' => 'assets/images/Dr Sophie Diallo.jpg',
+                                    'Dr Aliou Ndiaye' => 'assets/images/Dr Aliou Ndiaye.jpg',
+                                    'Dr Fatou Sow' => 'assets/images/Dr Fatou Sow.jpg',
+                                    'Dr Abdoulaye Kane' => 'assets/images/Dr Abdoulaye Kane.jpg',
+                                    'Dr Adja Diop' => 'assets/images/Dr Adja Diop.jpg',
+                                    'Dr Oumar Fall' => 'assets/images/Dr Oumar Fall.jpg',
+                                    'Dr Aïssatou Ba' => 'assets/images/Dr Aïssatou Ba.jpg',
+                                    'Dr Cheikh Diagne' => 'assets/images/Dr Cheikh Diagne.jpg',
+                                    'Dr Mame Diarra Fall' => 'assets/images/Dr Mame Diarra Fall.jpg'
+                                ];
+
+                                // Images par défaut par spécialité
+                                $specialiteImages = [
+                                    'Cardiologie' => 'assets/images/Dr Aboubakar.jpg',
+                                    'Dermatologie' => 'assets/images/doc4.jpg',
+                                    'Pédiatrie' => 'assets/images/doc3.jpg',
+                                    'Gynécologie' => 'assets/images/doc6.jpg',
+                                    'Ophtalmologie' => 'assets/images/doc10.jpg',
+                                    'Urologie' => 'assets/images/doc5.jpg',
+                                    'Dentiste' => 'assets/images/doc2.png',
+                                    'ORL' => 'assets/images/docc.jpg',
+                                    'Généraliste' => 'assets/images/docff.png',
+                                    'Orthopédie' => 'assets/images/doccrm.png',
+                                    'Neurologie' => 'assets/images/Dr Mame Diarra Fall.jpg',
+                                    'Psychiatrie' => 'assets/images/docter.jpg'
+                                ];
+
+                                // Liste d'avatars fallback
+                                $fallbacks = [
                                     'assets/images/doc4.jpg',
                                     'assets/images/docs.jpg',
                                     'assets/images/doc6.jpg',
@@ -127,22 +156,39 @@ $medecins = $stmtMedecins->fetchAll();
                                     'assets/images/med.jpg'
                                 ];
 
-                                // Déterminer la source de l'image du médecin
                                 $photo = '';
-                                if (!empty($medecin['photo'])) {
+                                $doctorName = trim($medecin['nom_complet']);
+                                $specialiteNom = $medecin['specialite_nom'];
+                                $normalizedSpecialite = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $specialiteNom));
+
+                                if (isset($doctorPhotos[$doctorName]) && file_exists(BASE_PATH . $doctorPhotos[$doctorName])) {
+                                    $photo = $doctorPhotos[$doctorName];
+                                }
+
+                                if (empty($photo) && !empty($medecin['photo'])) {
                                     $photo = $medecin['photo'];
-                                    // Si c'est un chemin relatif stocké sans dossier, chercher dans assets/images
                                     if (!preg_match('#^https?://#', $photo) && !file_exists(BASE_PATH . $photo)) {
                                         if (file_exists(BASE_PATH . 'assets/images/' . $photo)) {
                                             $photo = 'assets/images/' . $photo;
                                         }
                                     }
-                                    // Si le fichier n'existe toujours pas, utiliser un fallback
                                     if (!preg_match('#^https?://#', $photo) && !file_exists(BASE_PATH . $photo)) {
-                                        $photo = $defaults[$index % count($defaults)];
+                                        $photo = '';
                                     }
-                                } else {
-                                    $photo = $defaults[$index % count($defaults)];
+                                }
+
+                                if (empty($photo) && !empty($specialiteNom)) {
+                                    foreach ($specialiteImages as $key => $defaultImage) {
+                                        $normalizedKey = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $key));
+                                        if ((strpos($normalizedSpecialite, $normalizedKey) !== false || stripos($specialiteNom, $key) !== false) && file_exists(BASE_PATH . $defaultImage)) {
+                                            $photo = $defaultImage;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (empty($photo)) {
+                                    $photo = $fallbacks[$index % count($fallbacks)];
                                 }
 
                                 // Construire l'URL publique
