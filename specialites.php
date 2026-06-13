@@ -206,9 +206,9 @@ $medecins = $stmtMedecins->fetchAll();
                             </div>
                             <div class="card-footer bg-transparent">
                                 <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'patient'): ?>
-                                    <button class="btn btn-primary w-100" onclick="prendreRendezVous(<?php echo $medecin['id']; ?>)">
+                                    <a href="prendre-rendez-vous.php?id=<?php echo $medecin['id']; ?>" class="btn btn-primary w-100">
                                         <i class="fas fa-calendar-check"></i> Prendre RDV
-                                    </button>
+                                    </a>
                                 <?php else: ?>
                                     <a href="connexion.php" class="btn btn-outline-primary w-100">
                                         <i class="fas fa-sign-in-alt"></i> Connectez-vous pour réserver

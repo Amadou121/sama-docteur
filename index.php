@@ -749,7 +749,7 @@ function getDoctorRating($medecinId) {
                     </div>
                     
                     <div class="d-flex gap-2">
-                        <a href="prendre-rendez-vous.php?id=<?php echo $medecin['id']; ?>"
+                        <a href="prendre-rendez-vous-etape1.php?id=<?php echo $medecin['id']; ?>"
                            class="btn btn-primary flex-grow-1">
                             <i class="fas fa-calendar-check me-1"></i>
                             Prendre votre rendez-vous
