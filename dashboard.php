@@ -229,64 +229,73 @@ include 'includes/header.php';
 }
 
 .stat-card {
-    background: linear-gradient(180deg, #ffffff 0%, #f6f8ff 100%);
-    border-radius: 22px;
-    padding: 24px;
-    text-align: center;
-    box-shadow: 0 16px 36px rgba(32, 49, 84, 0.09);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(102,126,234,0.12);
-}
-
-.stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-    border-radius: 999px;
-}
-
-.stat-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 22px 48px rgba(32, 49, 84, 0.12);
-}
-
-.stat-card i {
     display: none;
 }
 
-.stat-card .stat-chip {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 18px;
-    border-radius: 999px;
-    background: rgba(102,126,234,0.1);
-    color: #2f427f;
+.stats-bar {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 32px 24px;
+    box-shadow: 0 16px 36px rgba(32, 49, 84, 0.09);
+    border: 1px solid rgba(102,126,234,0.12);
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 24px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 16px 12px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(102,126,234,0.04) 0%, rgba(118,75,162,0.04) 100%);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stat-item:hover {
+    background: linear-gradient(180deg, rgba(102,126,234,0.08) 0%, rgba(118,75,162,0.08) 100%);
+    transform: translateY(-3px);
+}
+
+.stat-item:hover::before {
+    opacity: 1;
+}
+
+.stat-item .stat-number {
+    font-size: 40px;
+    font-weight: 800;
+    color: #667eea;
+    margin: 0;
+    line-height: 1;
+}
+
+.stat-item .stat-label {
     font-size: 12px;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 14px;
-}
-
-.stat-card h3 {
-    font-size: 34px;
-    font-weight: 700;
-    margin: 8px 0 8px;
-    color: #24324d;
-}
-
-.stat-card p {
-    margin: 0;
     color: #5a6b7d;
-    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-top: 12px;
+}
+
+.stat-item .stat-desc {
+    font-size: 12px;
+    color: #8899aa;
+    margin-top: 6px;
 }
 
 .stat-card h3 {
@@ -808,34 +817,26 @@ include 'includes/header.php';
                         <p>Bienvenue sur votre tableau de bord</p>
                     </div>
                  </div>
-                    <div class="row g-4 mb-4">
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <div class="stat-chip">Total</div>
-                                <h3><?php echo $stats['total_rdv']; ?></h3>
-                                <p>Total RDV</p>
-                            </div>
+                    <div class="stats-bar">
+                        <div class="stat-item">
+                            <p class="stat-number"><?php echo $stats['total_rdv']; ?></p>
+                            <p class="stat-label">Total RDV</p>
+                            <p class="stat-desc">Rendez-vous</p>
                         </div>
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <div class="stat-chip">Confirmés</div>
-                                <h3><?php echo $stats['rdv_confirms']; ?></h3>
-                                <p>Confirmés</p>
-                            </div>
+                        <div class="stat-item">
+                            <p class="stat-number"><?php echo $stats['rdv_confirms']; ?></p>
+                            <p class="stat-label">Confirmés</p>
+                            <p class="stat-desc">Approuvés</p>
                         </div>
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <div class="stat-chip">En attente</div>
-                                <h3><?php echo $stats['rdv_attente']; ?></h3>
-                                <p>En attente</p>
-                            </div>
+                        <div class="stat-item">
+                            <p class="stat-number"><?php echo $stats['rdv_attente']; ?></p>
+                            <p class="stat-label">En Attente</p>
+                            <p class="stat-desc">En Cours</p>
                         </div>
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <div class="stat-chip">Terminés</div>
-                                <h3><?php echo $stats['rdv_termines']; ?></h3>
-                                <p>Terminés</p>
-                            </div>
+                        <div class="stat-item">
+                            <p class="stat-number"><?php echo $stats['rdv_termines']; ?></p>
+                            <p class="stat-label">Terminés</p>
+                            <p class="stat-desc">Complétés</p>
                         </div>
                     </div>
                     
