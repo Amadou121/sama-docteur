@@ -363,7 +363,7 @@ include 'includes/header.php';
 /* Hero Section */
 .about-hero {
     position: relative;
-    min-height: 90vh;
+    min-height: 70vh;
     display: flex;
     align-items: center;
     overflow: hidden;
