@@ -382,12 +382,187 @@ textarea.form-control-modern {
     font-size: 0.7rem;
     margin-left: 4px;
 }
+
+/* Section informations de contact */
+.contact-info-section {
+    margin-top: 4rem;
+}
+
+.contact-info-card {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 20px 40px -12px rgba(37,99,235,0.15);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(37,99,235,0.05);
+    height: 100%;
+}
+
+.contact-info-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px -12px rgba(37,99,235,0.25);
+}
+
+.contact-info-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #2563EB 0%, #1e40af 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 30px -10px rgba(37,99,235,0.4);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact-info-card:hover .contact-info-icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 15px 40px -10px rgba(37,99,235,0.5);
+}
+
+.contact-info-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.contact-info-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
+}
+
+.contact-info-text {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.contact-info-link {
+    color: #2563EB;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.contact-info-link:hover {
+    color: #1e40af;
+    text-decoration: underline;
+}
+
+/* Section horaires */
+.hours-section {
+    margin-top: 3rem;
+}
+
+.hours-card {
+    background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+    border-radius: 24px;
+    padding: 2rem;
+    border: 2px solid rgba(37,99,235,0.1);
+}
+
+.hours-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.hours-title i {
+    color: #2563EB;
+}
+
+.hours-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(37,99,235,0.1);
+    transition: all 0.3s ease;
+}
+
+.hours-item:last-child {
+    border-bottom: none;
+}
+
+.hours-item:hover {
+    background: rgba(37,99,235,0.05);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 12px;
+}
+
+.hours-day {
+    color: #334155;
+    font-weight: 500;
+}
+
+.hours-time {
+    color: #64748b;
+    font-weight: 400;
+}
+
+.hours-current {
+    color: #10b981;
+    font-weight: 600;
+}
+
+/* Amélioration de la carte */
+.map-section {
+    margin-top: 4rem;
+}
+
+.map-section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.map-section-subtitle {
+    text-align: center;
+    color: #64748b;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+/* Badge d'urgence */
+.urgent-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 30px -10px rgba(239,68,68,0.4);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
 </style>
 
 <div class="contact-page">
     <div class="container py-5">
         <!-- En-tête sophistiqué -->
         <div class="contact-header" data-aos="fade-up">
+            <div class="urgent-badge">
+                <i class="fas fa-exclamation-triangle"></i>
+                Urgence médicale ? Appelez le 15
+            </div>
             <div class="badge">
                 <i class="fas fa-comment-medical me-2"></i> Assistance Médicale 24/7
             </div>
@@ -480,8 +655,88 @@ textarea.form-control-modern {
             </div>
         </div>
         
+        <!-- Section informations de contact -->
+        <div class="contact-info-section" data-aos="fade-up">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h4 class="contact-info-title">Téléphone</h4>
+                        <p class="contact-info-text">
+                            <a href="tel:+221771234567" class="contact-info-link">+221 77 123 45 67</a>
+                        </p>
+                        <p class="contact-info-text">
+                            <a href="tel:+221789876543" class="contact-info-link">+221 78 987 65 43</a>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h4 class="contact-info-title">Email</h4>
+                        <p class="contact-info-text">
+                            <a href="mailto:contact@samadocteur.sn" class="contact-info-link">contact@samadocteur.sn</a>
+                        </p>
+                        <p class="contact-info-text">
+                            <a href="mailto:support@samadocteur.sn" class="contact-info-link">support@samadocteur.sn</a>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4 class="contact-info-title">Adresse</h4>
+                        <p class="contact-info-text">
+                            Quartier Sor, Saint-Louis<br>
+                            Sénégal
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section horaires -->
+        <div class="hours-section" data-aos="fade-up">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="hours-card">
+                        <h4 class="hours-title">
+                            <i class="fas fa-clock"></i>
+                            Horaires d'ouverture
+                        </h4>
+                        <div class="hours-item">
+                            <span class="hours-day">Lundi - Vendredi</span>
+                            <span class="hours-time">08:00 - 18:00</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Samedi</span>
+                            <span class="hours-time">09:00 - 14:00</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Dimanche</span>
+                            <span class="hours-time">Fermé</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Urgences</span>
+                            <span class="hours-current">24h/24 - 7j/7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- Google Maps sophistiqué -->
-        <div class="mt-5 pt-4" data-aos="fade-up">
+        <div class="map-section" data-aos="fade-up">
+            <h3 class="map-section-title">Nous trouver</h3>
+            <p class="map-section-subtitle">Notre centre médical est situé au cœur de Saint-Louis</p>
             <div class="map-container-modern" style="max-width: 800px; margin: 0 auto;">
                 <div class="map-overlay">
                     <i class="fas fa-map-marker-alt me-1"></i> Saint-Louis, Sénégal
