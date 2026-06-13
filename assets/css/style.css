@@ -171,6 +171,7 @@ main {
     color: var(--text-secondary);
 }
 
+
 /* ==================== CARDS ==================== */
 .card {
     background: var(--white);
@@ -265,6 +266,77 @@ main {
     font-weight: 600;
     color: var(--primary-blue);
     margin: 15px 0;
+}
+
+.card-medecin .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    padding: 1.25rem 1.25rem 0.75rem;
+}
+
+.card-medecin .card-footer {
+    padding: 1rem 1.25rem 1.25rem;
+}
+
+.card-medecin .card-footer .btn {
+    width: 100%;
+}
+
+/* Médecins : cartes fluides */
+.card-medecin {
+    min-height: 100%;
+}
+
+@media (max-width: 992px) {
+    .card-medecin .card-img-top {
+        height: auto;
+        padding: 2rem 0;
+    }
+
+    .photo-profil {
+        width: 110px;
+        height: 110px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-medecin .card-img-top {
+        min-height: 170px;
+        padding: 1.5rem 0;
+    }
+
+    .photo-profil {
+        width: 100px;
+        height: 100px;
+    }
+
+    .card-medecin .card-title {
+        font-size: 1rem;
+    }
+
+    .card-medecin .specialite,
+    .card-medecin .info,
+    .card-medecin .tarif {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-medecin .card-body,
+    .card-medecin .card-footer {
+        padding-left: 0.9rem;
+        padding-right: 0.9rem;
+    }
+
+    .card-medecin .card-img-top {
+        padding: 1rem 0;
+    }
+
+    .photo-profil {
+        width: 90px;
+        height: 90px;
+    }
 }
 
 /* ==================== FORMULAIRES ==================== */
@@ -761,6 +833,73 @@ main {
     }
 }
 
+/* Responsive amélioré pour la page des spécialités */
+@media (max-width: 992px) {
+    .dashboard-sidebar {
+        position: static;
+        top: 0;
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    .dashboard-sidebar .dashboard-menu a {
+        padding: 0.9rem 1rem;
+    }
+
+    .dashboard-sidebar .form-control,
+    .dashboard-sidebar .form-select,
+    .dashboard-sidebar .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-medecin .card-img-top {
+        height: auto;
+        min-height: 200px;
+        padding: 2.2rem 0;
+    }
+
+    .photo-profil {
+        width: 100px;
+        height: 100px;
+    }
+
+    .card-medecin .card-body {
+        padding: 1rem 1rem 1.25rem;
+    }
+
+    .card-medecin .card-footer {
+        padding: 1rem 1rem 1.15rem;
+    }
+
+    .card-medecin .card-title {
+        font-size: 1rem;
+    }
+
+    .dashboard-sidebar {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-sidebar h5 {
+        font-size: 1rem;
+    }
+
+    .dashboard-menu a {
+        font-size: 0.95rem;
+    }
+
+    .card-medecin .card-body {
+        padding: 0.9rem 0.9rem 1rem;
+    }
+
+    .card-medecin .card-footer {
+        padding: 0.9rem 0.9rem 0.95rem;
+    }
+}
+
 /* ==================== SCROLLBAR ==================== */
 ::-webkit-scrollbar {
     width: 10px;
@@ -1035,5 +1174,140 @@ body{
     
     .navbar-brand span {
         font-size: 0.9rem;
+    }
+}
+
+/* Global responsive improvements */
+img, svg, iframe, embed, object, video {
+    max-width: 100%;
+    height: auto;
+}
+
+html, body {
+    min-width: 0;
+}
+
+@media (max-width: 992px) {
+    .navbar-collapse {
+        background: var(--white);
+        padding: 1rem;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 0.6rem 0.75rem;
+        width: 100%;
+    }
+
+    .navbar-nav .nav-item {
+        width: 100%;
+    }
+
+    .dashboard-sidebar {
+        position: static;
+        top: 0;
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    .dashboard-sidebar .dashboard-menu a {
+        padding: 0.9rem 1rem;
+    }
+
+    .dashboard-sidebar .form-control,
+    .dashboard-sidebar .form-select,
+    .dashboard-sidebar .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero, .hero-section, .search-box, .search-card, .contact-info, .form-container, .specialite-card, .doctor-card, .advantage-card, .stat-card, .appointment-card {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .hero h1,
+    .hero-title,
+    .section-title,
+    .card-medecin .card-title,
+    .section-subtitle,
+    .hero-text {
+        font-size: 1.1rem;
+    }
+
+    .card-medecin .card-img-top {
+        min-height: 170px;
+    }
+
+    .photo-profil,
+    .doctor-card img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .card-medecin .card-body,
+    .card-medecin .card-footer {
+        padding: 1rem;
+    }
+
+    .btn {
+        width: 100%;
+        white-space: normal;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .navbar-brand span {
+        width: 100%;
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .nav-link {
+        padding: 0.75rem 0;
+    }
+
+    .container,
+    .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .card-medecin .card-body,
+    .card-medecin .card-footer,
+    .form-container,
+    .search-box,
+    .specialite-card,
+    .doctor-card {
+        padding: 1rem;
+    }
+
+    .card-medecin .card-title,
+    .section-title,
+    .hero-title {
+        font-size: 1rem;
+    }
+
+    .specialite-card,
+    .doctor-card,
+    .advantage-card,
+    .stat-card,
+    .appointment-card,
+    .search-card,
+    .contact-info {
+        border-radius: 16px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 }
