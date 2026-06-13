@@ -112,6 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         max-width: 800px;
         margin: 40px auto;
         padding: 30px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 20px;
     }
 
     .heure-card {
@@ -140,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     .progress-fill {
-        background: linear-gradient(90deg, #3498db, #2980b9);
+        background: linear-gradient(90deg, #007bff, #0056b3);
         height: 100%;
         border-radius: 10px;
         width: 66.66%;
@@ -171,10 +173,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     .creneau-btn:hover {
-        border-color: #3498db;
+        border-color: #007bff;
         background: #f8fbff;
         transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
     }
 
     .date-info {

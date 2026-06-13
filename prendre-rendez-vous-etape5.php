@@ -81,6 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         max-width: 800px;
         margin: 40px auto;
         padding: 30px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 20px;
     }
 
     .confirmation-card {
@@ -109,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     .progress-fill {
-        background: linear-gradient(90deg, #3498db, #2980b9);
+        background: linear-gradient(90deg, #007bff, #0056b3);
         height: 100%;
         border-radius: 10px;
         width: 83.33%;
@@ -181,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     .btn-submit {
-        background: linear-gradient(135deg, #3498db, #2980b9);
+        background: linear-gradient(135deg, #007bff, #0056b3);
         color: white;
         padding: 15px 40px;
         border: none;
@@ -195,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     .btn-submit:hover {
         transform: translateY(-2px);
-        box-shadow: 0 5px 20px rgba(52, 152, 219, 0.4);
+        box-shadow: 0 5px 20px rgba(0, 123, 255, 0.4);
     }
 </style>
 

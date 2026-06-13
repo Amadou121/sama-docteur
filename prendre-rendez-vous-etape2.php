@@ -54,6 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         max-width: 1000px;
         margin: 40px auto;
         padding: 30px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 20px;
     }
 
     .medecin-card {
@@ -66,12 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         align-items: center;
         gap: 20px;
         height: 100%;
+        background: white;
     }
 
     .medecin-card:hover {
-        border-color: #3498db;
+        border-color: #007bff;
         transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(52, 152, 219, 0.15);
+        box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
     }
 
     .medecin-photo {
@@ -79,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         height: 80px;
         border-radius: 50%;
         object-fit: cover;
-        border: 3px solid #3498db;
+        border: 3px solid #007bff;
     }
 
     .medecin-info h4 {
@@ -95,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     .medecin-info .badge {
-        background: #3498db;
+        background: #007bff;
         color: white;
         padding: 5px 12px;
         border-radius: 20px;
@@ -121,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     .progress-fill {
-        background: linear-gradient(90deg, #3498db, #2980b9);
+        background: linear-gradient(90deg, #007bff, #0056b3);
         height: 100%;
         border-radius: 10px;
         width: 33.33%;

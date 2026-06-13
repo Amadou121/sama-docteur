@@ -49,6 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         max-width: 1000px;
         margin: 40px auto;
         padding: 30px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 20px;
     }
 
     .specialite-card {
@@ -59,17 +61,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         transition: all 0.3s ease;
         text-align: center;
         height: 100%;
+        background: white;
     }
 
     .specialite-card:hover {
-        border-color: #3498db;
+        border-color: #007bff;
         transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(52, 152, 219, 0.2);
+        box-shadow: 0 20px 40px rgba(0, 123, 255, 0.2);
     }
 
     .specialite-card i {
         font-size: 3em;
-        color: #3498db;
+        color: #007bff;
         margin-bottom: 15px;
     }
 
@@ -104,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     .progress-fill {
-        background: linear-gradient(90deg, #3498db, #2980b9);
+        background: linear-gradient(90deg, #007bff, #0056b3);
         height: 100%;
         border-radius: 10px;
         width: 16.66%;

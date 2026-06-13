@@ -67,6 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         max-width: 600px;
         margin: 40px auto;
         padding: 30px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 20px;
     }
 
     .date-card {
@@ -95,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     .progress-fill {
-        background: linear-gradient(90deg, #3498db, #2980b9);
+        background: linear-gradient(90deg, #007bff, #0056b3);
         height: 100%;
         border-radius: 10px;
         width: 50%;
