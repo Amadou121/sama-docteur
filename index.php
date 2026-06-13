@@ -85,7 +85,7 @@ function getDoctorRating($medecinId) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="description" content="Sama Docteur - Prenez rendez-vous en ligne avec les meilleurs médecins spécialistes. Consultation médicale facile et rapide.">
-    <meta name="keywords" content="médecin, spécialiste, rendez-vous médical, consultation, santé, Sénégal, Dakar">
+    <meta name="keywords" content="médecin, spécialiste, rendez-vous médical, consultation, santé, Sénégal, Saint-Louis">
     <meta name="author" content="Sama Docteur">
     <title>Sama Docteur - Prenez rendez-vous avec les meilleurs spécialistes</title>
     
@@ -320,19 +320,7 @@ function getDoctorRating($medecinId) {
             font-size: 10px;
         }
         
-        .doctor-card .price {
-            transition: all 0.3s ease;
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #007bff;
-        }
-        
-        .doctor-card:hover .price {
-            transform: scale(1.1);
-            color: #0056b3;
-        }
-        
-        /* ========== ADVANTAGE CARD ========== */
+        /* ========== AVANTAGE CARD ========== */
         .advantage-card {
             transition: all 0.3s ease;
             position: relative;
@@ -632,15 +620,12 @@ function getDoctorRating($medecinId) {
                             <input type="text"
                                    name="ville"
                                    class="form-control border-0"
-                                   placeholder="Ville ou quartier (ex: Dakar, Almadies...)"
+                                   placeholder="Ville ou quartier (ex: Saint-Louis...)"
                                    autocomplete="off"
+                                   value="Saint-Louis"
                                    list="villes-list">
                             <datalist id="villes-list">
-                                <option value="Dakar">
-                                <option value="Almadies">
-                                <option value="Pikine">
-                                <option value="Guédiawaye">
-                                <option value="Rufisque">
+                                <option value="Saint-Louis">
                             </datalist>
                         </div>
                     </div>
@@ -717,6 +702,8 @@ function getDoctorRating($medecinId) {
                 $halfStar = ($rating['stars'] - $fullStars) >= 0.5;
                 $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
                 $photoPath = getDoctorPhoto($medecin);
+                // Forcer la ville à Saint-Louis
+                $medecin['ville'] = 'Saint-Louis';
             ?>
             <div class="col-md-6 col-lg-3 reveal" style="animation-delay: <?php echo $index * 0.1; ?>s;">
                 <div class="doctor-card text-center p-4 shadow-sm h-100">
@@ -745,13 +732,8 @@ function getDoctorRating($medecinId) {
                     
                     <p class="ville text-muted small mb-2">
                         <i class="fas fa-map-marker-alt me-1"></i>
-                        <?php echo htmlspecialchars($medecin['ville']); ?>
+                        Saint-Louis
                     </p>
-                    
-                    <div class="price mb-2">
-                        <?php echo number_format($medecin['tarif_consultation'],0,',',' '); ?> FCFA
-                        <span class="text-muted small fw-normal">/ consultation</span>
-                    </div>
                     
                     <div class="rating mb-3">
                         <?php for($i = 1; $i <= $fullStars; $i++): ?>
@@ -770,7 +752,7 @@ function getDoctorRating($medecinId) {
                         <a href="prendre-rendez-vous.php?id=<?php echo $medecin['id']; ?>"
                            class="btn btn-primary flex-grow-1">
                             <i class="fas fa-calendar-check me-1"></i>
-                            Réserver
+                            Prendre votre rendez-vous
                         </a>
                         <button class="btn btn-outline-primary" onclick="showDoctorDetails(<?php echo $medecin['id']; ?>)">
                             <i class="fas fa-info-circle"></i>
