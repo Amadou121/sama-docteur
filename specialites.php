@@ -80,10 +80,7 @@ $medecins = $stmtMedecins->fetchAll();
                     <div class="mb-3">
                         <label class="form-label">Ville</label>
                         <select class="form-select" name="ville">
-                            <option value="">Toutes les villes</option>
-                            <option value="Dakar" <?php echo $ville == 'Dakar' ? 'selected' : ''; ?>>Dakar</option>
-                            <option value="Thiès" <?php echo $ville == 'Thiès' ? 'selected' : ''; ?>>Thiès</option>
-                            <option value="Rufisque" <?php echo $ville == 'Rufisque' ? 'selected' : ''; ?>>Rufisque</option>
+                            <option value="Saint-Louis" <?php echo $ville == 'Saint-Louis' ? 'selected' : ''; ?>>Saint-Louis</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">
@@ -201,9 +198,9 @@ $medecins = $stmtMedecins->fetchAll();
                                       style="width:120px;height:120px;border-radius:50%;object-fit:cover;border:4px solid #ffffff;box-shadow:0 4px 12px rgba(0,0,0,0.2);transition:transform 0.3s ease;" />
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title"><?php echo htmlspecialchars($medecin['nom_complet']); ?></h5>
+                                 <h5 class="card-title"><?php echo htmlspecialchars($medecin['nom_complet']); ?></h5>
                                 <p class="specialite"><?php echo htmlspecialchars($medecin['specialite_nom']); ?></p>
-                                <p class="info"><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($medecin['ville']); ?></p>
+                                <p class="info"><i class="fas fa-map-marker-alt"></i> Saint-Louis, Senegal</p>
                                 <p class="info"><i class="fas fa-phone-alt"></i> <?php echo htmlspecialchars($medecin['telephone']); ?></p>
                                 <p class="info"><i class="fas fa-calendar-alt"></i> <?php echo $medecin['annees_experience']; ?> ans d'expérience</p>
                             </div>
