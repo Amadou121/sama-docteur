@@ -5,7 +5,7 @@ include 'includes/header.php';
 ?>
 
 <!-- Hero Section avec overlay gradient -->
-<section class="about-hero position-relative text-white" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); min-height: 60vh;">
+<section class="about-hero position-relative text-white" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); min-height: 62vh;">
     <div class="container h-100 py-5">
         <div class="row h-100 align-items-center">
             <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
