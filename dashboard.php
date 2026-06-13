@@ -246,56 +246,102 @@ include 'includes/header.php';
 
 .stat-item {
     text-align: center;
-    padding: 16px 12px;
-    border-radius: 16px;
-    background: linear-gradient(180deg, rgba(102,126,234,0.04) 0%, rgba(118,75,162,0.04) 100%);
-    transition: all 0.3s ease;
+    padding: 22px 16px;
+    border-radius: 24px;
+    background: rgba(255,255,255,0.95);
+    transition: all 0.35s ease;
     position: relative;
     overflow: hidden;
+    border: 1px solid rgba(102,126,234,0.12);
 }
 
 .stat-item::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(102,126,234,0.18), transparent 42%);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.35s ease;
+}
+
+.stat-item::after {
+    content: '';
+    position: absolute;
+    width: 98px;
+    height: 98px;
+    border-radius: 50%;
+    top: -34px;
+    right: -34px;
+    background: rgba(118,75,162,0.15);
+    pointer-events: none;
+    transition: transform 0.35s ease;
 }
 
 .stat-item:hover {
-    background: linear-gradient(180deg, rgba(102,126,234,0.08) 0%, rgba(118,75,162,0.08) 100%);
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(32, 49, 84, 0.12);
 }
 
-.stat-item:hover::before {
+.stat-item:hover::before,
+.stat-item:hover::after {
     opacity: 1;
+    transform: translateY(-2px);
+}
+
+.stat-gradient-blue {
+    background: linear-gradient(180deg, #eef4ff 0%, #f6f8ff 100%);
+}
+
+.stat-gradient-green {
+    background: linear-gradient(180deg, #e9fbf1 0%, #f4f8f5 100%);
+}
+
+.stat-gradient-orange {
+    background: linear-gradient(180deg, #fff6e5 0%, #fffaf2 100%);
+}
+
+.stat-gradient-purple {
+    background: linear-gradient(180deg, #f4ecff 0%, #faf6ff 100%);
 }
 
 .stat-item .stat-number {
-    font-size: 40px;
-    font-weight: 800;
-    color: #667eea;
+    font-size: 46px;
+    font-weight: 900;
+    color: #2d3a62;
     margin: 0;
     line-height: 1;
 }
 
 .stat-item .stat-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: #5a6b7d;
+    font-size: 13px;
+    font-weight: 800;
+    color: #4e5d79;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-top: 12px;
+    letter-spacing: 0.12em;
+    margin-top: 16px;
 }
 
 .stat-item .stat-desc {
-    font-size: 12px;
-    color: #8899aa;
-    margin-top: 6px;
+    font-size: 13px;
+    color: #667789;
+    margin-top: 8px;
+    line-height: 1.5;
+}
+
+.stat-item.stat-gradient-blue .stat-number {
+    color: #3b5bff;
+}
+
+.stat-item.stat-gradient-green .stat-number {
+    color: #1f8e5e;
+}
+
+.stat-item.stat-gradient-orange .stat-number {
+    color: #d46c08;
+}
+
+.stat-item.stat-gradient-purple .stat-number {
+    color: #6b4acb;
 }
 
 .stat-card h3 {
@@ -818,25 +864,25 @@ include 'includes/header.php';
                     </div>
                  </div>
                     <div class="stats-bar">
-                        <div class="stat-item">
+                        <div class="stat-item stat-gradient-blue">
                             <p class="stat-number"><?php echo $stats['total_rdv']; ?></p>
                             <p class="stat-label">Total RDV</p>
-                            <p class="stat-desc">Rendez-vous</p>
+                            <p class="stat-desc">Tous les rendez-vous planifiés</p>
                         </div>
-                        <div class="stat-item">
+                        <div class="stat-item stat-gradient-green">
                             <p class="stat-number"><?php echo $stats['rdv_confirms']; ?></p>
                             <p class="stat-label">Confirmés</p>
-                            <p class="stat-desc">Approuvés</p>
+                            <p class="stat-desc">Rendez-vous validés</p>
                         </div>
-                        <div class="stat-item">
+                        <div class="stat-item stat-gradient-orange">
                             <p class="stat-number"><?php echo $stats['rdv_attente']; ?></p>
-                            <p class="stat-label">En Attente</p>
-                            <p class="stat-desc">En Cours</p>
+                            <p class="stat-label">En attente</p>
+                            <p class="stat-desc">Demandes en attente</p>
                         </div>
-                        <div class="stat-item">
+                        <div class="stat-item stat-gradient-purple">
                             <p class="stat-number"><?php echo $stats['rdv_termines']; ?></p>
                             <p class="stat-label">Terminés</p>
-                            <p class="stat-desc">Complétés</p>
+                            <p class="stat-desc">Rendez-vous clos</p>
                         </div>
                     </div>
                     
