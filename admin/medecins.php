@@ -119,15 +119,19 @@ include '../includes/header.php';
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #0066cc;
-            --secondary-color: #00a8ff;
-            --dark-color: #2c3e50;
-            --light-bg: #f8f9fa;
+            --primary-color: #00549a; /* plus sombre */
+            --secondary-color: #0077b8; /* plus sombre */
+            --dark-color: #162430; /* texte principal plus foncé */
+            --light-bg: #eef2f4; /* léger mais contrasté */
         }
 
         body {
             background: var(--light-bg);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-color);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .admin-wrapper {
@@ -138,8 +142,8 @@ include '../includes/header.php';
         /* Sidebar */
         .admin-sidebar {
             width: 280px;
-            background: linear-gradient(135deg, var(--dark-color) 0%, #34495e 100%);
-            color: white;
+            background: linear-gradient(135deg, #0f2a3a 0%, #263f50 100%);
+            color: #eef6fb;
             transition: all 0.3s;
             position: fixed;
             height: 100vh;
@@ -155,7 +159,9 @@ include '../includes/header.php';
 
         .admin-sidebar .logo h3 {
             margin: 0;
-            font-size: 24px;
+            font-size: 22px;
+            font-weight: 600;
+            color: #f1fbff;
         }
 
         .admin-sidebar .logo p {
@@ -201,11 +207,11 @@ include '../includes/header.php';
 
         /* Top Bar */
         .top-bar {
-            background: white;
+            background: #ffffff;
             border-radius: 12px;
-            padding: 15px 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 12px 20px;
+            margin-bottom: 22px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -225,12 +231,12 @@ include '../includes/header.php';
 
         /* Stats Cards */
         .stat-card {
-            background: white;
+            background: #ffffff;
             border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(6,22,34,0.06);
+            transition: transform 0.22s;
         }
 
         .stat-card:hover {
@@ -264,16 +270,16 @@ include '../includes/header.php';
 
         /* Table Styles */
         .medecins-table {
-            background: white;
+            background: #ffffff;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(6,22,34,0.04);
         }
 
         .medecins-table th {
-            background: var(--light-bg);
-            padding: 15px;
-            font-weight: 600;
+            background: #f4f6f8;
+            padding: 14px;
+            font-weight: 700;
             color: var(--dark-color);
         }
 
@@ -282,11 +288,38 @@ include '../includes/header.php';
             vertical-align: middle;
         }
 
+        /* Avatar: force un carré (fonctionne pour <img> et pour la div placeholder) */
         .medecin-avatar {
             width: 45px;
             height: 45px;
+            min-width: 45px;
             border-radius: 50%;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-position: center;
+            background-size: cover;
+        }
+        .medecin-avatar img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            display: block;
+        }
+
+        /* Ajustements pour petits écrans */
+        @media (max-width: 768px) {
+            .medecin-avatar {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .action-buttons .btn { margin: 3px 2px; padding: 4px 6px; font-size: 11px; }
+            .medecins-table td { font-size: 13px; }
         }
 
         .status-badge {
@@ -334,17 +367,27 @@ include '../includes/header.php';
             color: var(--dark-color);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
             .admin-sidebar {
                 transform: translateX(-100%);
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100vh;
             }
             .admin-content {
                 margin-left: 0;
+                padding: 18px;
             }
-            .sidebar-toggle {
-                display: block;
-            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-sidebar { width: 220px; }
+            .admin-sidebar .logo h3 { font-size: 18px; }
+            .top-bar { padding: 10px 12px; }
+            .medecins-table td { padding: 10px; }
+            .stat-card h3 { font-size: 20px; }
         }
     </style>
 </head>
