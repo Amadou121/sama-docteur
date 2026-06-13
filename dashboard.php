@@ -102,32 +102,42 @@ include 'includes/header.php';
 }
 
 .dashboard-sidebar {
-    background: white;
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    background: rgba(255,255,255,0.97);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 18px 50px rgba(32, 49, 84, 0.12);
     margin-bottom: 30px;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.8);
 }
 
 .dashboard-sidebar:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 25px 60px rgba(32, 49, 84, 0.15);
 }
 
 .user-info {
     text-align: center;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #f0f0f0;
-    margin-bottom: 20px;
+    padding: 22px 18px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(102,126,234,0.1), rgba(255,255,255,0.95));
+    border: 1px solid rgba(102,126,234,0.16);
+    margin-bottom: 24px;
 }
 
-.user-info i {
-    font-size: 70px;
+.user-avatar {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 10px;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 .dashboard-menu {
@@ -137,37 +147,65 @@ include 'includes/header.php';
 }
 
 .dashboard-menu li {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     position: relative;
 }
 
 .dashboard-menu a {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
     align-items: center;
-    padding: 12px 15px;
-    color: #333;
+    gap: 12px;
+    padding: 14px 18px;
+    color: #303841;
     text-decoration: none;
-    border-radius: 12px;
-    transition: all 0.3s;
+    border-radius: 16px;
+    transition: all 0.3s ease;
     position: relative;
-    font-weight: 500;
+    font-weight: 600;
+    background: rgba(255,255,255,0.88);
+    border: 1px solid rgba(220, 227, 241, 0.8);
+    box-shadow: 0 8px 20px rgba(70, 96, 187, 0.08);
 }
 
 .dashboard-menu a:hover {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    transform: translateX(5px);
+    transform: translateX(4px);
+    box-shadow: 0 12px 28px rgba(102,126,234,0.25);
 }
 
 .dashboard-menu a.active {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    box-shadow: 0 5px 15px rgba(102,126,234,0.3);
+    box-shadow: 0 12px 28px rgba(102,126,234,0.25);
+}
+
+.menu-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(102,126,234,0.12);
+    color: #667eea;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.dashboard-menu a:hover .menu-icon {
+    background: rgba(255,255,255,0.25);
+    transform: translateX(2px);
+}
+
+.dashboard-menu a.active .menu-icon {
+    background: rgba(255,255,255,0.25);
 }
 
 .dashboard-menu a i {
-    width: 25px;
-    margin-right: 10px;
+    width: auto;
+    margin: 0;
+    font-size: 16px;
 }
 
 .menu-badge {
@@ -191,46 +229,159 @@ include 'includes/header.php';
 }
 
 .stat-card {
-    background: white;
+    display: none;
+}
+
+.stats-bar {
+    background: #ffffff;
     border-radius: 20px;
-    padding: 20px;
+    padding: 32px 24px;
+    box-shadow: 0 16px 36px rgba(32, 49, 84, 0.09);
+    border: 1px solid rgba(102,126,234,0.12);
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 24px;
+}
+
+.stat-item {
     text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    transition: all 0.3s;
+    padding: 16px 12px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(102,126,234,0.04) 0%, rgba(118,75,162,0.04) 100%);
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
 }
 
-.stat-card::before {
+.stat-item::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
+    height: 3px;
     background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.stat-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+.stat-item:hover {
+    background: linear-gradient(180deg, rgba(102,126,234,0.08) 0%, rgba(118,75,162,0.08) 100%);
+    transform: translateY(-3px);
 }
 
-.stat-card i {
-    font-size: 45px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 10px;
+.stat-item:hover::before {
+    opacity: 1;
+}
+
+.stat-item .stat-number {
+    font-size: 40px;
+    font-weight: 800;
+    color: #667eea;
+    margin: 0;
+    line-height: 1;
+}
+
+.stat-item .stat-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #5a6b7d;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-top: 12px;
+}
+
+.stat-item .stat-desc {
+    font-size: 12px;
+    color: #8899aa;
+    margin-top: 6px;
+}
+
+.stat-card h3 {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 10px 0 8px;
+    color: #28354b;
+}
+
+.stat-card p {
+    margin: 0;
+    color: #58657f;
+    font-size: 14px;
+}
+
+/* Banner greeting styles */
+.dashboard-greeting {
+ background: #ffffff;
+ padding: 24px 20px;
+ border-radius: 18px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ text-align: center;
+ box-shadow: 0 14px 40px rgba(102, 126, 234, 0.12);
+ border: 1px solid rgba(102,126,234,0.1);
+ margin-bottom: 20px;
+ max-width: 100%;
+ animation: floatIn 0.8s ease-out both;
+}
+.dashboard-greeting h2 {
+ margin:0;
+ font-size: 28px;
+ color:#273c75;
+ letter-spacing: 0.3px;
+ animation: fadeInUp 0.9s ease-out 0.1s both;
+}
+.dashboard-greeting p {
+ margin:10px 0 0;
+ color:#546e7a;
+ font-size: 15px;
+ animation: fadeInUp 1s ease-out 0.2s both;
+}
+.dashboard-greeting::after {
+ content: '';
+ display: block;
+ width: 80px;
+ height: 4px;
+ border-radius: 50px;
+ background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+ margin-top: 16px;
+ animation: pulseLine 2s ease-in-out infinite;
+}
+
+@keyframes floatIn {
+ from {
+ opacity: 0;
+ transform: translateY(20px) scale(0.98);
+ }
+ to {
+ opacity: 1;
+ transform: translateY(0) scale(1);
+ }
+}
+
+@keyframes fadeInUp {
+ from {
+ opacity: 0;
+ transform: translateY(12px);
+ }
+ to {
+ opacity: 1;
+ transform: translateY(0);
+ }
+}
+
+@keyframes pulseLine {
+ 0%, 100% { transform: scaleX(1); opacity: 1; }
+ 50% { transform: scaleX(1.08); opacity: 0.85; }
 }
 
 .stat-card h3 {
     font-size: 32px;
-    font-weight: bold;
+    font-weight: 700;
     margin: 10px 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #24324d;
 }
 
 .appointment-card {
@@ -238,15 +389,15 @@ include 'includes/header.php';
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 15px;
-    border-left: 5px solid;
-    transition: all 0.3s;
+    border-left: 5px solid rgba(102,126,234,0.25);
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
 }
 
 .appointment-card:hover {
-    transform: translateX(8px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transform: translateX(6px);
+    box-shadow: 0 8px 24px rgba(32, 49, 84, 0.12);
 }
 
 .appointment-card.confirme {
@@ -624,7 +775,9 @@ include 'includes/header.php';
             <div class="col-lg-3" data-aos="fade-right">
                 <div class="dashboard-sidebar">
                     <div class="user-info">
-                        <i class="fas fa-user-circle"></i>
+                        <div class="user-avatar">
+                            <?php echo strtoupper(substr(htmlspecialchars($_SESSION['user_nom']), 0, 1)); ?>
+                        </div>
                         <h5><?php echo htmlspecialchars($_SESSION['user_nom']); ?></h5>
                         <p class="text-muted">Patient</p>
                         <p class="small text-secondary">
@@ -632,10 +785,10 @@ include 'includes/header.php';
                         </p>
                     </div>
                     <ul class="dashboard-menu">
-                        <li><a href="#" class="active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a></li>
-                        <li><a href="#" data-page="booking"><i class="fas fa-calendar-plus"></i> Prendre RDV</a></li>
+                        <li><a href="#" class="active" data-page="dashboard"><span class="menu-icon"><i class="fas fa-tachometer-alt"></i></span> Tableau de bord</a></li>
+                        <li><a href="#" data-page="booking"><span class="menu-icon"><i class="fas fa-calendar-plus"></i></span> Prendre RDV</a></li>
                         <li><a href="#" data-page="appointments">
-                            <i class="fas fa-calendar-alt"></i> Mes rendez-vous
+                            <span class="menu-icon"><i class="fas fa-calendar-alt"></i></span> Mes rendez-vous
                             <?php 
                             $total_rdv_encours = $rdv_attente_count['nb_attente'] + $rdv_confirmes_count['nb_confirmes'];
                             if($total_rdv_encours > 0): 
@@ -643,10 +796,10 @@ include 'includes/header.php';
                                 <span class="menu-badge"><?php echo $total_rdv_encours; ?></span>
                             <?php endif; ?>
                         </a></li>
-                        <li><a href="#" data-page="history"><i class="fas fa-history"></i> Historique</a></li>
-                        <li><a href="#" data-page="profile"><i class="fas fa-user"></i> Mon profil</a></li>
+                        <li><a href="#" data-page="history"><span class="menu-icon"><i class="fas fa-history"></i></span> Historique</a></li>
+                        <li><a href="#" data-page="profile"><span class="menu-icon"><i class="fas fa-user"></i></span> Mon profil</a></li>
                         <li><a href="#" data-page="notifications">
-                            <i class="fas fa-bell"></i> Notifications 
+                            <span class="menu-icon"><i class="fas fa-bell"></i></span> Notifications 
                             <?php if($notifications['non_lues'] > 0): ?>
                                 <span class="menu-badge"><?php echo $notifications['non_lues']; ?></span>
                             <?php endif; ?>
@@ -656,36 +809,34 @@ include 'includes/header.php';
             </div>
             
             <div class="col-lg-9" data-aos="fade-left">
-                <!-- Section Tableau de bord -->
-                <div id="dashboardSection">
-                    <div class="row g-4 mb-4">
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <i class="fas fa-calendar-check"></i>
-                                <h3><?php echo $stats['total_rdv']; ?></h3>
-                                <p>Total RDV</p>
-                            </div>
+                 <!-- Section Tableau de bord -->
+                 <div id="dashboardSection">
+                 <div class="dashboard-greeting">
+                    <div class="greet-text">
+                        <h2>Bonjour, <?php echo htmlspecialchars($_SESSION['user_nom']); ?></h2>
+                        <p>Bienvenue sur votre tableau de bord</p>
+                    </div>
+                 </div>
+                    <div class="stats-bar">
+                        <div class="stat-item">
+                            <p class="stat-number"><?php echo $stats['total_rdv']; ?></p>
+                            <p class="stat-label">Total RDV</p>
+                            <p class="stat-desc">Rendez-vous</p>
                         </div>
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <i class="fas fa-check-circle"></i>
-                                <h3><?php echo $stats['rdv_confirms']; ?></h3>
-                                <p>Confirmés</p>
-                            </div>
+                        <div class="stat-item">
+                            <p class="stat-number"><?php echo $stats['rdv_confirms']; ?></p>
+                            <p class="stat-label">Confirmés</p>
+                            <p class="stat-desc">Approuvés</p>
                         </div>
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <i class="fas fa-clock"></i>
-                                <h3><?php echo $stats['rdv_attente']; ?></h3>
-                                <p>En attente</p>
-                            </div>
+                        <div class="stat-item">
+                            <p class="stat-number"><?php echo $stats['rdv_attente']; ?></p>
+                            <p class="stat-label">En Attente</p>
+                            <p class="stat-desc">En Cours</p>
                         </div>
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <i class="fas fa-check-double"></i>
-                                <h3><?php echo $stats['rdv_termines']; ?></h3>
-                                <p>Terminés</p>
-                            </div>
+                        <div class="stat-item">
+                            <p class="stat-number"><?php echo $stats['rdv_termines']; ?></p>
+                            <p class="stat-label">Terminés</p>
+                            <p class="stat-desc">Complétés</p>
                         </div>
                     </div>
                     
