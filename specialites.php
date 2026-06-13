@@ -206,7 +206,6 @@ $medecins = $stmtMedecins->fetchAll();
                                 <p class="info"><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($medecin['ville']); ?></p>
                                 <p class="info"><i class="fas fa-phone-alt"></i> <?php echo htmlspecialchars($medecin['telephone']); ?></p>
                                 <p class="info"><i class="fas fa-calendar-alt"></i> <?php echo $medecin['annees_experience']; ?> ans d'expérience</p>
-                                <p class="tarif"><?php echo number_format($medecin['tarif_consultation'], 0, ',', ' '); ?> FCFA</p>
                             </div>
                             <div class="card-footer bg-transparent">
                                 <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'patient'): ?>
