@@ -194,7 +194,7 @@ include 'includes/header.php';
 .btn-outline-primary {
     border-radius: 25px;
     padding: 8px 25px;
-    transition: all 0.3s;
+    transitio n: all 0.3s;
 }
 
 .btn-outline-primary:hover {
