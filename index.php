@@ -547,7 +547,7 @@ function getDoctorRating($medecinId) {
                 </p>
                 
                 <div class="d-flex gap-3 flex-wrap">
-                    <a href="specialites.php" class="btn btn-primary px-4 py-3">
+                    <a href="prendre-rendez-vous.php" class="btn btn-primary px-4 py-3">
                         <i class="fas fa-calendar-check me-2"></i>
                         Prendre rendez-vous
                     </a>
@@ -955,7 +955,7 @@ function getDoctorRating($medecinId) {
             <h2 class="display-5 fw-bold mb-3">Prêt à prendre soin de votre santé ?</h2>
             <p class="fs-5 mb-4 opacity-90">Rejoignez des milliers de patients qui nous font confiance chaque jour</p>
             <div class="d-flex gap-3 justify-content-center flex-wrap">
-                <a href="specialites.php" class="btn btn-light btn-lg px-5">
+                <a href="prendre-rendez-vous.php" class="btn btn-light btn-lg px-5">
                     <i class="fas fa-calendar-check me-2"></i>
                     Prendre rendez-vous
                 </a>
