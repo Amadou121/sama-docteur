@@ -5,7 +5,7 @@ require_once 'includes/config.php';
 if (estConnecte()) {
     switch($_SESSION['user_role']) {
         case 'patient':
-            header('Location: dashboard.php');
+            header('Location: index.php');
             break;
         case 'medecin':
             header('Location: dashboard-medecin.php');
