@@ -2,6 +2,42 @@
 // Fichier: includes/footer.php
 ?>
     </main>
+    <style>
+        .footer {
+            background: #0b2a36; /* fond plus sombre */
+            color: #eaf6fb;
+            padding: 40px 0;
+        }
+        .footer a {
+            color: #9fd6ee;
+            text-decoration: none;
+        }
+        /* Supprimer puces et marges des listes de liens dans le footer */
+        .footer .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer .footer-links li {
+            margin-bottom: 8px;
+            color: #d8f3fb;
+        }
+        .footer .footer-links li a { color: #c7ecfb; }
+        .footer .footer-links li a:hover { color: #ffffff; }
+        .footer a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+        .footer .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 15px;
+            margin-top: 20px;
+            color: #cfeffb;
+            font-size: 13px;
+        }
+        .footer .footer-brand i { color: #9fd6ee; margin-right: 8px; }
+    </style>
+
     <footer class="footer">
         <div class="container">
             <div class="row">
