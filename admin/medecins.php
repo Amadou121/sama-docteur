@@ -401,7 +401,7 @@ include '../includes/header.php';
         </div>
         <div class="nav-menu">
             <div class="nav-item">
-                <a href="dashboard.php" class="nav-link">
+                <a href="index.php" class="nav-link">
                     <i class="fas fa-tachometer-alt"></i> Tableau de bord
                 </a>
             </div>

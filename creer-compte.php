@@ -3,7 +3,7 @@
 require_once 'includes/config.php';
 
 if (estConnecte()) {
-    header('Location: dashboard.php');
+    header('Location: index.php');
     exit();
 }
 
