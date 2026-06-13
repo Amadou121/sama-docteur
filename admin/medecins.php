@@ -145,8 +145,13 @@ include '../includes/header.php';
             background: linear-gradient(135deg, #0f2a3a 0%, #263f50 100%);
             color: #eef6fb;
             transition: all 0.3s;
-            position: fixed;
-            height: 100vh;
+            /* Use sticky on desktop so the sidebar stays within the page flow
+               and does not overlap footer. For small screens we'll switch to fixed. */
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            align-self: flex-start;
+            height: calc(100vh);
             overflow-y: auto;
             z-index: 1000;
         }
