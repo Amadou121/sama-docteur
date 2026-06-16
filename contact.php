@@ -450,24 +450,16 @@ textarea.form-control-modern {
     font-size: 0.7rem;
     margin-left: 4px;
 }
-
-/* ⭐ BADGE CONNECTÉ */
-.user-badge {
-    display: inline-block;
-    background: #d1fae5;
-    color: #065f46;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 500;
-    margin-top: 10px;
-}
 </style>
 
 <div class="contact-page">
     <div class="container py-5">
         <!-- En-tête sophistiqué -->
         <div class="contact-header" data-aos="fade-up">
+            <div class="urgent-badge">
+                <i class="fas fa-exclamation-triangle"></i>
+                Urgence médicale ? Appelez le 15
+            </div>
             <div class="badge">
                 <i class="fas fa-comment-medical me-2"></i> Assistance Médicale 24/7
             </div>
@@ -579,8 +571,88 @@ textarea.form-control-modern {
             </div>
         </div>
         
+        <!-- Section informations de contact -->
+        <div class="contact-info-section" data-aos="fade-up">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h4 class="contact-info-title">Téléphone</h4>
+                        <p class="contact-info-text">
+                            <a href="tel:+221771234567" class="contact-info-link">+221 77 123 45 67</a>
+                        </p>
+                        <p class="contact-info-text">
+                            <a href="tel:+221789876543" class="contact-info-link">+221 78 987 65 43</a>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h4 class="contact-info-title">Email</h4>
+                        <p class="contact-info-text">
+                            <a href="mailto:contact@samadocteur.sn" class="contact-info-link">contact@samadocteur.sn</a>
+                        </p>
+                        <p class="contact-info-text">
+                            <a href="mailto:support@samadocteur.sn" class="contact-info-link">support@samadocteur.sn</a>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4 class="contact-info-title">Adresse</h4>
+                        <p class="contact-info-text">
+                            Quartier Sor, Saint-Louis<br>
+                            Sénégal
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section horaires -->
+        <div class="hours-section" data-aos="fade-up">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="hours-card">
+                        <h4 class="hours-title">
+                            <i class="fas fa-clock"></i>
+                            Horaires d'ouverture
+                        </h4>
+                        <div class="hours-item">
+                            <span class="hours-day">Lundi - Vendredi</span>
+                            <span class="hours-time">08:00 - 18:00</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Samedi</span>
+                            <span class="hours-time">09:00 - 14:00</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Dimanche</span>
+                            <span class="hours-time">Fermé</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Urgences</span>
+                            <span class="hours-current">24h/24 - 7j/7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- Google Maps sophistiqué -->
-        <div class="mt-5 pt-4" data-aos="fade-up">
+        <div class="map-section" data-aos="fade-up">
+            <h3 class="map-section-title">Nous trouver</h3>
+            <p class="map-section-subtitle">Notre centre médical est situé au cœur de Saint-Louis</p>
             <div class="map-container-modern" style="max-width: 800px; margin: 0 auto;">
                 <div class="map-overlay">
                     <i class="fas fa-map-marker-alt me-1"></i> Saint-Louis, Sénégal

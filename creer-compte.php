@@ -3,7 +3,7 @@
 require_once 'includes/config.php';
 
 if (estConnecte()) {
-    header('Location: dashboard.php');
+    header('Location: index.php');
     exit();
 }
 
@@ -194,7 +194,7 @@ include 'includes/header.php';
 .btn-outline-primary {
     border-radius: 25px;
     padding: 8px 25px;
-    transition: all 0.3s;
+    transitio n: all 0.3s;
 }
 
 .btn-outline-primary:hover {

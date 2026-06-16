@@ -415,6 +415,19 @@ CREATE TABLE IF NOT EXISTS logs_systeme (
     INDEX idx_action (action),
     INDEX idx_date (date_creation)
 );
+
+
+
+-- Ajouter la colonne photo à la table medecins
+ALTER TABLE `medecins` 
+ADD COLUMN `photo` VARCHAR(255) NULL 
+AFTER `tarif_consultation`;
+
+-- Mettre à jour avec des photos existantes (optionnel)
+UPDATE `medecins` SET `photo` = 'docteur1.jpg' WHERE `id` = 1;
+UPDATE `medecins` SET `photo` = 'docteur2.jpg' WHERE `id` = 2;
+UPDATE `medecins` SET `photo` = 'docteur3.jpg' WHERE `id` = 3;
+UPDATE `medecins` SET `photo` = 'docteur4.jpg' WHERE `id` = 4;
 -- ============================================
 -- FIN DU SCRIPT
 -- ============================================
