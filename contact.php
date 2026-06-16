@@ -7,6 +7,20 @@ $message_envoye = false;
 $erreur = '';
 $prenom = $nom = $telephone = $message = '';
 
+// Vérifier si l'utilisateur est connecté pour pré-remplir les champs
+if (isset($_SESSION['user_id']) && $_SESSION['user_role'] == 'patient') {
+    $user_id = $_SESSION['user_id'];
+    $stmt = $pdo->prepare("SELECT nom_complet, email, telephone FROM utilisateurs WHERE id = ?");
+    $stmt->execute([$user_id]);
+    $user = $stmt->fetch();
+    if ($user) {
+        $nom_complet = explode(' ', $user['nom_complet']);
+        $prenom = $nom_complet[0] ?? '';
+        $nom = $nom_complet[1] ?? '';
+        $telephone = $user['telephone'] ?? '';
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $prenom = trim(htmlspecialchars($_POST['prenom'] ?? ''));
     $nom = trim(htmlspecialchars($_POST['nom'] ?? ''));
@@ -84,6 +98,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     font-weight: 400;
     max-width: 500px;
     margin: 0 auto;
+}
+
+/* ⭐ NOUVEAU STYLE POUR LES BOUTONS DE NAVIGATION */
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.nav-btn-primary {
+    background: linear-gradient(135deg, #2563EB, #1e40af);
+    color: white;
+}
+
+.nav-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(37,99,235,0.3);
+    color: white;
+}
+
+.nav-btn-outline {
+    background: transparent;
+    border-color: #2563EB;
+    color: #2563EB;
+}
+
+.nav-btn-outline:hover {
+    background: #2563EB;
+    color: white;
+    transform: translateY(-3px);
 }
 
 .contact-form-wrapper {
@@ -327,6 +385,16 @@ textarea.form-control-modern {
     .btn-submit-modern {
         padding: 14px;
     }
+    
+    .nav-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .nav-btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 /* Input avec icône flottante */
@@ -382,6 +450,18 @@ textarea.form-control-modern {
     font-size: 0.7rem;
     margin-left: 4px;
 }
+
+/* ⭐ BADGE CONNECTÉ */
+.user-badge {
+    display: inline-block;
+    background: #d1fae5;
+    color: #065f46;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    margin-top: 10px;
+}
 </style>
 
 <div class="contact-page">
@@ -394,6 +474,25 @@ textarea.form-control-modern {
             <h1>Prenons soin de vous</h1>
             <div class="divider"></div>
             <p>Une question médicale ? Notre équipe de professionnels vous répond sous 24h</p>
+            
+            <?php if (isset($_SESSION['user_id']) && $_SESSION['user_role'] == 'patient'): ?>
+                <div class="user-badge">
+                    <i class="fas fa-check-circle me-1"></i> Connecté en tant que patient
+                </div>
+            <?php endif; ?>
+            
+            <!-- ⭐ BOUTONS DE NAVIGATION -->
+            <div class="nav-buttons">
+                <?php if (isset($_SESSION['user_id']) && $_SESSION['user_role'] == 'patient'): ?>
+                    <a href="dashboard.php" class="nav-btn nav-btn-primary">
+                        <i class="fas fa-tachometer-alt"></i> Mon tableau de bord
+                    </a>
+                <?php else: ?>
+                    <a href="medecin_login.php" class="nav-btn nav-btn-outline">
+                        <i class="fas fa-user-md"></i> Espace Médecin
+                    </a>
+                <?php endif; ?>
+            </div>
         </div>
         
         <div class="row justify-content-center">

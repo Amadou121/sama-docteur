@@ -11,37 +11,78 @@ if ($_SESSION['user_role'] != 'patient') {
 $user_id = $_SESSION['user_id'];
 
 // Statistiques
-$stmt = $pdo->prepare("\n    SELECT \n        COUNT(*) as total_rdv,\n        SUM(CASE WHEN statut = 'confirme' THEN 1 ELSE 0 END) as rdv_confirms,\n        SUM(CASE WHEN statut = 'termine' THEN 1 ELSE 0 END) as rdv_termines,\n        SUM(CASE WHEN statut = 'en_attente' THEN 1 ELSE 0 END) as rdv_attente\n    FROM rendez_vous \n    WHERE utilisateur_id = ?\n");
+$stmt = $pdo->prepare("
+    SELECT 
+        COUNT(*) as total_rdv,
+        SUM(CASE WHEN statut = 'confirme' THEN 1 ELSE 0 END) as rdv_confirms,
+        SUM(CASE WHEN statut = 'termine' THEN 1 ELSE 0 END) as rdv_termines,
+        SUM(CASE WHEN statut = 'en_attente' THEN 1 ELSE 0 END) as rdv_attente
+    FROM rendez_vous 
+    WHERE utilisateur_id = ?
+");
 $stmt->execute([$user_id]);
 $stats = $stmt->fetch();
 
 // Prochains rendez-vous
-$stmt = $pdo->prepare("\n    SELECT r.*, m.nom_complet as medecin_nom, m.telephone as medecin_tel, s.nom as specialite_nom\n    FROM rendez_vous r\n    JOIN medecins m ON r.medecin_id = m.id\n    JOIN specialites s ON m.specialite_id = s.id\n    WHERE r.utilisateur_id = ? AND r.date_rendez_vous >= NOW() AND r.statut NOT IN ('annule', 'termine')\n    ORDER BY r.date_rendez_vous ASC\n    LIMIT 5\n");
+$stmt = $pdo->prepare("
+    SELECT r.*, m.nom_complet as medecin_nom, m.telephone as medecin_tel, s.nom as specialite_nom
+    FROM rendez_vous r
+    JOIN medecins m ON r.medecin_id = m.id
+    JOIN specialites s ON m.specialite_id = s.id
+    WHERE r.utilisateur_id = ? AND r.date_rendez_vous >= NOW() AND r.statut NOT IN ('annule', 'termine')
+    ORDER BY r.date_rendez_vous ASC
+    LIMIT 5
+");
 $stmt->execute([$user_id]);
 $prochains_rdv = $stmt->fetchAll();
 
 // Compter les rendez-vous en attente de confirmation
-$stmt = $pdo->prepare("\n    SELECT COUNT(*) as nb_attente\n    FROM rendez_vous \n    WHERE utilisateur_id = ? AND statut = 'en_attente' AND date_rendez_vous >= NOW()\n");
+$stmt = $pdo->prepare("
+    SELECT COUNT(*) as nb_attente
+    FROM rendez_vous 
+    WHERE utilisateur_id = ? AND statut = 'en_attente' AND date_rendez_vous >= NOW()
+");
 $stmt->execute([$user_id]);
 $rdv_attente_count = $stmt->fetch();
 
 // Compter les rendez-vous confirmés à venir
-$stmt = $pdo->prepare("\n    SELECT COUNT(*) as nb_confirmes\n    FROM rendez_vous \n    WHERE utilisateur_id = ? AND statut = 'confirme' AND date_rendez_vous >= NOW()\n");
+$stmt = $pdo->prepare("
+    SELECT COUNT(*) as nb_confirmes
+    FROM rendez_vous 
+    WHERE utilisateur_id = ? AND statut = 'confirme' AND date_rendez_vous >= NOW()
+");
 $stmt->execute([$user_id]);
 $rdv_confirmes_count = $stmt->fetch();
 
 // Historique des rendez-vous
-$stmt = $pdo->prepare("\n    SELECT r.*, m.nom_complet as medecin_nom, s.nom as specialite_nom\n    FROM rendez_vous r\n    JOIN medecins m ON r.medecin_id = m.id\n    JOIN specialites s ON m.specialite_id = s.id\n    WHERE r.utilisateur_id = ? \n    ORDER BY r.date_rendez_vous DESC\n    LIMIT 10\n");
+$stmt = $pdo->prepare("
+    SELECT r.*, m.nom_complet as medecin_nom, s.nom as specialite_nom
+    FROM rendez_vous r
+    JOIN medecins m ON r.medecin_id = m.id
+    JOIN specialites s ON m.specialite_id = s.id
+    WHERE r.utilisateur_id = ? 
+    ORDER BY r.date_rendez_vous DESC
+    LIMIT 10
+");
 $stmt->execute([$user_id]);
 $historique_rdv = $stmt->fetchAll();
 
 // Notifications non lues
-$stmt = $pdo->prepare("\n    SELECT COUNT(*) as non_lues \n    FROM notifications \n    WHERE utilisateur_id = ? AND est_lu = FALSE\n");
+$stmt = $pdo->prepare("
+    SELECT COUNT(*) as non_lues 
+    FROM notifications 
+    WHERE utilisateur_id = ? AND est_lu = FALSE
+");
 $stmt->execute([$user_id]);
 $notifications = $stmt->fetch();
 
 // Récupérer toutes les notifications pour l'affichage
-$stmt = $pdo->prepare("\n    SELECT * FROM notifications \n    WHERE utilisateur_id = ? \n    ORDER BY date_creation DESC \n    LIMIT 20\n");
+$stmt = $pdo->prepare("
+    SELECT * FROM notifications 
+    WHERE utilisateur_id = ? 
+    ORDER BY date_creation DESC 
+    LIMIT 20
+");
 $stmt->execute([$user_id]);
 $liste_notifications = $stmt->fetchAll();
 
@@ -111,6 +152,24 @@ include 'includes/header.php';
 .dashboard-menu a i {
     width: 25px;
     margin-right: 10px;
+}
+
+/* ⭐ STYLE POUR LE LIEN CONTACT DANS LE MENU */
+.dashboard-menu a.contact-link {
+    background: linear-gradient(135deg, #2563EB, #1e40af);
+    color: white !important;
+    margin-top: 15px;
+    border: none;
+}
+
+.dashboard-menu a.contact-link:hover {
+    background: linear-gradient(135deg, #1e40af, #1e3a8a);
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(37,99,235,0.3);
+}
+
+.dashboard-menu a.contact-link i {
+    color: white;
 }
 
 .menu-badge {
@@ -234,6 +293,92 @@ include 'includes/header.php';
     padding: 5px 12px;
     font-size: 12px;
 }
+
+/* ⭐ BANNIÈRE DE LIEN VERS CONTACT */
+.contact-banner {
+    background: linear-gradient(135deg, #2563EB, #1e40af);
+    border-radius: 15px;
+    padding: 20px 30px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(37,99,235,0.2);
+}
+
+.contact-banner .banner-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.contact-banner .banner-content i {
+    font-size: 2rem;
+}
+
+.contact-banner .banner-content h5 {
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.contact-banner .banner-content p {
+    margin-bottom: 0;
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+.contact-banner .btn-banner {
+    background: white;
+    color: #2563EB;
+    padding: 10px 25px;
+    border-radius: 30px;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.contact-banner .btn-banner:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    color: #1e40af;
+}
+
+.contact-btn-top {
+    background: transparent;
+    border: 2px solid #0066cc;
+    color: #0066cc;
+    padding: 6px 18px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.contact-btn-top:hover {
+    background: #0066cc;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,102,204,0.3);
+}
+
+@media (max-width: 768px) {
+    .contact-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .contact-banner .banner-content {
+        flex-direction: column;
+    }
+}
 </style>
 
 <div class="dashboard-wrapper">
@@ -268,11 +413,31 @@ include 'includes/header.php';
                                 <span class="menu-badge"><?php echo $notifications['non_lues']; ?></span>
                             <?php endif; ?>
                         </a></li>
+                        
+                        <!-- ⭐ NOUVEAU LIEN VERS CONTACT DANS LE MENU -->
+                        <li><a href="contact.php" class="contact-link">
+                            <i class="fas fa-envelope"></i> Nous contacter
+                            <i class="fas fa-arrow-right ms-auto"></i>
+                        </a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="col-lg-9" data-aos="fade-left">
+                <!-- ⭐ BANNIÈRE CONTACT -->
+                <div class="contact-banner">
+                    <div class="banner-content">
+                        <i class="fas fa-comment-medical"></i>
+                        <div>
+                            <h5>Une question médicale ?</h5>
+                            <p>Notre équipe est à votre écoute 24/7</p>
+                        </div>
+                    </div>
+                    <a href="contact.php" class="btn-banner">
+                        <i class="fas fa-paper-plane me-2"></i> Nous contacter
+                    </a>
+                </div>
+                
                 <!-- Section Tableau de bord -->
                 <div id="dashboardSection">
                     <div class="row g-4 mb-4">
@@ -307,12 +472,18 @@ include 'includes/header.php';
                     </div>
                     
                     <div class="dashboard-sidebar mb-4">
-                        <h4 class="mb-3">
-                            <i class="fas fa-calendar-alt"></i> Prochains rendez-vous
-                            <?php if($total_rdv_encours > 0): ?>
-                                <span class="badge bg-primary"><?php echo $total_rdv_encours; ?> à venir</span>
-                            <?php endif; ?>
-                        </h4>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-0">
+                                <i class="fas fa-calendar-alt"></i> Prochains rendez-vous
+                                <?php if($total_rdv_encours > 0): ?>
+                                    <span class="badge bg-primary"><?php echo $total_rdv_encours; ?> à venir</span>
+                                <?php endif; ?>
+                            </h4>
+                            <!-- ⭐ BOUTON CONTACT DANS LE HEADER -->
+                            <a href="contact.php" class="contact-btn-top">
+                                <i class="fas fa-envelope"></i> Contacter
+                            </a>
+                        </div>
                         <?php if(empty($prochains_rdv)): ?>
                             <div class="alert alert-info">
                                 <i class="fas fa-info-circle"></i> Aucun rendez-vous à venir.
