@@ -764,6 +764,48 @@ main {
     animation: slideInRight 0.6s ease-out;
 }
 
+/* ==================== STORY SECTION ==================== */
+.story-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    overflow: hidden;
+}
+
+.doctor-image {
+    max-width: 100%;
+    width: 100%;
+    max-height: 350px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    border: 3px solid #2563eb;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+    animation: floatImage 3s ease-in-out infinite;
+}
+
+.doctor-image:hover {
+    animation: none;
+    transform: scale(1.05);
+}
+
+@keyframes floatImage {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .doctor-image {
+        border-radius: 8px;
+    }
+}
+
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 1200px) {
     .hero h1 {

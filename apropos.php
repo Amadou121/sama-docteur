@@ -57,19 +57,7 @@ include 'includes/header.php';
                 </div>
             </div>
             <div class="story-image">
-                <div class="image-wrapper">
-                    <div class="image-card">
-                        <i class="fas fa-stethoscope"></i>
-                    </div>
-                    <div class="floating-card card1">
-                        <i class="fas fa-user-md"></i>
-                        <span>100+ médecins</span>
-                    </div>
-                    <div class="floating-card card2">
-                        <i class="fas fa-smile"></i>
-                        <span>98% satisfaction</span>
-                    </div>
-                </div>
+                <img src="assets/images/Dr Sophie Diallo.jpg" alt="Médecin Sama Docteur" class="doctor-image">
             </div>
         </div>
     </div>
