@@ -3,27 +3,18 @@
 ?>
     </main>
     <style>
+        /* Footer styles consolidated and fixed */
         .footer {
             background: #0b2a36; /* fond plus sombre */
             color: #eaf6fb;
             padding: 40px 0;
+            position: relative; /* s'assurer qu'on peut gérer le stacking */
+            z-index: 1100; /* doit être au-dessus du sidebar fixe */
         }
         .footer a {
             color: #9fd6ee;
             text-decoration: none;
         }
-        /* Supprimer puces et marges des listes de liens dans le footer */
-        .footer .footer-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .footer .footer-links li {
-            margin-bottom: 8px;
-            color: #d8f3fb;
-        }
-        .footer .footer-links li a { color: #c7ecfb; }
-        .footer .footer-links li a:hover { color: #ffffff; }
         .footer a:hover {
             color: #ffffff;
             text-decoration: underline;
@@ -36,6 +27,28 @@
             font-size: 13px;
         }
         .footer .footer-brand i { color: #9fd6ee; margin-right: 8px; }
+
+        /* Supprimer puces et marges des listes de liens dans le footer */
+        .footer .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer .footer-links li {
+            margin-bottom: 8px;
+            color: #d8f3fb;
+        }
+        .footer .footer-links li a { color: #c7ecfb; }
+        .footer .footer-links li a:hover { color: #ffffff; }
+
+        /* Empêcher le sidebar fixe de chevaucher le footer en desktop
+           et assurer compatibilité mobile */
+        @media (min-width: 993px) {
+            .footer { margin-left: 280px; }
+        }
+        @media (max-width: 992px) {
+            .footer { margin-left: 0; }
+        }
     </style>
 
     <footer class="footer">

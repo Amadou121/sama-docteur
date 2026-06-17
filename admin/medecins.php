@@ -142,16 +142,10 @@ include '../includes/header.php';
         /* Sidebar */
         .admin-sidebar {
             width: 280px;
-            background: linear-gradient(135deg, #0f2a3a 0%, #263f50 100%);
-            color: #eef6fb;
-            transition: all 0.3s;
-            /* Use sticky on desktop so the sidebar stays within the page flow
-               and does not overlap footer. For small screens we'll switch to fixed. */
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            align-self: flex-start;
-            height: calc(100vh);
+            background: linear-gradient(135deg, var(--dark-color) 0%, #34495e 100%);
+            color: white;
+            position: fixed;
+            height: 100vh;
             overflow-y: auto;
             z-index: 1000;
         }
