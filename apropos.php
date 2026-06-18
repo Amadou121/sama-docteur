@@ -56,9 +56,16 @@ include 'includes/header.php';
                     </div>
                 </div>
             </div>
-            <div class="story-image">
-                <img src="assets/images/Dr Sophie Diallo.jpg" alt="Médecin Sama Docteur" class="doctor-image">
-            </div>
+                <div class="story-image">
+                    <div class="story-hero">
+                        <img src="assets/images/Mamadou Diallo.jpg" alt="Dr Mamadou Diallo" class="doctor-image doctor-hero-image">
+                        <div class="doctor-hero-overlay">
+                            <h3>Dr Mamadou Diallo</h3>
+                            <p>Fondateur &amp; CEO — Médecin généraliste</p>
+                            <a href="prendre-rendez-vous.php" class="btn-primary">Prendre rendez-vous</a>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 </section>
