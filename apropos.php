@@ -166,7 +166,7 @@ include 'includes/header.php';
             <div class="team-member">
                 <div class="member-image">
                     <div class="member-avatar">
-                        <i class="fas fa-user-md"></i>
+                        <img src="assets/images/Mamadou Diallo.jpg" alt="Dr Mamadou Diallo">
                     </div>
                     <div class="member-social">
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
@@ -182,7 +182,7 @@ include 'includes/header.php';
             <div class="team-member">
                 <div class="member-image">
                     <div class="member-avatar">
-                        <i class="fas fa-user-circle"></i>
+                        <img src="assets/images/Aminata Sow.jpg" alt="Aminata Sow">
                     </div>
                     <div class="member-social">
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
@@ -198,11 +198,11 @@ include 'includes/header.php';
             <div class="team-member">
                 <div class="member-image">
                     <div class="member-avatar">
-                        <i class="fas fa-laptop-code"></i>
+                        <img src="assets/images/Oumar Ndiaye.jpg" alt="Oumar Ndiaye">
                     </div>
                     <div class="member-social">
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
                 <div class="member-info">
