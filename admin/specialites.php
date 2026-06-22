@@ -64,8 +64,11 @@ include '../includes/header.php';
         .specialite-icon { width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 15px; }
         @media (max-width: 768px) { .admin-sidebar { transform: translateX(-100%); } .admin-content { margin-left: 0; } }
     </style>
+    <link rel="stylesheet" href="assets/css/admin-responsive.css">
 </head>
 <body>
+<button class="admin-toggle-btn" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i></button>
+<div class="admin-overlay"></div>
 <div class="admin-wrapper">
     <div class="admin-sidebar">
         <div class="logo"><h3><i class="fas fa-stethoscope"></i> Sama Docteur</h3><p>Espace Administration</p></div>
@@ -128,6 +131,7 @@ include '../includes/header.php';
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/admin.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>

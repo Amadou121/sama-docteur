@@ -13,6 +13,11 @@ $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' 
 $host = $_SERVER['HTTP_HOST'];
 $uri = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
 
+// Si le projet est dupliqué dans un dossier imbriqué, on normalise le chemin
+if (strpos($uri, '/sama-docteur/sama-docteur') !== false) {
+    $uri = '/sama-docteur';
+}
+
 // Définir SITE_URL de manière dynamique
 define('SITE_URL', $protocol . $host . $uri . '/');
 
