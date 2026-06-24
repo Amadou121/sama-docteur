@@ -338,7 +338,7 @@ include 'includes/header.php';
                     <a href="prendre-rendezvous.php" class="btn-primary">
                         <i class="fas fa-calendar-plus"></i> Prendre rendez-vous
                     </a>
-                    <a href="medecins.php" class="btn-outline-light">
+                    <a href="specialites.php" class="btn-outline-light">
                         <i class="fas fa-search"></i> Trouver un médecin
                     </a>
                 </div>
