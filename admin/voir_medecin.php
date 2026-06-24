@@ -83,8 +83,11 @@ $noHeader = true;
         .schedule-item { background: #f8f9fa; padding: 10px 15px; margin-bottom: 8px; border-radius: 8px; }
         @media (max-width: 768px) { .admin-sidebar { transform: translateX(-100%); } .admin-content { margin-left: 0; } }
     </style>
+    <link rel="stylesheet" href="assets/css/admin-responsive.css">
 </head>
 <body>
+<button class="admin-toggle-btn" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i></button>
+<div class="admin-overlay"></div>
 <div class="admin-wrapper">
     <div class="admin-sidebar">
         <div class="logo"><h3><i class="fas fa-stethoscope"></i> Sama Docteur</h3><p>Espace Administration</p></div>

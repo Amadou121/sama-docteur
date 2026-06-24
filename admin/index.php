@@ -297,8 +297,11 @@ $noHeader = true;
             }
         }
     </style>
+    <link rel="stylesheet" href="assets/css/admin-responsive.css">
 </head>
 <body>
+<button class="admin-toggle-btn" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i></button>
+<div class="admin-overlay"></div>
 <div class="admin-wrapper">
     <!-- Sidebar -->
     <div class="admin-sidebar">

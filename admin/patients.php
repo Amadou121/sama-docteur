@@ -92,8 +92,11 @@ $noHeader = true;
         .avatar { width: 40px; height: 40px; border-radius: 50%; background: #0066cc; color: white; display: flex; align-items: center; justify-content: center; }
         @media (max-width: 768px) { .admin-sidebar { transform: translateX(-100%); } .admin-content { margin-left: 0; } }
     </style>
+    <link rel="stylesheet" href="assets/css/admin-responsive.css">
 </head>
 <body>
+<button class="admin-toggle-btn" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i></button>
+<div class="admin-overlay"></div>
 <div class="admin-wrapper">
     <div class="admin-sidebar">
         <div class="logo">

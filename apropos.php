@@ -56,21 +56,16 @@ include 'includes/header.php';
                     </div>
                 </div>
             </div>
-            <div class="story-image">
-                <div class="image-wrapper">
-                    <div class="image-card">
-                        <i class="fas fa-stethoscope"></i>
-                    </div>
-                    <div class="floating-card card1">
-                        <i class="fas fa-user-md"></i>
-                        <span>100+ médecins</span>
-                    </div>
-                    <div class="floating-card card2">
-                        <i class="fas fa-smile"></i>
-                        <span>98% satisfaction</span>
+                <div class="story-image">
+                    <div class="story-hero">
+                        <img src="assets/images/Mamadou Diallo.jpg" alt="Dr Mamadou Diallo" class="doctor-image doctor-hero-image">
+                        <div class="doctor-hero-overlay">
+                            <h3>Dr Mamadou Diallo</h3>
+                            <p>Fondateur &amp; CEO — Médecin généraliste</p>
+                            <a href="prendre-rendez-vous.php" class="btn-primary">Prendre rendez-vous</a>
+                        </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </section>
@@ -178,7 +173,7 @@ include 'includes/header.php';
             <div class="team-member">
                 <div class="member-image">
                     <div class="member-avatar">
-                        <i class="fas fa-user-md"></i>
+                        <img src="assets/images/Mamadou Diallo.jpg" alt="Dr Mamadou Diallo">
                     </div>
                     <div class="member-social">
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
@@ -194,7 +189,7 @@ include 'includes/header.php';
             <div class="team-member">
                 <div class="member-image">
                     <div class="member-avatar">
-                        <i class="fas fa-user-circle"></i>
+                        <img src="assets/images/Aminata Sow.jpg" alt="Aminata Sow">
                     </div>
                     <div class="member-social">
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
@@ -210,11 +205,11 @@ include 'includes/header.php';
             <div class="team-member">
                 <div class="member-image">
                     <div class="member-avatar">
-                        <i class="fas fa-laptop-code"></i>
+                        <img src="assets/images/Oumar Ndiaye.jpg" alt="Oumar Ndiaye">
                     </div>
                     <div class="member-social">
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
                 <div class="member-info">
@@ -340,7 +335,7 @@ include 'includes/header.php';
                 <h2>Prêt à prendre soin de votre santé ?</h2>
                 <p>Rejoignez les milliers de patients qui nous font confiance chaque jour</p>
                 <div class="cta-buttons">
-                    <a href="prendre-rendezvous.php" class="btn-primary">
+                    <a href="prendre-rendez-vous.php" class="btn-primary">
                         <i class="fas fa-calendar-plus"></i> Prendre rendez-vous
                     </a>
                     <a href="medecins.php" class="btn-outline-light">

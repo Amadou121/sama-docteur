@@ -100,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     margin: 0 auto;
 }
 
-/* ⭐ NOUVEAU STYLE POUR LES BOUTONS DE NAVIGATION */
 .nav-buttons {
     display: flex;
     justify-content: center;
@@ -351,6 +350,239 @@ textarea.form-control-modern {
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
+/* ============================================
+   NOUVEAU DESIGN - INFOS CONTACT EN LIGNE
+   ============================================ */
+
+.contact-info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    max-width: 1100px;
+    margin: 2.5rem auto 2rem;
+    padding: 0 1rem;
+}
+
+.contact-info-card {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 8px 25px -8px rgba(37,99,235,0.08), 0 0 0 1px rgba(37,99,235,0.04);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-info-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #2563EB, #60a5fa, #2563EB);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.contact-info-card:hover::before {
+    opacity: 1;
+}
+
+.contact-info-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 20px 40px -12px rgba(37,99,235,0.2), 0 0 0 1px rgba(37,99,235,0.1);
+}
+
+/* Effet de brillance au survol */
+.contact-info-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(37,99,235,0.03) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+}
+
+.contact-info-card:hover::after {
+    opacity: 1;
+}
+
+.contact-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 0.75rem;
+    background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(96,165,250,0.05));
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.contact-info-card:hover .contact-icon-wrapper {
+    background: linear-gradient(135deg, #2563EB, #1e40af);
+    transform: scale(1.05) rotate(-3deg);
+    box-shadow: 0 8px 20px rgba(37,99,235,0.25);
+}
+
+.contact-icon-wrapper i {
+    font-size: 1.4rem;
+    color: #2563EB;
+    transition: all 0.3s ease;
+}
+
+.contact-info-card:hover .contact-icon-wrapper i {
+    color: white;
+    transform: scale(1.1);
+}
+
+.contact-card-title {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #94a3b8;
+    margin-bottom: 0.5rem;
+}
+
+.contact-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.contact-card-link {
+    color: #1e293b;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 2px 0;
+    border-bottom: 2px solid transparent;
+}
+
+.contact-card-link:hover {
+    color: #2563EB;
+    border-bottom-color: #2563EB;
+}
+
+.contact-card-text {
+    color: #475569;
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Badge "Urgence" dans la carte */
+.contact-card-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    padding: 0.2rem 0.8rem;
+    border-radius: 30px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Séparateur vertical entre les cartes */
+.contact-info-divider {
+    display: none;
+}
+
+/* Responsive - Tablettes */
+@media (max-width: 992px) {
+    .contact-info-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 0 1.5rem;
+    }
+    
+    .contact-info-card {
+        padding: 1.25rem 0.75rem;
+    }
+}
+
+/* Responsive - Mobiles */
+@media (max-width: 576px) {
+    .contact-info-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        padding: 0 0.75rem;
+        margin: 1.5rem auto 1rem;
+    }
+    
+    .contact-info-card {
+        padding: 1rem 0.5rem;
+        border-radius: 18px;
+    }
+    
+    .contact-icon-wrapper {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+    }
+    
+    .contact-icon-wrapper i {
+        font-size: 1.1rem;
+    }
+    
+    .contact-card-title {
+        font-size: 0.55rem;
+        letter-spacing: 0.8px;
+    }
+    
+    .contact-card-link {
+        font-size: 0.7rem;
+    }
+    
+    .contact-card-text {
+        font-size: 0.7rem;
+    }
+    
+    .contact-card-badge {
+        font-size: 0.5rem;
+        padding: 0.15rem 0.6rem;
+    }
+}
+
+/* Pour les très petits écrans */
+@media (max-width: 400px) {
+    .contact-info-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+    
+    .contact-info-card {
+        padding: 0.75rem 0.4rem;
+    }
+}
+
+/* Fin du nouveau design */
+
 /* Animations */
 @keyframes fadeScale {
     from {
@@ -450,6 +682,32 @@ textarea.form-control-modern {
     font-size: 0.7rem;
     margin-left: 4px;
 }
+
+/* Badge utilisateur connecté */
+.user-badge {
+    display: inline-block;
+    background: rgba(16,185,129,0.12);
+    color: #065f46;
+    padding: 0.4rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 0.75rem;
+}
+
+.urgent-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    color: #dc2626;
+    padding: 0.4rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(220,38,38,0.15);
+}
+
+/* Hours section supprimée - intégrée dans la grille */
 </style>
 
 <div class="contact-page">
@@ -473,22 +731,106 @@ textarea.form-control-modern {
                 </div>
             <?php endif; ?>
             
-            <!-- ⭐ BOUTONS DE NAVIGATION -->
             <div class="nav-buttons">
                 <?php if (isset($_SESSION['user_id']) && $_SESSION['user_role'] == 'patient'): ?>
                     <a href="dashboard.php" class="nav-btn nav-btn-primary">
                         <i class="fas fa-tachometer-alt"></i> Mon tableau de bord
                     </a>
                 <?php else: ?>
-                    <a href="medecin_login.php" class="nav-btn nav-btn-outline">
-                        <i class="fas fa-user-md"></i> Espace Médecin
+                    <a href="specialites.php" class="nav-btn nav-btn-outline">
+                        <i class="fas fa-stethoscope"></i> Nos spécialités
                     </a>
                 <?php endif; ?>
             </div>
         </div>
         
+        <!-- ⭐ NOUVELLE SECTION - INFOS CONTACT EN GRILLE 4 COLONNES -->
+        <div class="contact-info-grid" data-aos="fade-up" data-aos-delay="100">
+            <!-- Téléphone -->
+            <div class="contact-info-card">
+                <div class="contact-icon-wrapper">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <div class="contact-card-title">Téléphone</div>
+                <div class="contact-card-content">
+                    <a href="tel:+221771234567" class="contact-card-link">
+                        <i class="fas fa-phone me-1" style="font-size:0.6rem; color:#2563EB;"></i>
+                        +221 77 123 45 67
+                    </a>
+                    <a href="tel:+221789876543" class="contact-card-link">
+                        <i class="fas fa-phone me-1" style="font-size:0.6rem; color:#2563EB;"></i>
+                        +221 78 987 65 43
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Email -->
+            <div class="contact-info-card">
+                <div class="contact-icon-wrapper">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-card-title">Email</div>
+                <div class="contact-card-content">
+                    <a href="mailto:contact@samadocteur.sn" class="contact-card-link">
+                        <i class="fas fa-envelope me-1" style="font-size:0.6rem; color:#2563EB;"></i>
+                        contact@samadocteur.sn
+                    </a>
+                    <a href="mailto:support@samadocteur.sn" class="contact-card-link">
+                        <i class="fas fa-envelope me-1" style="font-size:0.6rem; color:#2563EB;"></i>
+                        support@samadocteur.sn
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Adresse -->
+            <div class="contact-info-card">
+                <div class="contact-icon-wrapper">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="contact-card-title">Adresse</div>
+                <div class="contact-card-content">
+                    <p class="contact-card-text">
+                        <i class="fas fa-location-dot me-1" style="font-size:0.6rem; color:#2563EB;"></i>
+                        Quartier Sor, Saint-Louis
+                    </p>
+                    <p class="contact-card-text" style="font-size:0.7rem; color:#94a3b8;">
+                        <i class="fas fa-flag me-1" style="font-size:0.5rem;"></i>
+                        Sénégal
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Horaires -->
+            <div class="contact-info-card">
+                <div class="contact-icon-wrapper">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="contact-card-title">Horaires</div>
+                <div class="contact-card-content">
+                    <p class="contact-card-text" style="display:flex; justify-content:space-between; width:100%;">
+                        <span style="font-weight:400; color:#64748b;">Lun - Ven</span>
+                        <span style="font-weight:600; color:#1e293b;">08:00 - 18:00</span>
+                    </p>
+                    <p class="contact-card-text" style="display:flex; justify-content:space-between; width:100%;">
+                        <span style="font-weight:400; color:#64748b;">Samedi</span>
+                        <span style="font-weight:600; color:#1e293b;">09:00 - 14:00</span>
+                    </p>
+                    <p class="contact-card-text" style="display:flex; justify-content:space-between; width:100%; margin-top:0.15rem;">
+                        <span style="font-weight:400; color:#64748b;">Dimanche</span>
+                        <span style="font-weight:600; color:#ef4444; font-size:0.7rem;">Fermé</span>
+                    </p>
+                    <div style="margin-top:0.3rem;">
+                        <span class="contact-card-badge">
+                            <i class="fas fa-bolt me-1"></i> Urgences 24/7
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulaire de contact -->
         <div class="row justify-content-center">
-            <div class="col-lg-6" data-aos="fade-up">
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
                 <div class="contact-form-wrapper">
                     <div class="form-header">
                         <h3>Envoyez-nous un message</h3>
@@ -571,88 +913,14 @@ textarea.form-control-modern {
             </div>
         </div>
         
-        <!-- Section informations de contact -->
-        <div class="contact-info-section" data-aos="fade-up">
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="contact-info-card">
-                        <div class="contact-info-icon">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <h4 class="contact-info-title">Téléphone</h4>
-                        <p class="contact-info-text">
-                            <a href="tel:+221771234567" class="contact-info-link">+221 77 123 45 67</a>
-                        </p>
-                        <p class="contact-info-text">
-                            <a href="tel:+221789876543" class="contact-info-link">+221 78 987 65 43</a>
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="contact-info-card">
-                        <div class="contact-info-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <h4 class="contact-info-title">Email</h4>
-                        <p class="contact-info-text">
-                            <a href="mailto:contact@samadocteur.sn" class="contact-info-link">contact@samadocteur.sn</a>
-                        </p>
-                        <p class="contact-info-text">
-                            <a href="mailto:support@samadocteur.sn" class="contact-info-link">support@samadocteur.sn</a>
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="contact-info-card">
-                        <div class="contact-info-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <h4 class="contact-info-title">Adresse</h4>
-                        <p class="contact-info-text">
-                            Quartier Sor, Saint-Louis<br>
-                            Sénégal
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Section horaires -->
-        <div class="hours-section" data-aos="fade-up">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="hours-card">
-                        <h4 class="hours-title">
-                            <i class="fas fa-clock"></i>
-                            Horaires d'ouverture
-                        </h4>
-                        <div class="hours-item">
-                            <span class="hours-day">Lundi - Vendredi</span>
-                            <span class="hours-time">08:00 - 18:00</span>
-                        </div>
-                        <div class="hours-item">
-                            <span class="hours-day">Samedi</span>
-                            <span class="hours-time">09:00 - 14:00</span>
-                        </div>
-                        <div class="hours-item">
-                            <span class="hours-day">Dimanche</span>
-                            <span class="hours-time">Fermé</span>
-                        </div>
-                        <div class="hours-item">
-                            <span class="hours-day">Urgences</span>
-                            <span class="hours-current">24h/24 - 7j/7</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Google Maps sophistiqué -->
-        <div class="map-section" data-aos="fade-up">
-            <h3 class="map-section-title">Nous trouver</h3>
-            <p class="map-section-subtitle">Notre centre médical est situé au cœur de Saint-Louis</p>
+        <!-- Google Maps -->
+        <div class="map-section" data-aos="fade-up" data-aos-delay="300">
+            <h3 class="map-section-title" style="text-align:center; font-size:1.25rem; font-weight:600; color:#1e293b; margin-bottom:0.5rem;">
+                <i class="fas fa-map-pin" style="color:#2563EB;"></i> Nous trouver
+            </h3>
+            <p class="map-section-subtitle" style="text-align:center; color:#94a3b8; font-size:0.875rem; margin-bottom:1.5rem;">
+                Notre centre médical est situé au cœur de Saint-Louis
+            </p>
             <div class="map-container-modern" style="max-width: 800px; margin: 0 auto;">
                 <div class="map-overlay">
                     <i class="fas fa-map-marker-alt me-1"></i> Saint-Louis, Sénégal
@@ -708,6 +976,10 @@ textarea.form-control-modern {
                     submitBtn.disabled = true;
                     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span> Envoi en cours...</span>';
                 }
+                // Redirection vers dashboard-medecin.php après soumission
+                setTimeout(() => {
+                    window.location.href = 'dashboard-medecin.php';
+                }, 500);
             }
         });
         
