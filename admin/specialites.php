@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['HTTP_X_REQUESTED_WI
 }
 
 $specialites = $pdo->query("SELECT s.*, COUNT(m.id) as nb_medecins FROM specialites s LEFT JOIN medecins m ON s.id = m.specialite_id GROUP BY s.id ORDER BY s.nom")->fetchAll();
-include '../includes/header.php';
+$noHeader = true;
 ?>
 
 <!DOCTYPE html>
@@ -75,7 +75,7 @@ include '../includes/header.php';
             <div class="nav-item"><a href="patients.php" class="nav-link"><i class="fas fa-users"></i> Patients</a></div>
             <div class="nav-item"><a href="rendez-vous.php" class="nav-link"><i class="fas fa-calendar-alt"></i> Rendez-vous</a></div>
             <div class="nav-item"><a href="specialites.php" class="nav-link active"><i class="fas fa-tags"></i> Spécialités</a></div>
-            <div class="nav-item"><a href="../logout.php" class="nav-link"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></div>
+            <div class="nav-item"><a href="../deconnexion.php" class="nav-link"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></div>
         </div>
     </div>
 

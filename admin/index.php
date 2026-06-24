@@ -80,7 +80,7 @@ $stats_statuts = $pdo->query("
     GROUP BY statut
 ")->fetchAll();
 
-include '../includes/header.php';
+$noHeader = true;
 ?>
 
 <!DOCTYPE html>
@@ -338,7 +338,7 @@ include '../includes/header.php';
                 </a>
             </div>
             <div class="nav-item">
-                <a href="../logout.php" class="nav-link">
+                <a href="../deconnexion.php" class="nav-link">
                     <i class="fas fa-sign-out-alt"></i> Déconnexion
                 </a>
             </div>

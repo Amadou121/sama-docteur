@@ -1,7 +1,10 @@
 <?php
 // Fichier: includes/footer.php
+// Fermer le <main> uniquement si le header l'a ouvert
+if (!isset($noHeader)) {
+    echo "</main>\n";
+}
 ?>
-    </main>
     <style>
         /* Footer styles consolidated and fixed */
         .footer {
