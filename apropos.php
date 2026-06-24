@@ -335,7 +335,7 @@ include 'includes/header.php';
                 <h2>Prêt à prendre soin de votre santé ?</h2>
                 <p>Rejoignez les milliers de patients qui nous font confiance chaque jour</p>
                 <div class="cta-buttons">
-                    <a href="prendre-rendezvous.php" class="btn-primary">
+                    <a href="prendre-rendez-vous.php" class="btn-primary">
                         <i class="fas fa-calendar-plus"></i> Prendre rendez-vous
                     </a>
                     <a href="medecins.php" class="btn-outline-light">

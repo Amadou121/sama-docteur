@@ -237,10 +237,10 @@
                 <div class="col-md-3 mb-4 mb-md-0">
                     <h5>Nos spécialités</h5>
                     <ul class="footer-links">
-                        <li><a href="#">Cardiologie</a></li>
-                        <li><a href="#">Dermatologie</a></li>
-                        <li><a href="#">Pédiatrie</a></li>
-                        <li><a href="#">Gynécologie</a></li>
+                        <li><a href="<?php echo SITE_URL; ?>specialites.php?specialite=cardiologie">Cardiologie</a></li>
+                        <li><a href="<?php echo SITE_URL; ?>specialites.php?specialite=dermatologie">Dermatologie</a></li>
+                        <li><a href="<?php echo SITE_URL; ?>specialites.php?specialite=pediatrie">Pédiatrie</a></li>
+                        <li><a href="<?php echo SITE_URL; ?>specialites.php?specialite=gynecologie">Gynécologie</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
