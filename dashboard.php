@@ -97,8 +97,13 @@ include 'includes/header.php';
 <style>
 .dashboard-wrapper {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: calc(100vh - 200px);
+    min-height: calc(100vh - 150px);
     padding: 30px 0;
+    overflow-x: hidden;
+}
+
+.dashboard-wrapper .container {
+    max-width: 1260px;
 }
 
 .dashboard-sidebar {
@@ -109,6 +114,33 @@ include 'includes/header.php';
     margin-bottom: 30px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid rgba(255,255,255,0.8);
+}
+
+.dashboard-card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 16px 40px rgba(32, 49, 84, 0.1);
+    margin-bottom: 30px;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    width: 100%;
+    overflow: hidden;
+}
+
+.dashboard-card h4 {
+    margin-bottom: 1rem;
+}
+
+.dashboard-card .table-responsive {
+    overflow-x: auto;
+}
+
+.dashboard-card .appointment-card,
+.dashboard-card .notification-item,
+.dashboard-card .confirmation-card,
+.dashboard-card .booking-step {
+    max-width: 100%;
+    word-break: break-word;
 }
 
 .dashboard-sidebar:hover {
@@ -886,7 +918,7 @@ include 'includes/header.php';
                         </div>
                     </div>
                     
-                    <div class="dashboard-sidebar mb-4">
+                    <div class="dashboard-card mb-4">
                         <h4 class="mb-3">
                             <i class="fas fa-calendar-alt"></i> Prochains rendez-vous
                             <?php if($total_rdv_encours > 0): ?>
@@ -1053,7 +1085,7 @@ include 'includes/header.php';
                 
                 <!-- Section Mes rendez-vous (liste complète) -->
                 <div id="appointmentsSection" style="display: none;">
-                    <div class="dashboard-sidebar">
+                    <div class="dashboard-card">
                         <h4 class="mb-3">
                             <i class="fas fa-calendar-alt"></i> Tous mes rendez-vous
                             <?php if($total_rdv_encours > 0): ?>
@@ -1176,7 +1208,7 @@ include 'includes/header.php';
                 
                 <!-- Section Historique -->
                 <div id="historySection" style="display: none;">
-                    <div class="dashboard-sidebar">
+                    <div class="dashboard-card">
                         <h4 class="mb-3"><i class="fas fa-history"></i> Historique des rendez-vous</h4>
                         <?php if(empty($historique_rdv)): ?>
                             <div class="alert alert-info">
@@ -1228,7 +1260,7 @@ include 'includes/header.php';
                 
                 <!-- Section Profil -->
                 <div id="profileSection" style="display: none;">
-                    <div class="dashboard-sidebar">
+                    <div class="dashboard-card">
                         <h4 class="mb-3"><i class="fas fa-user"></i> Mon profil</h4>
                         <form id="profileForm">
                             <div class="row">
@@ -1275,7 +1307,7 @@ include 'includes/header.php';
                 
                 <!-- Section Notifications -->
                 <div id="notificationsSection" style="display: none;">
-                    <div class="dashboard-sidebar">
+                    <div class="dashboard-card">
                         <h4 class="mb-3">
                             <i class="fas fa-bell"></i> Mes notifications
                             <?php if($notifications['non_lues'] > 0): ?>
