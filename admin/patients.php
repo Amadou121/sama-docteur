@@ -57,7 +57,7 @@ $stats = $pdo->query("
     FROM utilisateurs WHERE role = 'patient'
 ")->fetch();
 
-include '../includes/header.php';
+$noHeader = true;
 ?>
 
 <!DOCTYPE html>
@@ -92,8 +92,11 @@ include '../includes/header.php';
         .avatar { width: 40px; height: 40px; border-radius: 50%; background: #0066cc; color: white; display: flex; align-items: center; justify-content: center; }
         @media (max-width: 768px) { .admin-sidebar { transform: translateX(-100%); } .admin-content { margin-left: 0; } }
     </style>
+    <link rel="stylesheet" href="assets/css/admin-responsive.css">
 </head>
 <body>
+<button class="admin-toggle-btn" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i></button>
+<div class="admin-overlay"></div>
 <div class="admin-wrapper">
     <div class="admin-sidebar">
         <div class="logo">
@@ -106,7 +109,7 @@ include '../includes/header.php';
             <div class="nav-item"><a href="patients.php" class="nav-link active"><i class="fas fa-users"></i> Patients</a></div>
             <div class="nav-item"><a href="rendez-vous.php" class="nav-link"><i class="fas fa-calendar-alt"></i> Rendez-vous</a></div>
             <div class="nav-item"><a href="specialites.php" class="nav-link"><i class="fas fa-tags"></i> Spécialités</a></div>
-            <div class="nav-item"><a href="../logout.php" class="nav-link"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></div>
+            <div class="nav-item"><a href="../deconnexion.php" class="nav-link"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></div>
         </div>
     </div>
 

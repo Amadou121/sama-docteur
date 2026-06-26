@@ -105,7 +105,7 @@ $stats = $pdo->query("
     FROM medecins
 ")->fetch();
 
-include '../includes/header.php';
+$noHeader = true;
 ?>
 
 <!DOCTYPE html>
@@ -142,16 +142,10 @@ include '../includes/header.php';
         /* Sidebar */
         .admin-sidebar {
             width: 280px;
-            background: linear-gradient(135deg, #0f2a3a 0%, #263f50 100%);
-            color: #eef6fb;
-            transition: all 0.3s;
-            /* Use sticky on desktop so the sidebar stays within the page flow
-               and does not overlap footer. For small screens we'll switch to fixed. */
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            align-self: flex-start;
-            height: calc(100vh);
+            background: linear-gradient(135deg, var(--dark-color) 0%, #34495e 100%);
+            color: white;
+            position: fixed;
+            height: 100vh;
             overflow-y: auto;
             z-index: 1000;
         }
@@ -395,8 +389,11 @@ include '../includes/header.php';
             .stat-card h3 { font-size: 20px; }
         }
     </style>
+    <link rel="stylesheet" href="assets/css/admin-responsive.css">
 </head>
 <body>
+<button class="admin-toggle-btn" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i></button>
+<div class="admin-overlay"></div>
 <div class="admin-wrapper">
     <!-- Sidebar -->
     <div class="admin-sidebar">
@@ -436,7 +433,7 @@ include '../includes/header.php';
                 </a>
             </div>
             <div class="nav-item">
-                <a href="../logout.php" class="nav-link">
+                <a href="../deconnexion.php" class="nav-link">
                     <i class="fas fa-sign-out-alt"></i> Déconnexion
                 </a>
             </div>

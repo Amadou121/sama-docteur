@@ -240,6 +240,24 @@ include 'includes/header.php';
     font-size: 16px;
 }
 
+/* ⭐ STYLE POUR LE LIEN CONTACT DANS LE MENU */
+.dashboard-menu a.contact-link {
+    background: linear-gradient(135deg, #2563EB, #1e40af);
+    color: white !important;
+    margin-top: 15px;
+    border: none;
+}
+
+.dashboard-menu a.contact-link:hover {
+    background: linear-gradient(135deg, #1e40af, #1e3a8a);
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(37,99,235,0.3);
+}
+
+.dashboard-menu a.contact-link i {
+    color: white;
+}
+
 .menu-badge {
     position: absolute;
     right: 15px;
@@ -845,6 +863,92 @@ include 'includes/header.php';
     color: #28a745;
     margin-bottom: 20px;
 }
+
+/* ⭐ BANNIÈRE DE LIEN VERS CONTACT */
+.contact-banner {
+    background: linear-gradient(135deg, #2563EB, #1e40af);
+    border-radius: 15px;
+    padding: 20px 30px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(37,99,235,0.2);
+}
+
+.contact-banner .banner-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.contact-banner .banner-content i {
+    font-size: 2rem;
+}
+
+.contact-banner .banner-content h5 {
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.contact-banner .banner-content p {
+    margin-bottom: 0;
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+.contact-banner .btn-banner {
+    background: white;
+    color: #2563EB;
+    padding: 10px 25px;
+    border-radius: 30px;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.contact-banner .btn-banner:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    color: #1e40af;
+}
+
+.contact-btn-top {
+    background: transparent;
+    border: 2px solid #0066cc;
+    color: #0066cc;
+    padding: 6px 18px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.contact-btn-top:hover {
+    background: #0066cc;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,102,204,0.3);
+}
+
+@media (max-width: 768px) {
+    .contact-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .contact-banner .banner-content {
+        flex-direction: column;
+    }
+}
 </style>
 
 <div class="dashboard-wrapper">
@@ -882,11 +986,40 @@ include 'includes/header.php';
                                 <span class="menu-badge"><?php echo $notifications['non_lues']; ?></span>
                             <?php endif; ?>
                         </a></li>
+                        
+                        <!-- ⭐ NOUVEAU LIEN VERS CONTACT DANS LE MENU -->
+                        <li><a href="contact.php" class="contact-link">
+                            <i class="fas fa-envelope"></i> Nous contacter
+                            <i class="fas fa-arrow-right ms-auto"></i>
+                        </a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="col-lg-9" data-aos="fade-left">
+                <!-- ⭐ BANNIÈRE CONTACT -->
+                <div class="contact-banner">
+                    <div class="banner-content">
+                        <i class="fas fa-comment-medical"></i>
+                        <div>
+                            <h5>Une question médicale ?</h5>
+                            <p>Notre équipe est à votre écoute 24/7</p>
+                        </div>
+                    </div>
+                    <a href="contact.php" class="btn-banner">
+                        <i class="fas fa-paper-plane me-2"></i> Nous contacter
+                    </a>
+                </div>
+                
+                <!-- Section Tableau de bord -->
+                <div id="dashboardSection">
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <i class="fas fa-calendar-check"></i>
+                                <h3><?php echo $stats['total_rdv']; ?></h3>
+                                <p>Total RDV</p>
+                            </div>
                  <!-- Section Tableau de bord -->
                  <div id="dashboardSection">
                  <div class="dashboard-greeting">
@@ -918,7 +1051,23 @@ include 'includes/header.php';
                         </div>
                     </div>
                     
+<<<<<<< HEAD
                     <div class="dashboard-card mb-4">
+=======
+                    <div class="dashboard-sidebar mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-0">
+                                <i class="fas fa-calendar-alt"></i> Prochains rendez-vous
+                                <?php if($total_rdv_encours > 0): ?>
+                                    <span class="badge bg-primary"><?php echo $total_rdv_encours; ?> à venir</span>
+                                <?php endif; ?>
+                            </h4>
+                            <!-- ⭐ BOUTON CONTACT DANS LE HEADER -->
+                            <a href="contact.php" class="contact-btn-top">
+                                <i class="fas fa-envelope"></i> Contacter
+                            </a>
+                        </div>
+>>>>>>> b87bceb22778f3dbf4b52e738a39c79d790a33a3
                         <h4 class="mb-3">
                             <i class="fas fa-calendar-alt"></i> Prochains rendez-vous
                             <?php if($total_rdv_encours > 0): ?>

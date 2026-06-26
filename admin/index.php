@@ -80,7 +80,7 @@ $stats_statuts = $pdo->query("
     GROUP BY statut
 ")->fetchAll();
 
-include '../includes/header.php';
+$noHeader = true;
 ?>
 
 <!DOCTYPE html>
@@ -297,8 +297,11 @@ include '../includes/header.php';
             }
         }
     </style>
+    <link rel="stylesheet" href="assets/css/admin-responsive.css">
 </head>
 <body>
+<button class="admin-toggle-btn" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i></button>
+<div class="admin-overlay"></div>
 <div class="admin-wrapper">
     <!-- Sidebar -->
     <div class="admin-sidebar">
@@ -338,7 +341,7 @@ include '../includes/header.php';
                 </a>
             </div>
             <div class="nav-item">
-                <a href="../logout.php" class="nav-link">
+                <a href="../deconnexion.php" class="nav-link">
                     <i class="fas fa-sign-out-alt"></i> Déconnexion
                 </a>
             </div>

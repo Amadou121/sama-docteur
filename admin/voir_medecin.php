@@ -56,7 +56,7 @@ $avis = $pdo->prepare("
 $avis->execute([$id]);
 $avis = $avis->fetchAll();
 
-include '../includes/header.php';
+$noHeader = true;
 ?>
 
 <!DOCTYPE html>
@@ -83,8 +83,11 @@ include '../includes/header.php';
         .schedule-item { background: #f8f9fa; padding: 10px 15px; margin-bottom: 8px; border-radius: 8px; }
         @media (max-width: 768px) { .admin-sidebar { transform: translateX(-100%); } .admin-content { margin-left: 0; } }
     </style>
+    <link rel="stylesheet" href="assets/css/admin-responsive.css">
 </head>
 <body>
+<button class="admin-toggle-btn" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i></button>
+<div class="admin-overlay"></div>
 <div class="admin-wrapper">
     <div class="admin-sidebar">
         <div class="logo"><h3><i class="fas fa-stethoscope"></i> Sama Docteur</h3><p>Espace Administration</p></div>
@@ -94,7 +97,7 @@ include '../includes/header.php';
             <div class="nav-item"><a href="patients.php" class="nav-link"><i class="fas fa-users"></i> Patients</a></div>
             <div class="nav-item"><a href="rendez-vous.php" class="nav-link"><i class="fas fa-calendar-alt"></i> Rendez-vous</a></div>
             <div class="nav-item"><a href="specialites.php" class="nav-link"><i class="fas fa-tags"></i> Spécialités</a></div>
-            <div class="nav-item"><a href="../logout.php" class="nav-link"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></div>
+            <div class="nav-item"><a href="../deconnexion.php" class="nav-link"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></div>
         </div>
     </div>
 

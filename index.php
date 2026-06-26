@@ -764,7 +764,7 @@ function getDoctorRating($medecinId) {
         </div>
         
         <div class="text-center mt-5 reveal">
-            <a href="medecins.php" class="btn btn-outline-primary px-4 py-2">
+            <a href="specialites.php" class="btn btn-outline-primary px-4 py-2">
                 Voir tous les médecins <i class="fas fa-arrow-right ms-2"></i>
             </a>
         </div>
