@@ -409,75 +409,71 @@ include 'includes/header.php';
 
 /* Banner greeting styles */
 .dashboard-greeting {
- background: #ffffff;
- padding: 24px 20px;
- border-radius: 18px;
- display: flex;
- flex-direction: column;
- align-items: center;
- text-align: center;
- box-shadow: 0 14px 40px rgba(102, 126, 234, 0.12);
- border: 1px solid rgba(102,126,234,0.1);
- margin-bottom: 20px;
- max-width: 100%;
- animation: floatIn 0.8s ease-out both;
+    background: #ffffff;
+    padding: 24px 20px;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 14px 40px rgba(102, 126, 234, 0.12);
+    border: 1px solid rgba(102,126,234,0.1);
+    margin-bottom: 20px;
+    max-width: 100%;
+    animation: floatIn 0.8s ease-out both;
 }
+
 .dashboard-greeting h2 {
- margin:0;
- font-size: 28px;
- color:#273c75;
- letter-spacing: 0.3px;
- animation: fadeInUp 0.9s ease-out 0.1s both;
+    margin: 0;
+    font-size: 28px;
+    color: #273c75;
+    letter-spacing: 0.3px;
+    animation: fadeInUp 0.9s ease-out 0.1s both;
 }
+
 .dashboard-greeting p {
- margin:10px 0 0;
- color:#546e7a;
- font-size: 15px;
- animation: fadeInUp 1s ease-out 0.2s both;
+    margin: 10px 0 0;
+    color: #546e7a;
+    font-size: 15px;
+    animation: fadeInUp 1s ease-out 0.2s both;
 }
+
 .dashboard-greeting::after {
- content: '';
- display: block;
- width: 80px;
- height: 4px;
- border-radius: 50px;
- background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
- margin-top: 16px;
- animation: pulseLine 2s ease-in-out infinite;
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    border-radius: 50px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    margin-top: 16px;
+    animation: pulseLine 2s ease-in-out infinite;
 }
 
 @keyframes floatIn {
- from {
- opacity: 0;
- transform: translateY(20px) scale(0.98);
- }
- to {
- opacity: 1;
- transform: translateY(0) scale(1);
- }
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 @keyframes fadeInUp {
- from {
- opacity: 0;
- transform: translateY(12px);
- }
- to {
- opacity: 1;
- transform: translateY(0);
- }
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes pulseLine {
- 0%, 100% { transform: scaleX(1); opacity: 1; }
- 50% { transform: scaleX(1.08); opacity: 0.85; }
-}
-
-.stat-card h3 {
-    font-size: 32px;
-    font-weight: 700;
-    margin: 10px 0;
-    color: #24324d;
+    0%, 100% { transform: scaleX(1); opacity: 1; }
+    50% { transform: scaleX(1.08); opacity: 0.85; }
 }
 
 .appointment-card {
@@ -986,8 +982,6 @@ include 'includes/header.php';
                                 <span class="menu-badge"><?php echo $notifications['non_lues']; ?></span>
                             <?php endif; ?>
                         </a></li>
-                        
-                        <!-- ⭐ NOUVEAU LIEN VERS CONTACT DANS LE MENU -->
                         <li><a href="contact.php" class="contact-link">
                             <i class="fas fa-envelope"></i> Nous contacter
                             <i class="fas fa-arrow-right ms-auto"></i>
@@ -1013,21 +1007,13 @@ include 'includes/header.php';
                 
                 <!-- Section Tableau de bord -->
                 <div id="dashboardSection">
-                    <div class="row g-4 mb-4">
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <i class="fas fa-calendar-check"></i>
-                                <h3><?php echo $stats['total_rdv']; ?></h3>
-                                <p>Total RDV</p>
-                            </div>
-                 <!-- Section Tableau de bord -->
-                 <div id="dashboardSection">
-                 <div class="dashboard-greeting">
-                    <div class="greet-text">
-                        <h2>Bonjour, <?php echo htmlspecialchars($_SESSION['user_nom']); ?></h2>
-                        <p>Bienvenue sur votre tableau de bord</p>
+                    <div class="dashboard-greeting">
+                        <div class="greet-text">
+                            <h2>Bonjour, <?php echo htmlspecialchars($_SESSION['user_nom']); ?></h2>
+                            <p>Bienvenue sur votre tableau de bord</p>
+                        </div>
                     </div>
-                 </div>
+                    
                     <div class="stats-bar">
                         <div class="stat-item stat-gradient-blue">
                             <p class="stat-number"><?php echo $stats['total_rdv']; ?></p>
@@ -1051,29 +1037,19 @@ include 'includes/header.php';
                         </div>
                     </div>
                     
-<<<<<<< HEAD
                     <div class="dashboard-card mb-4">
-=======
-                    <div class="dashboard-sidebar mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4 class="mb-0">
                                 <i class="fas fa-calendar-alt"></i> Prochains rendez-vous
                                 <?php if($total_rdv_encours > 0): ?>
-                                    <span class="badge bg-primary"><?php echo $total_rdv_encours; ?> à venir</span>
+                                    <span class="badge-gradient"><?php echo $total_rdv_encours; ?> à venir</span>
                                 <?php endif; ?>
                             </h4>
-                            <!-- ⭐ BOUTON CONTACT DANS LE HEADER -->
                             <a href="contact.php" class="contact-btn-top">
                                 <i class="fas fa-envelope"></i> Contacter
                             </a>
                         </div>
->>>>>>> b87bceb22778f3dbf4b52e738a39c79d790a33a3
-                        <h4 class="mb-3">
-                            <i class="fas fa-calendar-alt"></i> Prochains rendez-vous
-                            <?php if($total_rdv_encours > 0): ?>
-                                <span class="badge-gradient"><?php echo $total_rdv_encours; ?> à venir</span>
-                            <?php endif; ?>
-                        </h4>
+                        
                         <?php if(empty($prochains_rdv)): ?>
                             <div class="alert alert-info fade-in">
                                 <i class="fas fa-info-circle"></i> Aucun rendez-vous à venir.
