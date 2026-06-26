@@ -1386,7 +1386,7 @@ include 'includes/header.php';
                 <!-- Section Profil -->
                 <div id="profileSection" style="display: none;">
                     <div class="dashboard-card">
-                        <h4 class="mb-3"><i class="fas fa-user"></i> Mon profil</h4>
+                        <h4 class="mb-3"><i class="fas fa-user"></i> Mon pr</h4>
                         <form id="profileForm">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
