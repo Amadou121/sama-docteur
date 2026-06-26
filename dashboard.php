@@ -1386,7 +1386,7 @@ include 'includes/header.php';
                 <!-- Section Profil -->
                 <div id="profileSection" style="display: none;">
                     <div class="dashboard-card">
-                        <h4 class="mb-3"><i class="fas fa-user"></i> Mon pr</h4>
+                        <h4 class="mb-3"><i class="fas fa-user"></i> Mon profil</h4>
                         <form id="profileForm">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
@@ -1398,7 +1398,7 @@ include 'includes/header.php';
                                     <input type="email" class="form-control" value="<?php echo htmlspecialchars($_SESSION['user_email']); ?>">
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Téléphone</label>
+                                    <label class="form-label">Telephone</label>
                                     <input type="tel" class="form-control" placeholder="77 123 45 67">
                                 </div>
                                 <div class="col-md-6 mb-3">
