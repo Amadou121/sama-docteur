@@ -77,7 +77,7 @@ include 'includes/header.php';
             <div class="section-label">
                 <span>Notre mission</span>
             </div>
-            <h2>Pourquoi nous faisons <span class="text-gradient">ce que nous faisons</span></h2>
+            <h2>Notre engagement <span class="text-gradient">pour la santé</span></h2>
             <p>Une mission claire qui guide chacune de nos actions au quotidien</p>
         </div>
         <div class="mission-grid">
@@ -128,7 +128,7 @@ include 'includes/header.php';
                 <div class="timeline-content">
                     <div class="timeline-year">2020</div>
                     <h3>La naissance de Sama Docteur</h3>
-                    <p>Création de la plateforme avec 50 médecins partenaires à Dakar. Première version de notre application de prise de rendez-vous.</p>
+                    <p>Création de la plateforme avec 10 médecins partenaires à Saint-Louis. Première version de notre application de prise de rendez-vous.</p>
                 </div>
             </div>
             <div class="timeline-item">
@@ -136,7 +136,7 @@ include 'includes/header.php';
                 <div class="timeline-content">
                     <div class="timeline-year">2021</div>
                     <h3>Expansion à toute la région</h3>
-                    <p>Extension à Thiès, Mbour et Saint-Louis. Lancement de notre système de téléconsultation.</p>
+                    <p>Extension à Thiès, Mbour, kolda et Saint-Louis. Lancement de notre système de téléconsultation.</p>
                 </div>
             </div>
             <div class="timeline-item">
@@ -144,7 +144,7 @@ include 'includes/header.php';
                 <div class="timeline-content">
                     <div class="timeline-year">2022</div>
                     <h3>Reconnaissance nationale</h3>
-                    <p>Partenariat avec l'Ordre des Médecins du Sénégal. Plus de 200 médecins nous font confiance.</p>
+                    <p>Partenariat avec l'Ordre des Médecins du Sénégal. Plus de 50 médecins nous font confiance.</p>
                 </div>
             </div>
             <div class="timeline-item">
@@ -152,7 +152,7 @@ include 'includes/header.php';
                 <div class="timeline-content">
                     <div class="timeline-year">2024</div>
                     <h3>Leader de l'e-santé</h3>
-                    <p>Reconnue meilleure plateforme e-santé d'Afrique de l'Ouest. Plus de 50 000 utilisateurs actifs.</p>
+                    <p>Reconnue meilleure plateforme e-santé d'Afrique de l'Ouest. Plus de 500 utilisateurs actifs.</p>
                 </div>
             </div>
         </div>
