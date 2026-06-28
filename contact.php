@@ -46,6 +46,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
+    
+    /* Supprime la barre de défilement sur Firefox et IE/Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+/* Supprime la barre de défilement sur Chrome, Safari et Opera */
+.contact-page::-webkit-scrollbar {
+    display: none;
 }
 
 /* Particules de fond */
@@ -350,10 +359,7 @@ textarea.form-control-modern {
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-/* ============================================
-   NOUVEAU DESIGN - INFOS CONTACT EN LIGNE
-   ============================================ */
-
+/* Infos contact en ligne */
 .contact-info-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -403,7 +409,6 @@ textarea.form-control-modern {
     box-shadow: 0 20px 40px -12px rgba(37,99,235,0.2), 0 0 0 1px rgba(37,99,235,0.1);
 }
 
-/* Effet de brillance au survol */
 .contact-info-card::after {
     content: '';
     position: absolute;
@@ -489,7 +494,6 @@ textarea.form-control-modern {
     margin: 0;
 }
 
-/* Badge "Urgence" dans la carte */
 .contact-card-badge {
     display: inline-block;
     background: linear-gradient(135deg, #ef4444, #dc2626);
@@ -508,7 +512,6 @@ textarea.form-control-modern {
     50% { transform: scale(1.05); }
 }
 
-/* Séparateur vertical entre les cartes */
 .contact-info-divider {
     display: none;
 }
@@ -569,7 +572,6 @@ textarea.form-control-modern {
     }
 }
 
-/* Pour les très petits écrans */
 @media (max-width: 400px) {
     .contact-info-grid {
         grid-template-columns: 1fr 1fr;
@@ -581,9 +583,6 @@ textarea.form-control-modern {
     }
 }
 
-/* Fin du nouveau design */
-
-/* Animations */
 @keyframes fadeScale {
     from {
         opacity: 0;
@@ -599,7 +598,6 @@ textarea.form-control-modern {
     animation: fadeScale 0.5s ease forwards;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .contact-header h1 {
         font-size: 2rem;
@@ -629,7 +627,6 @@ textarea.form-control-modern {
     }
 }
 
-/* Input avec icône flottante */
 .input-icon-wrapper {
     position: relative;
 }
@@ -652,7 +649,6 @@ textarea.form-control-modern {
     color: #2563EB;
 }
 
-/* Séparateur décoratif */
 .divider {
     width: 60px;
     height: 4px;
@@ -661,7 +657,6 @@ textarea.form-control-modern {
     margin: 0 auto 1.5rem auto;
 }
 
-/* Amélioration des champs invalides */
 .form-control-modern.is-invalid {
     border-color: #ef4444;
     box-shadow: 0 0 0 4px rgba(239,68,68,0.1);
@@ -676,14 +671,12 @@ textarea.form-control-modern {
     gap: 4px;
 }
 
-/* Indicateur de champ requis */
 .required-indicator {
     color: #ef4444;
     font-size: 0.7rem;
     margin-left: 4px;
 }
 
-/* Badge utilisateur connecté */
 .user-badge {
     display: inline-block;
     background: rgba(16,185,129,0.12);
@@ -706,13 +699,10 @@ textarea.form-control-modern {
     margin-bottom: 1rem;
     border: 1px solid rgba(220,38,38,0.15);
 }
-
-/* Hours section supprimée - intégrée dans la grille */
 </style>
 
 <div class="contact-page">
     <div class="container py-5">
-        <!-- En-tête sophistiqué -->
         <div class="contact-header" data-aos="fade-up">
             <div class="urgent-badge">
                 <i class="fas fa-exclamation-triangle"></i>
@@ -744,9 +734,7 @@ textarea.form-control-modern {
             </div>
         </div>
         
-        <!-- ⭐ NOUVELLE SECTION - INFOS CONTACT EN GRILLE 4 COLONNES -->
         <div class="contact-info-grid" data-aos="fade-up" data-aos-delay="100">
-            <!-- Téléphone -->
             <div class="contact-info-card">
                 <div class="contact-icon-wrapper">
                     <i class="fas fa-phone-alt"></i>
@@ -764,7 +752,6 @@ textarea.form-control-modern {
                 </div>
             </div>
             
-            <!-- Email -->
             <div class="contact-info-card">
                 <div class="contact-icon-wrapper">
                     <i class="fas fa-envelope"></i>
@@ -782,7 +769,6 @@ textarea.form-control-modern {
                 </div>
             </div>
             
-            <!-- Adresse -->
             <div class="contact-info-card">
                 <div class="contact-icon-wrapper">
                     <i class="fas fa-map-marker-alt"></i>
@@ -800,7 +786,6 @@ textarea.form-control-modern {
                 </div>
             </div>
             
-            <!-- Horaires -->
             <div class="contact-info-card">
                 <div class="contact-icon-wrapper">
                     <i class="fas fa-clock"></i>
@@ -828,7 +813,6 @@ textarea.form-control-modern {
             </div>
         </div>
         
-        <!-- Formulaire de contact -->
         <div class="row justify-content-center">
             <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
                 <div class="contact-form-wrapper">
@@ -913,7 +897,6 @@ textarea.form-control-modern {
             </div>
         </div>
         
-        <!-- Google Maps -->
         <div class="map-section" data-aos="fade-up" data-aos-delay="300">
             <h3 class="map-section-title" style="text-align:center; font-size:1.25rem; font-weight:600; color:#1e293b; margin-bottom:0.5rem;">
                 <i class="fas fa-map-pin" style="color:#2563EB;"></i> Nous trouver
@@ -976,16 +959,13 @@ textarea.form-control-modern {
                     submitBtn.disabled = true;
                     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span> Envoi en cours...</span>';
                 }
-                // Redirection vers dashboard-medecin.php après soumission
                 setTimeout(() => {
                     window.location.href = 'dashboard-medecin.php';
                 }, 500);
             }
         });
-        
-        // Validation en temps réel pour le message uniquement
+
         const messageField = document.getElementById('message');
-        
         if (messageField) {
             messageField.addEventListener('input', function() {
                 if (this.value.trim().length >= 10) {
