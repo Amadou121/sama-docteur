@@ -123,7 +123,8 @@ $medecins = $stmtMedecins->fetchAll();
                                     'Dr Oumar Fall' => 'assets/images/Dr Oumar Fall.jpg',
                                     'Dr Aïssatou Ba' => 'assets/images/Dr Aïssatou Ba.jpg',
                                     'Dr Cheikh Diagne' => 'assets/images/Dr Cheikh Diagne.jpg',
-                                    'Dr Mame Diarra Fall' => 'assets/images/Dr Mame Diarra Fall.jpg'
+                                    'Dr Mame Diarra Fall' => 'assets/images/Dr Mame Diarra Fall.jpg',
+                                    'Dr Fatou Ndiaye' => 'assets/images/Fatou Ndiaye.jpg'
                                 ];
 
                                 // Images par défaut par spécialité
