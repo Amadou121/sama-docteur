@@ -1,0 +1,10 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/samandsh/public_html
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R admin $DEPLOYPATH/
+    - /bin/cp -R assets $DEPLOYPATH/
+    - /bin/cp -R includes $DEPLOYPATH/
+    - /bin/cp -R sql $DEPLOYPATH/
+    - /bin/cp -R *.php $DEPLOYPATH/
